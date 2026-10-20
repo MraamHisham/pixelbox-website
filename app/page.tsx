@@ -111,7 +111,6 @@ export default function Home() {
   return (
     <div className={`min-h-screen bg-[#050505] text-white font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       
-      {/* الهيدر */}
       <header className="sticky top-0 w-full z-50 bg-black/60 backdrop-blur-lg border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           
@@ -199,7 +198,6 @@ export default function Home() {
           ))}
         </div>
 
-        {/* عرض كل المنتجات في الصفحة الرئيسية */}
         {products.length === 0 ? (
           <p className="text-center text-gray-500 text-xl">{text.noProducts}</p>
         ) : (
@@ -252,7 +250,6 @@ export default function Home() {
       {/* ========================================= */}
       {activeCategory && (
         <div className="fixed inset-0 z-[100] bg-[#050505] animate-fade-in overflow-y-auto flex flex-col">
-          {/* هيدر الشاشة المنبثقة */}
           <div className="sticky top-0 bg-[#050505]/90 backdrop-blur-md border-b border-white/10 p-6 flex justify-between items-center z-50">
             <h2 className="text-3xl font-playfair font-bold text-[#D4AF37]">
               {lang === 'ar' ? categories.find(c => c.id === activeCategory)?.ar : categories.find(c => c.id === activeCategory)?.en}
@@ -267,7 +264,6 @@ export default function Home() {
             </button>
           </div>
 
-          {/* محتوى الشاشة المنبثقة */}
           <div className="flex-grow p-6 max-w-7xl mx-auto w-full">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {products.filter(p => p.category === activeCategory).length === 0 ? (
@@ -318,7 +314,6 @@ export default function Home() {
         </div>
       )}
 
-      {/* باقي الصفحة (آراء العملاء والأسئلة) */}
       <section className="py-20 bg-[#0a0a0a] border-y border-white/5">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-3xl font-playfair font-bold mb-12 text-white">{text.testimonialsTitle}</h2>

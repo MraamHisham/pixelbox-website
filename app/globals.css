@@ -19,7 +19,6 @@ body {
   overflow-x: hidden;
 }
 
-/* إخفاء شريط التمرير للتصنيفات */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
@@ -28,7 +27,6 @@ body {
   scrollbar-width: none;
 }
 
-/* كلاسات الـ 3D */
 .perspective-1000 {
   perspective: 1000px;
 }
@@ -36,7 +34,6 @@ body {
   transform: rotateY(360deg);
 }
 
-/* أنيميشن ظهور العناصر (Fade In) */
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.98); }
   to { opacity: 1; transform: scale(1); }
@@ -45,7 +42,6 @@ body {
   animation: fadeIn 0.4s ease-out forwards;
 }
 
-/* أنيميشن النبض (Pulse) */
 @keyframes pulse-gold {
   0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
   70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
@@ -59,25 +55,27 @@ body {
 /* الحل السحري عشان الأنيميشن يشتغل على الموبايل باللمس */
 /* ========================================= */
 @media (hover: none) {
-  /* الكروت والصور */
   .group:active .group-hover\:scale-110 { transform: scale(1.1); }
   .group:active .group-hover\:-translate-y-2 { transform: translateY(-0.5rem); }
   .group:active .group-hover\:drop-shadow-\[0_20px_20px_rgba\(212\,175\,55\,0\.3\)\] { filter: drop-shadow(0 20px 20px rgba(212,175,55,0.3)); }
   .group:active .group-hover\:text-\[\#D4AF37\] { color: #D4AF37; }
   
-  /* اللوجو */
+  /* لفة 360 للمنتج على الموبايل */
+  .group:active .group-hover\:rotate-y-360 { transform: rotateY(360deg); }
+
+  /* لمعة اللوجو */
   .group:active .group-hover\:translate-x-\[100\%\] { transform: translateX(100%); }
   .group:active .group-hover\:shadow-\[0_0_20px_\#D4AF37\] { box-shadow: 0 0 20px #D4AF37; }
   
-  /* الأزرار */
+  /* لمعة الزرار الذهبي */
   .group\/btn:active .group-hover\/btn\:translate-x-\[150\%\] { transform: translateX(150%); }
 
-  /* إظهار كلمة (السلة، حسابي) عند اللمس */
+  /* إظهار كلمة السلة والحساب عند اللمس */
   .group\/icon:active .group-hover\/icon\:opacity-100 { opacity: 1; }
   .group\/account:active .group-hover\/account\:opacity-100 { opacity: 1; }
   .group\/settings:active .group-hover\/settings\:opacity-100 { opacity: 1; }
 
-  /* إظهار القوائم المنسدلة (السلة، حسابي) عند اللمس */
+  /* إظهار القوائم المنسدلة عند اللمس */
   .group\/account:active .group-hover\/account\:visible { visibility: visible; opacity: 1; }
   .group\/settings:active .group-hover\/settings\:visible { visibility: visible; opacity: 1; }
 }
