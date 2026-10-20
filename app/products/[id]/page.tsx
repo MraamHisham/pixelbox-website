@@ -77,7 +77,7 @@ function ProductDetails() {
   return (
     <div className={`min-h-screen bg-[#050505] text-white font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       <header className="w-full border-b border-white/10 p-6 flex items-center justify-between max-w-7xl mx-auto">
-        <Link href="/" className="text-[#D4AF37] hover:text-white transition-colors text-sm font-bold flex items-center gap-2">
+        <Link href={`/?lang=${lang}`} className="text-[#D4AF37] hover:text-white transition-colors text-sm font-bold flex items-center gap-2">
           <span>→</span> {text.back}
         </Link>
       </header>

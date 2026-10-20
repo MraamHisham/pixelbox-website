@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-/* إعدادات الألوان والخطوط الأساسية */
 :root {
   --background: #050505;
   --foreground: #ffffff;
@@ -17,20 +16,17 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-cairo), Arial, sans-serif;
-  overflow-x: hidden; /* عشان نمنع أي سكرول أفقي غريب */
+  overflow-x: hidden;
 }
 
-/* أنيميشن الشريط المتحرك (Marquee) */
-@keyframes marquee {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
-.animate-marquee {
-  display: inline-block;
-  animation: marquee 15s linear infinite;
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-/* كلاسات الـ 3D */
 .perspective-1000 {
   perspective: 1000px;
 }
@@ -38,22 +34,14 @@ body {
   transform: rotateY(360deg);
 }
 
-/* أنيميشن ظهور العناصر (Fade In) */
 @keyframes fadeIn {
-  from { 
-    opacity: 0; 
-    transform: scale(0.95); 
-  }
-  to { 
-    opacity: 1; 
-    transform: scale(1); 
-  }
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 .animate-fade-in {
   animation: fadeIn 0.6s ease-out forwards;
 }
 
-/* أنيميشن النبض (Pulse) للألوان */
 @keyframes pulse-gold {
   0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
   70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
@@ -61,4 +49,14 @@ body {
 }
 .animate-pulse-gold {
   animation: pulse-gold 2s infinite;
+}
+
+/* ده السر عشان الأنيميشن يشتغل على الموبايل باللمس */
+@media (hover: none) {
+  .group:active .group-hover\:scale-110 { transform: scale(1.1); }
+  .group:active .group-hover\:-translate-y-2 { transform: translateY(-0.5rem); }
+  .group:active .group-hover\:text-\[\#D4AF37\] { color: #D4AF37; }
+  .group:active .group-hover\:translate-x-\[100\%\] { transform: translateX(100%); }
+  .group:active .group-hover\:shadow-\[0_0_20px_\#D4AF37\] { box-shadow: 0 0 20px #D4AF37; }
+  .group\/btn:active .group-hover\/btn\:translate-x-\[150\%\] { transform: translateX(150%); }
 }

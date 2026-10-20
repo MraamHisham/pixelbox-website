@@ -41,7 +41,6 @@ export default function Home() {
     fetchData();
   }, []);
 
-  // فلترة المنتجات
   useEffect(() => {
     if (activeCategory === "All") {
       setFilteredProducts(products);
@@ -130,7 +129,6 @@ export default function Home() {
           </div>
           
           <div className="flex items-center gap-4 md:gap-6">
-            {/* أيقونة الحساب */}
             <div className="relative group/account">
               <button 
                 onClick={() => { setMobileAccountOpen(!mobileAccountOpen); setMobileSettingsOpen(false); }}
@@ -150,7 +148,6 @@ export default function Home() {
               </div>
             </div>
             
-            {/* أيقونة السلة */}
             <button className="relative group/icon text-gray-400 hover:text-[#D4AF37] active:text-[#D4AF37] active:scale-90 transition-all duration-300 flex flex-col items-center">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
@@ -158,7 +155,6 @@ export default function Home() {
               <span className="text-[10px] mt-1 hidden md:block opacity-0 group-hover/icon:opacity-100 transition-opacity">{text.cart}</span>
             </button>
 
-            {/* الإعدادات */}
             <div className="relative group/settings">
               <button 
                 onClick={() => { setMobileSettingsOpen(!mobileSettingsOpen); setMobileAccountOpen(false); }}
@@ -196,8 +192,7 @@ export default function Home() {
       </section>
 
       <main id="products" className="max-w-7xl mx-auto px-6 py-20">
-        {/* شريط التصنيفات المتحرك */}
-        <div className="overflow-x-auto pb-4 mb-12 scrollbar-hide flex gap-3 justify-start md:justify-center">
+        <div className="overflow-x-auto pb-4 mb-12 scrollbar-hide flex gap-3 justify-start md:justify-center px-4">
           {categories.map((cat) => (
             <button
               key={cat.id}
