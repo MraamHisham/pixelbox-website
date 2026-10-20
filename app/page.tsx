@@ -17,8 +17,8 @@ export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [hoveredReview, setHoveredReview] = useState<number | null>(null);
   
-  // حالة عشان نفتح القوائم باللمس في الموبايل
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  // حالات عشان نفتح القوائم باللمس في الموبايل
+  const [mobileAccountOpen, setMobileAccountOpen] = useState(false);
   const [mobileSettingsOpen, setMobileSettingsOpen] = useState(false);
 
   useEffect(() => {
@@ -91,11 +91,9 @@ export default function Home() {
   return (
     <div className={`min-h-screen bg-[#050505] text-white font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       
-      {/* الهيدر */}
       <header className="sticky top-0 w-full z-50 bg-black/60 backdrop-blur-lg border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           
-          {/* اللوجو مع أنيميشن للموبايل (active) وللكمبيوتر (hover) */}
           <div className="flex items-center gap-4 group cursor-pointer active:scale-95 transition-transform">
             <div className="w-12 h-12 rounded-full border-2 border-[#D4AF37] flex items-center justify-center relative overflow-hidden group-hover:shadow-[0_0_20px_#D4AF37] group-active:shadow-[0_0_20px_#D4AF37] transition-all duration-500">
               <span className="font-playfair text-xl font-bold text-white z-10 group-hover:text-[#D4AF37] group-active:text-[#D4AF37] transition-colors duration-300">P</span>
@@ -106,15 +104,23 @@ export default function Home() {
           
           <div className="flex items-center gap-4 md:gap-6">
             {/* أيقونة الحساب */}
-            <button 
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="relative group/icon text-gray-400 hover:text-[#D4AF37] active:text-[#D4AF37] active:scale-90 transition-all duration-300 flex flex-col items-center"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-              </svg>
-              <span className="text-[10px] mt-1 hidden md:block opacity-0 group-hover/icon:opacity-100 transition-opacity">{text.account}</span>
-            </button>
+            <div className="relative group/account">
+              <button 
+                onClick={() => { setMobileAccountOpen(!mobileAccountOpen); setMobileSettingsOpen(false); }}
+                className="relative text-gray-400 hover:text-[#D4AF37] active:text-[#D4AF37] active:scale-90 transition-all duration-300 flex flex-col items-center"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg>
+                <span className="text-[10px] mt-1 hidden md:block opacity-0 group-hover/account:opacity-100 transition-opacity">{text.account}</span>
+              </button>
+              <div className={`absolute top-full left-0 mt-2 w-48 bg-[#111] border border-white/10 rounded-lg shadow-xl transition-all duration-300 z-50 ${mobileAccountOpen ? 'opacity-100 visible' : 'opacity-0 invisible group-hover/account:opacity-100 group-hover/account:visible'}`}>
+                <ul className="py-2 text-sm text-gray-300">
+                  <li><button className="w-full text-right px-4 py-2 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-colors">{text.account}</button></li>
+                  <li><button className="w-full text-right px-4 py-2 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-colors">{lang === 'ar' ? 'تسجيل الخروج' : 'Logout'}</button></li>
+                </ul>
+              </div>
+            </div>
             
             {/* أيقونة السلة */}
             <button className="relative group/icon text-gray-400 hover:text-[#D4AF37] active:text-[#D4AF37] active:scale-90 transition-all duration-300 flex flex-col items-center">
@@ -124,10 +130,10 @@ export default function Home() {
               <span className="text-[10px] mt-1 hidden md:block opacity-0 group-hover/icon:opacity-100 transition-opacity">{text.cart}</span>
             </button>
 
-            {/* الإعدادات - بتفتح باللمس في الموبايل */}
+            {/* الإعدادات */}
             <div className="relative group/settings">
               <button 
-                onClick={() => setMobileSettingsOpen(!mobileSettingsOpen)}
+                onClick={() => { setMobileSettingsOpen(!mobileSettingsOpen); setMobileAccountOpen(false); }}
                 className="text-gray-400 hover:text-[#D4AF37] active:text-[#D4AF37] active:rotate-90 active:scale-90 transition-all duration-300 flex flex-col items-center"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -136,9 +142,7 @@ export default function Home() {
                 </svg>
                 <span className="text-[10px] mt-1 hidden md:block opacity-0 group-hover/settings:opacity-100 transition-opacity">{text.settings}</span>
               </button>
-              
-              {/* قائمة منسدلة بتفتح باللمس أو بالماوس */}
-              <div className={`absolute left-0 mt-2 w-48 bg-[#111] border border-white/10 rounded-lg shadow-xl transition-all duration-300 z-50 ${mobileSettingsOpen ? 'opacity-100 visible' : 'opacity-0 invisible group-hover/settings:opacity-100 group-hover/settings:visible'}`}>
+              <div className={`absolute top-full left-0 mt-2 w-48 bg-[#111] border border-white/10 rounded-lg shadow-xl transition-all duration-300 z-50 ${mobileSettingsOpen ? 'opacity-100 visible' : 'opacity-0 invisible group-hover/settings:opacity-100 group-hover/settings:visible'}`}>
                 <ul className="py-2 text-sm text-gray-300">
                   <li><button className="w-full text-right px-4 py-2 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-colors">{text.account}</button></li>
                   <li><button className="w-full text-right px-4 py-2 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-colors">{lang === 'ar' ? 'تسجيل الخروج' : 'Logout'}</button></li>
@@ -153,7 +157,6 @@ export default function Home() {
         </div>
       </header>
 
-      {/* باقي الصفحة زي ما هي */}
       <section className="pt-32 pb-24 px-6 text-center relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#D4AF37]/5 blur-[120px] rounded-full pointer-events-none"></div>
         <h2 className="font-playfair text-5xl md:text-8xl font-bold mb-6 flex flex-wrap justify-center items-center gap-x-4">

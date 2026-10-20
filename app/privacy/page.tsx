@@ -1,11 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Privacy() {
   const [lang, setLang] = useState<"ar" | "en">("ar");
-  const toggleLang = () => setLang(lang === "ar" ? "en" : "ar");
+
+  useEffect(() => {
+    const savedLang = localStorage.getItem('siteLang') as "ar" | "en";
+    if (savedLang) {
+      setLang(savedLang);
+      document.documentElement.lang = savedLang;
+      document.documentElement.dir = savedLang === "ar" ? "rtl" : "ltr";
+    }
+  }, []);
 
   const t = {
     ar: {
@@ -29,18 +37,16 @@ export default function Privacy() {
   const text = t[lang];
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white font-cairo flex flex-col" dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
+    <div className={`min-h-screen bg-[#050505] text-white font-cairo flex flex-col ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       <header className="w-full border-b border-white/10 p-6 flex justify-between items-center max-w-4xl mx-auto">
         <Link href="/" className="text-[#D4AF37] hover:text-white transition-colors text-sm font-bold flex items-center gap-2">
           <span>←</span> {text.back}
         </Link>
-        <button onClick={toggleLang} className="px-4 py-1.5 border border-white/20 hover:border-[#D4AF37] text-xs font-bold rounded-full transition-all duration-300 hover:text-[#D4AF37]">
-          {lang === 'ar' ? 'English' : 'عربي'}
-        </button>
       </header>
 
       <main className="max-w-3xl mx-auto px-6 py-20 flex-grow w-full">
         <h1 className="text-4xl font-playfair font-bold mb-10 text-[#D4AF37]">{text.title}</h1>
+        
         <div className="space-y-6 text-gray-300 leading-relaxed text-lg">
           <p>{text.p1}</p>
           <p>{text.p2}</p>
@@ -50,7 +56,7 @@ export default function Privacy() {
       </main>
 
       <footer className="border-t border-white/10 py-6 text-center text-gray-600 text-sm">
-       © 2026 Pixel Box Ads.
+        © 2026 Pixel Box Ads.
       </footer>
     </div>
   );

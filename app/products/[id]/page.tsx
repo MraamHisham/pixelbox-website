@@ -21,7 +21,6 @@ function ProductDetails() {
   const [lang, setLang] = useState<"ar" | "en">("ar");
 
   useEffect(() => {
-    // قراءة اللغة من الرابط
     const urlParams = new URLSearchParams(window.location.search);
     const urlLang = urlParams.get('lang') as "ar" | "en";
     if (urlLang) {
@@ -61,17 +60,18 @@ function ProductDetails() {
       notAvailable: "لا يوجد وصف متاح لهذا المنتج.",
       availableColors: "الألوان المتاحة:",
       inquire: "استفسر الآن",
+      soldOut: "سولد أوت"
     },
     en: {
       back: "Back to Store",
       notAvailable: "No description available for this product.",
       availableColors: "Available Colors:",
       inquire: "Inquire Now",
+      soldOut: "Sold Out"
     }
   };
   const text = t[lang];
 
-  // هنا بنختار الاسم بناءً على اللغة
   const displayName = lang === 'en' && product.name_en ? product.name_en : product.name;
 
   return (
@@ -131,14 +131,16 @@ function ProductDetails() {
                           }
                         }}
                         disabled={isSoldOut}
-                        className={`relative flex flex-col items-center justify-center w-12 h-16 transition-all duration-500 group/color ${isSoldOut ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer hover:-translate-y-2'}`}
-                        title={isSoldOut ? 'سولد أوت' : colorObj.color_name}
+                        className={`relative flex flex-col items-center justify-center w-12 h-16 transition-all duration-500 group/color ${isSoldOut ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer hover:-translate-y-2'}`}
+                        title={isSoldOut ? text.soldOut : colorObj.color_name}
                       >
                         <div 
-                          className={`w-4 h-14 rounded-full transition-all duration-500 ${isSelected ? 'ring-2 ring-[#D4AF37] ring-offset-4 ring-offset-[#050505] scale-110 shadow-[0_0_15px_rgba(212,175,55,0.5)] animate-pulse' : 'opacity-60 group-hover/color:opacity-100'}`}
+                          className={`w-4 h-14 rounded-full transition-all duration-500 ${isSelected ? 'ring-2 ring-[#D4AF37] ring-offset-4 ring-offset-[#050505] scale-110 shadow-[0_0_15px_rgba(212,175,55,0.5)] animate-pulse' : 'opacity-60 group-hover/color:opacity-100'} ${isSoldOut ? 'grayscale' : ''}`}
                           style={{ backgroundColor: colorObj.color_code }}
                         />
-                        {isSoldOut && (<span className="absolute inset-0 flex items-center justify-center text-white font-bold text-xs">X</span>)}
+                        {isSoldOut && (
+                          <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-lg drop-shadow-md">X</span>
+                        )}
                       </button>
                     );
                   })}
