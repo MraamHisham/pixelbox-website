@@ -12,14 +12,15 @@ const whatsappNumber = "966580647288";
 
 export default function Home() {
   const [products, setProducts] = useState<any[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [lang, setLang] = useState<"ar" | "en">("ar");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [hoveredReview, setHoveredReview] = useState<number | null>(null);
   
-  // حالات عشان نفتح القوائم باللمس في الموبايل
   const [mobileAccountOpen, setMobileAccountOpen] = useState(false);
   const [mobileSettingsOpen, setMobileSettingsOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState("All");
 
   useEffect(() => {
     const savedLang = localStorage.getItem('siteLang') as "ar" | "en";
@@ -31,11 +32,23 @@ export default function Home() {
 
     async function fetchData() {
       const { data } = await supabase.from("products").select("*").eq("is_visible", true);
-      if (data) setProducts(data);
+      if (data) {
+        setProducts(data);
+        setFilteredProducts(data);
+      }
       setLoading(false);
     }
     fetchData();
   }, []);
+
+  // فلترة المنتجات بناءً على التصنيف
+  useEffect(() => {
+    if (activeCategory === "All") {
+      setFilteredProducts(products);
+    } else {
+      setFilteredProducts(products.filter(p => p.category === activeCategory));
+    }
+  }, [activeCategory, products]);
 
   const toggleLang = () => {
     const newLang = lang === "ar" ? "en" : "ar";
@@ -45,13 +58,27 @@ export default function Home() {
     document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
   };
 
+  const categories = [
+    { id: "All", ar: "الكل", en: "All" },
+    { id: "Gift Boxes", ar: "علب هدايا", en: "Gift Boxes" },
+    { id: "Tote Bags", ar: "شنط توت", en: "Tote Bags" },
+    { id: "Clutch", ar: "كلاتش", en: "Clutch" },
+    { id: "Resin", ar: "ريزن", en: "Resin" },
+    { id: "DTF", ar: "طباعة DTF", en: "DTF" },
+    { id: "Acrylic", ar: "أكريليك", en: "Acrylic" },
+    { id: "Laser Engraving", ar: "حفر ليزر", en: "Laser Engraving" },
+    { id: "Hardcover", ar: "أغلفة صلبة", en: "Hardcover" },
+    { id: "Chocolate Boxes", ar: "علب شوكولاتة", en: "Chocolate Boxes" },
+    { id: "Perfume Boxes", ar: "علب برفيوم", en: "Perfume Boxes" },
+  ];
+
   const t = {
     ar: {
       subtitle: "الإبداع في ", highlight: "كل بكسل",
       desc: "نصنع لك تصاميم إعلانية وهويات بصرية تخطف الأنظار، بلمسة يدوية فاخرة.",
-      noProducts: "لا توجد منتجات حالياً", cta: "اكتشف أعمالنا", inquire: "استفسر الآن",
+      noProducts: "لا توجد منتجات في هذا التصنيف حالياً", cta: "اكتشف أعمالنا", inquire: "استفسر الآن",
       availableColors: "متاح بعدة ألوان - اضغط للتفاصيل",
-      account: "حسابي", cart: "السلة", settings: "الإعدادات",
+      account: "حسابي", cart: "السلة", settings: "الإعدادات", logout: "تسجيل الخروج", myOrders: "طلباتي", wishlist: "المفضلة",
       testimonialsTitle: "ماذا يقول عملاؤنا؟", faqTitle: "الأسئلة الشائعة",
       q1: "كيف يمكنني الطلب؟", a1: "يمكنك الضغط على زر (استفسر الآن) لأي منتج، وسنرد عليك عبر واتساب فوراً لترتيب التفاصيل.",
       q2: "كم تستغرق مدة التنفيذ؟", a2: "تختلف حسب المنتج، ولكن في الغالب تستغرق التصاميم من 3 إلى 5 أيام عمل.",
@@ -64,9 +91,9 @@ export default function Home() {
     en: {
       subtitle: "Creativity in ", highlight: "Every Pixel",
       desc: "We craft eye-catching ad designs and visual identities with a luxurious handmade touch.",
-      noProducts: "No products available", cta: "Discover Our Work", inquire: "Inquire Now",
+      noProducts: "No products in this category", cta: "Discover Our Work", inquire: "Inquire Now",
       availableColors: "Available in multiple colors - Click for details",
-      account: "Account", cart: "Cart", settings: "Settings",
+      account: "Account", cart: "Cart", settings: "Settings", logout: "Logout", myOrders: "My Orders", wishlist: "Wishlist",
       testimonialsTitle: "What Our Clients Say", faqTitle: "Frequently Asked Questions",
       q1: "How can I order?", a1: "Click the (Inquire Now) button on any product, and we will contact you via WhatsApp immediately.",
       q2: "How long does it take?", a2: "It varies by product, but designs usually take 3 to 5 business days.",
@@ -103,7 +130,6 @@ export default function Home() {
           </div>
           
           <div className="flex items-center gap-4 md:gap-6">
-            {/* أيقونة الحساب */}
             <div className="relative group/account">
               <button 
                 onClick={() => { setMobileAccountOpen(!mobileAccountOpen); setMobileSettingsOpen(false); }}
@@ -117,12 +143,12 @@ export default function Home() {
               <div className={`absolute top-full left-0 mt-2 w-48 bg-[#111] border border-white/10 rounded-lg shadow-xl transition-all duration-300 z-50 ${mobileAccountOpen ? 'opacity-100 visible' : 'opacity-0 invisible group-hover/account:opacity-100 group-hover/account:visible'}`}>
                 <ul className="py-2 text-sm text-gray-300">
                   <li><button className="w-full text-right px-4 py-2 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-colors">{text.account}</button></li>
-                  <li><button className="w-full text-right px-4 py-2 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-colors">{lang === 'ar' ? 'تسجيل الخروج' : 'Logout'}</button></li>
+                  <li><button className="w-full text-right px-4 py-2 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-colors">{text.myOrders}</button></li>
+                  <li><button className="w-full text-right px-4 py-2 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-colors">{text.wishlist}</button></li>
                 </ul>
               </div>
             </div>
             
-            {/* أيقونة السلة */}
             <button className="relative group/icon text-gray-400 hover:text-[#D4AF37] active:text-[#D4AF37] active:scale-90 transition-all duration-300 flex flex-col items-center">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
@@ -130,7 +156,6 @@ export default function Home() {
               <span className="text-[10px] mt-1 hidden md:block opacity-0 group-hover/icon:opacity-100 transition-opacity">{text.cart}</span>
             </button>
 
-            {/* الإعدادات */}
             <div className="relative group/settings">
               <button 
                 onClick={() => { setMobileSettingsOpen(!mobileSettingsOpen); setMobileAccountOpen(false); }}
@@ -145,7 +170,8 @@ export default function Home() {
               <div className={`absolute top-full left-0 mt-2 w-48 bg-[#111] border border-white/10 rounded-lg shadow-xl transition-all duration-300 z-50 ${mobileSettingsOpen ? 'opacity-100 visible' : 'opacity-0 invisible group-hover/settings:opacity-100 group-hover/settings:visible'}`}>
                 <ul className="py-2 text-sm text-gray-300">
                   <li><button className="w-full text-right px-4 py-2 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-colors">{text.account}</button></li>
-                  <li><button className="w-full text-right px-4 py-2 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-colors">{lang === 'ar' ? 'تسجيل الخروج' : 'Logout'}</button></li>
+                  <li><button className="w-full text-right px-4 py-2 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-colors">{text.logout}</button></li>
+                  <li><button className="w-full text-right px-4 py-2 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-colors">{text.myOrders}</button></li>
                 </ul>
               </div>
             </div>
@@ -168,11 +194,27 @@ export default function Home() {
       </section>
 
       <main id="products" className="max-w-7xl mx-auto px-6 py-20">
-        {products.length === 0 ? (
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setActiveCategory(cat.id)}
+              className={`px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 ${
+                activeCategory === cat.id 
+                  ? 'bg-[#D4AF37] text-black' 
+                  : 'bg-[#1a1a1a] text-gray-400 hover:bg-[#222] hover:text-white'
+              }`}
+            >
+              {lang === 'ar' ? cat.ar : cat.en}
+            </button>
+          ))}
+        </div>
+
+        {filteredProducts.length === 0 ? (
           <p className="text-center text-gray-500 text-xl">{text.noProducts}</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product) => {
+            {filteredProducts.map((product) => {
               const displayName = lang === 'en' && product.name_en ? product.name_en : product.name;
               const waMessage = encodeURIComponent(lang === 'ar' ? `مرحباً بكسل بوكس، أود الاستفسار عن منتج: ${displayName}` : `Hello Pixel Box, I would like to inquire about: ${displayName}`);
               const waLink = `https://wa.me/${whatsappNumber}?text=${waMessage}`;
