@@ -18,6 +18,14 @@ export default function Home() {
   const [hoveredReview, setHoveredReview] = useState<number | null>(null);
 
   useEffect(() => {
+    // أول ما الصفحة تفتح، بنشوف لو المستخدم كان مختار لغة قبل كده
+    const savedLang = localStorage.getItem('siteLang') as "ar" | "en";
+    if (savedLang) {
+      setLang(savedLang);
+      document.documentElement.lang = savedLang;
+      document.documentElement.dir = savedLang === "ar" ? "rtl" : "ltr";
+    }
+
     async function fetchData() {
       const { data } = await supabase.from("products").select("*").eq("is_visible", true);
       if (data) setProducts(data);
@@ -29,6 +37,7 @@ export default function Home() {
   const toggleLang = () => {
     const newLang = lang === "ar" ? "en" : "ar";
     setLang(newLang);
+    localStorage.setItem('siteLang', newLang); // السطر ده بيحفظ اللغة في المتصفح
     document.documentElement.lang = newLang;
     document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
   };
