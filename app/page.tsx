@@ -18,6 +18,7 @@ export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [hoveredReview, setHoveredReview] = useState<number | null>(null);
   
+  // حالات عشان نفتح القوائم باللمس في الموبايل
   const [mobileAccountOpen, setMobileAccountOpen] = useState(false);
   const [mobileSettingsOpen, setMobileSettingsOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState("All");
@@ -192,7 +193,7 @@ export default function Home() {
       </section>
 
       <main id="products" className="max-w-7xl mx-auto px-6 py-20">
-        <div className="overflow-x-auto pb-4 mb-12 scrollbar-hide flex gap-3 justify-start md:justify-center px-4">
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
           {categories.map((cat) => (
             <button
               key={cat.id}
