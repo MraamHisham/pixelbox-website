@@ -1,0 +1,57 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+
+export default function Privacy() {
+  const [lang, setLang] = useState<"ar" | "en">("ar");
+  const toggleLang = () => setLang(lang === "ar" ? "en" : "ar");
+
+  const t = {
+    ar: {
+      title: "سياسة الخصوصية",
+      p1: "نحن في Pixel Box Ads نحترم خصوصيتك ونلتزم بحماية بياناتك الشخصية.",
+      p2: "نحن نجمع المعلومات التي تقدمها لنا طواعية (مثل اسمك ورقم هاتفك) عند تواصلك معنا عبر واتساب أو وسائل التواصل الاجتماعي.",
+      p3: "نستخدم هذه المعلومات فقط للتواصل معك بخصوص استفساراتك أو طلباتك. لن نشارك بياناتك مع أي طرف ثالث لأغراض تسويقية.",
+      p4: "لأي استفسارات، يمكنك التواصل معنا مباشرة.",
+      back: "العودة للرئيسية"
+    },
+    en: {
+      title: "Privacy Policy",
+      p1: "At Pixel Box Ads, we respect your privacy and are committed to protecting your personal data.",
+      p2: "We collect information that you voluntarily provide to us (such as your name and phone number) when you contact us via WhatsApp or social media.",
+      p3: "We use this information only to contact you regarding your inquiries or requests. We will not share your data with any third party for marketing purposes.",
+      p4: "For any inquiries, you can contact us directly.",
+      back: "Back to Home"
+    }
+  };
+
+  const text = t[lang];
+
+  return (
+    <div className="min-h-screen bg-[#050505] text-white font-cairo flex flex-col" dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
+      <header className="w-full border-b border-white/10 p-6 flex justify-between items-center max-w-4xl mx-auto">
+        <Link href="/" className="text-[#D4AF37] hover:text-white transition-colors text-sm font-bold flex items-center gap-2">
+          <span>←</span> {text.back}
+        </Link>
+        <button onClick={toggleLang} className="px-4 py-1.5 border border-white/20 hover:border-[#D4AF37] text-xs font-bold rounded-full transition-all duration-300 hover:text-[#D4AF37]">
+          {lang === 'ar' ? 'English' : 'عربي'}
+        </button>
+      </header>
+
+      <main className="max-w-3xl mx-auto px-6 py-20 flex-grow w-full">
+        <h1 className="text-4xl font-playfair font-bold mb-10 text-[#D4AF37]">{text.title}</h1>
+        <div className="space-y-6 text-gray-300 leading-relaxed text-lg">
+          <p>{text.p1}</p>
+          <p>{text.p2}</p>
+          <p>{text.p3}</p>
+          <p>{text.p4}</p>
+        </div>
+      </main>
+
+      <footer className="border-t border-white/10 py-6 text-center text-gray-600 text-sm">
+       © 2026 Pixel Box Ads.
+      </footer>
+    </div>
+  );
+}
