@@ -18,7 +18,6 @@ export default function Home() {
   const [hoveredReview, setHoveredReview] = useState<number | null>(null);
 
   useEffect(() => {
-    // أول ما الصفحة تفتح، بنشوف لو المستخدم كان مختار لغة قبل كده
     const savedLang = localStorage.getItem('siteLang') as "ar" | "en";
     if (savedLang) {
       setLang(savedLang);
@@ -37,7 +36,7 @@ export default function Home() {
   const toggleLang = () => {
     const newLang = lang === "ar" ? "en" : "ar";
     setLang(newLang);
-    localStorage.setItem('siteLang', newLang); // السطر ده بيحفظ اللغة في المتصفح
+    localStorage.setItem('siteLang', newLang);
     document.documentElement.lang = newLang;
     document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
   };
@@ -158,7 +157,8 @@ export default function Home() {
 
               return (
                 <div key={product.id} className="group relative bg-[#0a0a0a] rounded-2xl border border-white/5 overflow-hidden flex flex-col transition-all duration-500 hover:border-[#D4AF37]/40 hover:shadow-[0_20px_50px_-10px_rgba(212,175,55,0.2)]">
-                  <Link href={`/products/${product.id}`}>
+                  {/* التعديل هنا: بنبعت اللغة في اللينك عشان صفحة المنتج تاخد بالها */}
+                  <Link href={`/products/${product.id}?lang=${lang}`}>
                     <div className="relative aspect-square bg-[#000] flex items-center justify-center overflow-hidden cursor-pointer">
                       <div className="w-full h-full flex items-center justify-center p-8 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-110 group-hover:-translate-y-2 group-hover:drop-shadow-[0_20px_20px_rgba(212,175,55,0.3)]">
                         {product.image_url ? (
@@ -171,10 +171,10 @@ export default function Home() {
                     </div>
                   </Link>
                   <div className="p-6 flex flex-col flex-grow bg-[#0a0a0a]">
-                    <Link href={`/products/${product.id}`}>
+                    <Link href={`/products/${product.id}?lang=${lang}`}>
                       <h3 className="font-playfair text-xl font-bold mb-2 text-white group-hover:text-[#D4AF37] transition-colors duration-300 cursor-pointer">{displayName}</h3>
                     </Link>
-                    <p className="text-[#D4AF37] text-sm mb-6 opacity-80 cursor-pointer hover:underline" onClick={() => window.location.href = `/products/${product.id}`}>
+                    <p className="text-[#D4AF37] text-sm mb-6 opacity-80 cursor-pointer hover:underline" onClick={() => window.location.href = `/products/${product.id}?lang=${lang}`}>
                       {text.availableColors}
                     </p>
                     <div className="mt-auto">
