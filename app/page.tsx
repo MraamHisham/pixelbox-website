@@ -41,7 +41,7 @@ export default function Home() {
     fetchData();
   }, []);
 
-  // فلترة المنتجات بناءً على التصنيف
+  // فلترة المنتجات
   useEffect(() => {
     if (activeCategory === "All") {
       setFilteredProducts(products);
@@ -78,7 +78,7 @@ export default function Home() {
       desc: "نصنع لك تصاميم إعلانية وهويات بصرية تخطف الأنظار، بلمسة يدوية فاخرة.",
       noProducts: "لا توجد منتجات في هذا التصنيف حالياً", cta: "اكتشف أعمالنا", inquire: "استفسر الآن",
       availableColors: "متاح بعدة ألوان - اضغط للتفاصيل",
-      account: "حسابي", cart: "السلة", settings: "الإعدادات", logout: "تسجيل الخروج", myOrders: "طلباتي", wishlist: "المفضلة",
+      account: "حسابي", cart: "السلة", settings: "الإعدادات", logout: "تسجيل الخروج", myOrders: "طلباتي", wishlist: "المفضلة", editProfile: "تعديل الحساب",
       testimonialsTitle: "ماذا يقول عملاؤنا؟", faqTitle: "الأسئلة الشائعة",
       q1: "كيف يمكنني الطلب؟", a1: "يمكنك الضغط على زر (استفسر الآن) لأي منتج، وسنرد عليك عبر واتساب فوراً لترتيب التفاصيل.",
       q2: "كم تستغرق مدة التنفيذ؟", a2: "تختلف حسب المنتج، ولكن في الغالب تستغرق التصاميم من 3 إلى 5 أيام عمل.",
@@ -93,7 +93,7 @@ export default function Home() {
       desc: "We craft eye-catching ad designs and visual identities with a luxurious handmade touch.",
       noProducts: "No products in this category", cta: "Discover Our Work", inquire: "Inquire Now",
       availableColors: "Available in multiple colors - Click for details",
-      account: "Account", cart: "Cart", settings: "Settings", logout: "Logout", myOrders: "My Orders", wishlist: "Wishlist",
+      account: "Account", cart: "Cart", settings: "Settings", logout: "Logout", myOrders: "My Orders", wishlist: "Wishlist", editProfile: "Edit Profile",
       testimonialsTitle: "What Our Clients Say", faqTitle: "Frequently Asked Questions",
       q1: "How can I order?", a1: "Click the (Inquire Now) button on any product, and we will contact you via WhatsApp immediately.",
       q2: "How long does it take?", a2: "It varies by product, but designs usually take 3 to 5 business days.",
@@ -130,6 +130,7 @@ export default function Home() {
           </div>
           
           <div className="flex items-center gap-4 md:gap-6">
+            {/* أيقونة الحساب */}
             <div className="relative group/account">
               <button 
                 onClick={() => { setMobileAccountOpen(!mobileAccountOpen); setMobileSettingsOpen(false); }}
@@ -142,13 +143,14 @@ export default function Home() {
               </button>
               <div className={`absolute top-full left-0 mt-2 w-48 bg-[#111] border border-white/10 rounded-lg shadow-xl transition-all duration-300 z-50 ${mobileAccountOpen ? 'opacity-100 visible' : 'opacity-0 invisible group-hover/account:opacity-100 group-hover/account:visible'}`}>
                 <ul className="py-2 text-sm text-gray-300">
-                  <li><button className="w-full text-right px-4 py-2 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-colors">{text.account}</button></li>
                   <li><button className="w-full text-right px-4 py-2 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-colors">{text.myOrders}</button></li>
                   <li><button className="w-full text-right px-4 py-2 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-colors">{text.wishlist}</button></li>
+                  <li><button className="w-full text-right px-4 py-2 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-colors">{text.logout}</button></li>
                 </ul>
               </div>
             </div>
             
+            {/* أيقونة السلة */}
             <button className="relative group/icon text-gray-400 hover:text-[#D4AF37] active:text-[#D4AF37] active:scale-90 transition-all duration-300 flex flex-col items-center">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
@@ -156,10 +158,11 @@ export default function Home() {
               <span className="text-[10px] mt-1 hidden md:block opacity-0 group-hover/icon:opacity-100 transition-opacity">{text.cart}</span>
             </button>
 
+            {/* الإعدادات */}
             <div className="relative group/settings">
               <button 
                 onClick={() => { setMobileSettingsOpen(!mobileSettingsOpen); setMobileAccountOpen(false); }}
-                className="text-gray-400 hover:text-[#D4AF37] active:text-[#D4AF37] active:rotate-90 active:scale-90 transition-all duration-300 flex flex-col items-center"
+                className="text-gray-400 hover:text-[#D4AF37] active:text-[#D4AF37] active:scale-90 transition-all duration-300 flex flex-col items-center"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
@@ -169,9 +172,8 @@ export default function Home() {
               </button>
               <div className={`absolute top-full left-0 mt-2 w-48 bg-[#111] border border-white/10 rounded-lg shadow-xl transition-all duration-300 z-50 ${mobileSettingsOpen ? 'opacity-100 visible' : 'opacity-0 invisible group-hover/settings:opacity-100 group-hover/settings:visible'}`}>
                 <ul className="py-2 text-sm text-gray-300">
-                  <li><button className="w-full text-right px-4 py-2 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-colors">{text.account}</button></li>
+                  <li><button className="w-full text-right px-4 py-2 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-colors">{text.editProfile}</button></li>
                   <li><button className="w-full text-right px-4 py-2 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-colors">{text.logout}</button></li>
-                  <li><button className="w-full text-right px-4 py-2 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37] transition-colors">{text.myOrders}</button></li>
                 </ul>
               </div>
             </div>
@@ -194,14 +196,15 @@ export default function Home() {
       </section>
 
       <main id="products" className="max-w-7xl mx-auto px-6 py-20">
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
+        {/* شريط التصنيفات المتحرك */}
+        <div className="overflow-x-auto pb-4 mb-12 scrollbar-hide flex gap-3 justify-start md:justify-center">
           {categories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 ${
+              className={`whitespace-nowrap px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 ${
                 activeCategory === cat.id 
-                  ? 'bg-[#D4AF37] text-black' 
+                  ? 'bg-[#D4AF37] text-black shadow-[0_0_15px_rgba(212,175,55,0.4)]' 
                   : 'bg-[#1a1a1a] text-gray-400 hover:bg-[#222] hover:text-white'
               }`}
             >
