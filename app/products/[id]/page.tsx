@@ -21,7 +21,7 @@ function ProductDetails() {
   const [lang, setLang] = useState<"ar" | "en">("ar");
 
   useEffect(() => {
-    // بنقرأ اللغة من الرابط
+    // قراءة اللغة من الرابط
     const urlParams = new URLSearchParams(window.location.search);
     const urlLang = urlParams.get('lang') as "ar" | "en";
     if (urlLang) {
@@ -71,6 +71,9 @@ function ProductDetails() {
   };
   const text = t[lang];
 
+  // هنا بنختار الاسم بناءً على اللغة
+  const displayName = lang === 'en' && product.name_en ? product.name_en : product.name;
+
   return (
     <div className={`min-h-screen bg-[#050505] text-white font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       <header className="w-full border-b border-white/10 p-6 flex items-center justify-between max-w-7xl mx-auto">
@@ -88,7 +91,7 @@ function ProductDetails() {
                 <img 
                   key={selectedImage} 
                   src={selectedImage} 
-                  alt={product.name} 
+                  alt={displayName} 
                   className="w-full h-full object-contain transition-all duration-700 animate-fade-in drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)]" 
                 />
               ) : (
@@ -102,7 +105,7 @@ function ProductDetails() {
 
           <div className="flex flex-col justify-center">
             <h1 className="font-playfair text-4xl md:text-6xl font-bold mb-6 text-white leading-tight">
-              {product.name}
+              {displayName}
             </h1>
             
             <div className="w-20 h-1 bg-[#D4AF37] mb-8 rounded-full"></div>
@@ -128,7 +131,6 @@ function ProductDetails() {
                           }
                         }}
                         disabled={isSoldOut}
-                        // التعديل هنا: كبرنا شوية الخط وعملناه أعرض شوية عشان يبان حلو
                         className={`relative flex flex-col items-center justify-center w-12 h-16 transition-all duration-500 group/color ${isSoldOut ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer hover:-translate-y-2'}`}
                         title={isSoldOut ? 'سولد أوت' : colorObj.color_name}
                       >
