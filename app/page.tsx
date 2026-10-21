@@ -45,7 +45,7 @@ export default function Home() {
       navContact: "تواصل معنا",
       heroTitle: "الإبداع في كل بكسل",
       heroSubtitle: "نصنع لك تصاميم إعلانية وهويات بصرية تخطف الأنظار، بلمسة يدوية فاخرة.",
-      heroCta: "اكتشف أعمالنا",
+      heroCta: "اطلب تصميمك",
       fastShipping: "شحن سريع",
       fastShippingDesc: "لجميع مناطق المملكة",
       securePayment: "دفع آمن",
@@ -71,7 +71,7 @@ export default function Home() {
       navContact: "Contact Us",
       heroTitle: "Creativity in Every Pixel",
       heroSubtitle: "We craft eye-catching ad designs and visual identities with a luxurious handmade touch.",
-      heroCta: "Discover Our Work",
+      heroCta: "Order Your Design",
       fastShipping: "Fast Shipping",
       fastShippingDesc: "To all regions of the Kingdom",
       securePayment: "Secure Payment",
@@ -126,24 +126,27 @@ export default function Home() {
         </div>
       </header>
 
-      {/* 2. قسم الـ Hero (الصورة كخلفية + كلام فوق بلور زجاجي) */}
-      <section className="relative w-full min-h-[85vh] flex items-center justify-center">
+      {/* 2. قسم الـ Hero (الصورة كخلفية + كلام على الشمال) */}
+      <section className="relative w-full min-h-[85vh] flex items-center">
         {/* الصورة كخلفية */}
         <div 
           className="absolute inset-0 bg-cover bg-center" 
           style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}
         ></div>
         
-        {/* الكلام فوق بلور زجاجي (Glassmorphism) */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 py-20 flex justify-center md:justify-start">
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 p-10 md:p-14 rounded-3xl shadow-2xl max-w-xl text-center md:text-right">
-            <h2 className="font-playfair text-5xl md:text-7xl font-bold mb-6 text-white drop-shadow-lg leading-tight">
+        {/* طبقة شفافة (Gradient) على الشمال عشان الكلام يبان */}
+        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-[#fdfbf7]/20 to-[#fdfbf7]/90"></div>
+
+        {/* الكلام على الشمال */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6">
+          <div className="max-w-xl text-right bg-white/30 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-white/40 shadow-xl">
+            <h2 className="font-playfair text-5xl md:text-7xl font-bold mb-6 text-[#3e2723] leading-tight drop-shadow-md">
               {text.heroTitle}
             </h2>
-            <p className="text-lg md:text-xl mb-10 text-gray-100 font-light drop-shadow-md">
+            <p className="text-lg md:text-xl mb-10 text-[#5d4037] font-medium drop-shadow-sm">
               {text.heroSubtitle}
             </p>
-            <Link href="#products" className="inline-block bg-[#d4af37] text-white px-10 py-4 rounded-md font-bold text-lg hover:bg-[#c19b2e] transition-all duration-300 shadow-xl">
+            <Link href="#products" className="inline-block bg-[#d4af37] text-white px-10 py-4 rounded-md font-bold text-lg hover:bg-[#c19b2e] transition-all duration-300 shadow-lg">
               {text.heroCta}
             </Link>
           </div>
