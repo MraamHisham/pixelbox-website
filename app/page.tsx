@@ -14,6 +14,13 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const savedLang = localStorage.getItem('siteLang') as "ar" | "en";
+    if (savedLang) {
+      setLang(savedLang);
+      document.documentElement.lang = savedLang;
+      document.documentElement.dir = savedLang === "ar" ? "rtl" : "ltr";
+    }
+
     async function fetchData() {
       const { data } = await supabase.from("products").select("*").eq("is_visible", true);
       if (data) setProducts(data);
@@ -25,59 +32,125 @@ export default function Home() {
   const toggleLang = () => {
     const newLang = lang === "ar" ? "en" : "ar";
     setLang(newLang);
+    localStorage.setItem('siteLang', newLang);
     document.documentElement.lang = newLang;
     document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
   };
+
+  const t = {
+    ar: {
+      navHome: "الرئيسية",
+      navProducts: "المنتجات",
+      navAbout: "من نحن",
+      navContact: "تواصل معنا",
+      heroTitle: "الإبداع في كل بكسل",
+      heroSubtitle: "نصنع لك تصاميم إعلانية وهويات بصرية تخطف الأنظار، بلمسة يدوية فاخرة.",
+      heroCta: "اكتشف أعمالنا",
+      fastShipping: "شحن سريع",
+      fastShippingDesc: "لجميع مناطق المملكة",
+      securePayment: "دفع آمن",
+      securePaymentDesc: "بجميع الوسائل",
+      quality: "جودة عالية",
+      qualityDesc: "في كل منتج",
+      support: "خدمة عملاء",
+      supportDesc: "على مدار الساعة",
+      latestProducts: "أحدث المنتجات",
+      noProducts: "لا توجد منتجات حالياً.",
+      currency: "ر.س",
+      footerDesc: "نصنع الإبداع في كل بكسل.",
+      quickLinks: "روابط سريعة",
+      privacy: "سياسة الخصوصية",
+      terms: "الشروط والأحكام",
+      contactUs: "تواصل معنا",
+      copyright: "© 2026 Pixel Box Ads. All rights reserved."
+    },
+    en: {
+      navHome: "Home",
+      navProducts: "Products",
+      navAbout: "About Us",
+      navContact: "Contact Us",
+      heroTitle: "Creativity in Every Pixel",
+      heroSubtitle: "We craft eye-catching ad designs and visual identities with a luxurious handmade touch.",
+      heroCta: "Discover Our Work",
+      fastShipping: "Fast Shipping",
+      fastShippingDesc: "To all regions of the Kingdom",
+      securePayment: "Secure Payment",
+      securePaymentDesc: "All payment methods",
+      quality: "High Quality",
+      qualityDesc: "In every product",
+      support: "Customer Support",
+      supportDesc: "24/7 Service",
+      latestProducts: "Latest Products",
+      noProducts: "No products available.",
+      currency: "SAR",
+      footerDesc: "We craft creativity in every pixel.",
+      quickLinks: "Quick Links",
+      privacy: "Privacy Policy",
+      terms: "Terms & Conditions",
+      contactUs: "Contact Us",
+      copyright: "© 2026 Pixel Box Ads. All rights reserved."
+    }
+  };
+
+  const text = t[lang];
 
   if (loading) return <div className="min-h-screen flex items-center justify-center text-xl bg-[#fdfbf7] text-[#3e2723] font-cairo">Loading...</div>;
 
   return (
     <div className={`min-h-screen bg-[#fdfbf7] text-[#3e2723] font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       
-      {/* 1. الهيدر (Header) */}
+      {/* 1. الهيدر (الشريط اللي فوق) */}
       <header className="w-full bg-white/80 backdrop-blur-md border-b border-[#e0d8cf] sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <h1 className="font-playfair text-2xl font-bold text-[#d4af37]">LUXORA</h1>
+          
+          <Link href="/">
+            <div className="flex items-center gap-3">
+               <div className="w-12 h-12 rounded-full border-2 border-[#d4af37] flex items-center justify-center font-bold text-xl text-[#d4af37]">P</div>
+               <h1 className="font-playfair text-2xl font-bold text-[#3e2723] tracking-widest">PIXEL BOX</h1>
+            </div>
+          </Link>
+
           <nav className="hidden md:flex gap-8 text-sm font-bold text-[#3e2723]">
-            <Link href="/">الرئيسية</Link>
-            <Link href="/products">المنتجات</Link>
-            <Link href="/about">من نحن</Link>
-            <Link href="/contact">تواصل معنا</Link>
+            <Link href="/" className="hover:text-[#d4af37] transition">{text.navHome}</Link>
+            <Link href="#products" className="hover:text-[#d4af37] transition">{text.navProducts}</Link>
+            <Link href="/about" className="hover:text-[#d4af37] transition">{text.navAbout}</Link>
+            <Link href="/contact" className="hover:text-[#d4af37] transition">{text.navContact}</Link>
           </nav>
+
           <div className="flex items-center gap-6">
-            <button className="text-2xl">🛒</button> {/* أيقونة السلة */}
-            <button onClick={toggleLang} className="text-sm font-bold border border-[#d4af37] text-[#d4af37] px-4 py-1 rounded-full">
+            <button className="text-2xl">🛒</button>
+            <button onClick={toggleLang} className="text-sm font-bold border border-[#d4af37] text-[#d4af37] px-4 py-1 rounded-full hover:bg-[#d4af37] hover:text-white transition">
               {lang === 'ar' ? 'English' : 'عربي'}
             </button>
           </div>
         </div>
       </header>
 
-      {/* 2. قسم الـ Hero (صورة كبيرة + كلام) */}
-      <section className="relative w-full h-[80vh] flex items-center justify-center text-center bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1616046229478-9901c5536a45?q=80&w=1600&auto=format&fit=crop')" }}>
-        <div className="absolute inset-0 bg-black/40"></div>
-        <div className="relative z-10 max-w-2xl px-6 text-white">
-          <h2 className="font-playfair text-5xl md:text-6xl font-bold mb-4">تفاصيل صغيرة.. تصنع فرقاً كبيراً</h2>
-          <p className="text-lg mb-8">منتجات عصرية تليق بمنزلك.</p>
-          <Link href="#products" className="bg-[#d4af37] text-white px-8 py-3 rounded-md font-bold hover:bg-[#c19b2e] transition">
-            تسوق الآن
+      {/* 2. قسم الـ Hero (الصورة + الكلام) */}
+      <section className="relative w-full h-[85vh] flex items-center justify-center text-center bg-cover bg-center" style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}>
+        <div className="absolute inset-0 bg-black/50"></div>
+        <div className="relative z-10 max-w-3xl px-6 text-white">
+          <h2 className="font-playfair text-5xl md:text-7xl font-bold mb-6 drop-shadow-lg">{text.heroTitle}</h2>
+          <p className="text-lg md:text-xl mb-10 text-gray-200 font-light drop-shadow-md">{text.heroSubtitle}</p>
+          <Link href="#products" className="bg-[#d4af37] text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-[#c19b2e] hover:scale-105 transition-all duration-300 shadow-xl">
+            {text.heroCta}
           </Link>
         </div>
       </section>
 
-      {/* 3. المزايا (شحن، دفع، جودة) */}
-      <section className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-        <div><span className="text-3xl">🚚</span><h3 className="font-bold mt-2">شحن سريع</h3><p className="text-sm text-gray-500">لجميع مناطق المملكة</p></div>
-        <div><span className="text-3xl">🛡️</span><h3 className="font-bold mt-2">دفع آمن</h3><p className="text-sm text-gray-500">بجميع الوسائل</p></div>
-        <div><span className="text-3xl">⭐</span><h3 className="font-bold mt-2">جودة عالية</h3><p className="text-sm text-gray-500">في كل منتج</p></div>
-        <div><span className="text-3xl">🎧</span><h3 className="font-bold mt-2">خدمة عملاء</h3><p className="text-sm text-gray-500">على مدار الساعة</p></div>
+      {/* 3. المزايا */}
+      <section className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center bg-white rounded-2xl shadow-sm -mt-10 relative z-20">
+        <div><span className="text-3xl">🚚</span><h3 className="font-bold mt-2">{text.fastShipping}</h3><p className="text-sm text-gray-500">{text.fastShippingDesc}</p></div>
+        <div><span className="text-3xl">🛡️</span><h3 className="font-bold mt-2">{text.securePayment}</h3><p className="text-sm text-gray-500">{text.securePaymentDesc}</p></div>
+        <div><span className="text-3xl">⭐</span><h3 className="font-bold mt-2">{text.quality}</h3><p className="text-sm text-gray-500">{text.qualityDesc}</p></div>
+        <div><span className="text-3xl">🎧</span><h3 className="font-bold mt-2">{text.support}</h3><p className="text-sm text-gray-500">{text.supportDesc}</p></div>
       </section>
 
       {/* 4. المنتجات */}
       <section id="products" className="max-w-7xl mx-auto px-6 py-16">
-        <h2 className="font-playfair text-3xl font-bold text-center mb-12">أحدث المنتجات</h2>
+        <h2 className="font-playfair text-3xl font-bold text-center mb-12">{text.latestProducts}</h2>
         {products.length === 0 ? (
-          <p className="text-center text-gray-500">لا توجد منتجات حالياً.</p>
+          <p className="text-center text-gray-500">{text.noProducts}</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {products.map((product) => {
@@ -97,7 +170,7 @@ export default function Home() {
                     <Link href={`/products/${product.id}?lang=${lang}`}>
                       <h3 className="font-playfair text-lg font-bold mb-1">{displayName}</h3>
                     </Link>
-                    <p className="text-[#d4af37] font-bold">{product.price} ر.س</p>
+                    <p className="text-[#d4af37] font-bold">{product.price} {text.currency}</p>
                   </div>
                 </div>
               );
@@ -106,24 +179,27 @@ export default function Home() {
         )}
       </section>
 
-      {/* 5. الفوتر (Footer) */}
+      {/* 5. الفوتر */}
       <footer className="bg-[#3e2723] text-[#fdfbf7] py-12 mt-16">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-right">
           <div>
-            <h4 className="font-playfair text-2xl font-bold text-[#d4af37] mb-4">LUXORA</h4>
-            <p className="text-sm">نصنع الإبداع في كل بكسل.</p>
+            <h4 className="font-playfair text-2xl font-bold text-[#d4af37] mb-4">PIXEL BOX</h4>
+            <p className="text-sm">{text.footerDesc}</p>
           </div>
           <div>
-            <h4 className="font-bold mb-4">روابط سريعة</h4>
+            <h4 className="font-bold mb-4">{text.quickLinks}</h4>
             <ul className="space-y-2 text-sm text-[#e0d8cf]">
-              <li><Link href="/privacy">سياسة الخصوصية</Link></li>
-              <li><Link href="/terms">الشروط والأحكام</Link></li>
+              <li><Link href="/privacy">{text.privacy}</Link></li>
+              <li><Link href="/terms">{text.terms}</Link></li>
             </ul>
           </div>
           <div>
-            <h4 className="font-bold mb-4">تواصل معنا</h4>
-            <p className="text-sm">فريقنا جاهز لمساعدتك.</p>
+            <h4 className="font-bold mb-4">{text.contactUs}</h4>
+            <p className="text-sm">info@pixelboxads.shop</p>
           </div>
+        </div>
+        <div className="text-center text-xs mt-8 border-t border-[#5d4037] pt-6">
+          {text.copyright}
         </div>
       </footer>
     </div>
