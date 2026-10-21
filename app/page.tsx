@@ -99,7 +99,7 @@ export default function Home() {
   return (
     <div className={`min-h-screen bg-[#fdfbf7] text-[#3e2723] font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       
-      {/* 1. الهيدر (الشريط اللي فوق) */}
+      {/* 1. الهيدر */}
       <header className="w-full bg-white/80 backdrop-blur-md border-b border-[#e0d8cf] sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           
@@ -126,20 +126,32 @@ export default function Home() {
         </div>
       </header>
 
-      {/* 2. قسم الـ Hero (الصورة + الكلام) */}
-      <section className="relative w-full h-[85vh] flex items-center justify-center text-center bg-cover bg-center" style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}>
-        <div className="absolute inset-0 bg-black/50"></div>
-        <div className="relative z-10 max-w-3xl px-6 text-white">
-          <h2 className="font-playfair text-5xl md:text-7xl font-bold mb-6 drop-shadow-lg">{text.heroTitle}</h2>
-          <p className="text-lg md:text-xl mb-10 text-gray-200 font-light drop-shadow-md">{text.heroSubtitle}</p>
-          <Link href="#products" className="bg-[#d4af37] text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-[#c19b2e] hover:scale-105 transition-all duration-300 shadow-xl">
-            {text.heroCta}
-          </Link>
+      {/* 2. قسم الـ Hero (الصورة كخلفية + كلام فوق بلور زجاجي) */}
+      <section className="relative w-full min-h-[85vh] flex items-center justify-center">
+        {/* الصورة كخلفية */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center" 
+          style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}
+        ></div>
+        
+        {/* الكلام فوق بلور زجاجي (Glassmorphism) */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 py-20 flex justify-center md:justify-start">
+          <div className="bg-white/10 backdrop-blur-md border border-white/20 p-10 md:p-14 rounded-3xl shadow-2xl max-w-xl text-center md:text-right">
+            <h2 className="font-playfair text-5xl md:text-7xl font-bold mb-6 text-white drop-shadow-lg leading-tight">
+              {text.heroTitle}
+            </h2>
+            <p className="text-lg md:text-xl mb-10 text-gray-100 font-light drop-shadow-md">
+              {text.heroSubtitle}
+            </p>
+            <Link href="#products" className="inline-block bg-[#d4af37] text-white px-10 py-4 rounded-md font-bold text-lg hover:bg-[#c19b2e] transition-all duration-300 shadow-xl">
+              {text.heroCta}
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* 3. المزايا */}
-      <section className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center bg-white rounded-2xl shadow-sm -mt-10 relative z-20">
+      <section className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center border-t border-[#e0d8cf]">
         <div><span className="text-3xl">🚚</span><h3 className="font-bold mt-2">{text.fastShipping}</h3><p className="text-sm text-gray-500">{text.fastShippingDesc}</p></div>
         <div><span className="text-3xl">🛡️</span><h3 className="font-bold mt-2">{text.securePayment}</h3><p className="text-sm text-gray-500">{text.securePaymentDesc}</p></div>
         <div><span className="text-3xl">⭐</span><h3 className="font-bold mt-2">{text.quality}</h3><p className="text-sm text-gray-500">{text.qualityDesc}</p></div>
