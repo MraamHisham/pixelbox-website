@@ -99,35 +99,35 @@ export default function Home() {
   return (
     <div className={`min-h-screen bg-[#fdfbf7] text-[#3e2723] font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       
-      {/* 1. الهيدر */}
-      <header className="w-full bg-white/80 backdrop-blur-md border-b border-[#e0d8cf] sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      {/* 1. الهيدر (شريط شفاف فوق الصورة) */}
+      <header className="absolute top-0 left-0 w-full z-50 bg-transparent py-6">
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           
           <Link href="/">
             <div className="flex items-center gap-3">
                <div className="w-12 h-12 rounded-full border-2 border-[#d4af37] flex items-center justify-center font-bold text-xl text-[#d4af37]">P</div>
-               <h1 className="font-playfair text-2xl font-bold text-[#3e2723] tracking-widest">PIXEL BOX</h1>
+               <h1 className="font-playfair text-2xl font-bold text-white tracking-widest drop-shadow-md">PIXEL BOX</h1>
             </div>
           </Link>
 
-          <nav className="hidden md:flex gap-8 text-sm font-bold text-[#3e2723]">
+          <nav className="hidden md:flex gap-8 text-sm font-bold text-white drop-shadow-md">
             <Link href="/" className="hover:text-[#d4af37] transition">{text.navHome}</Link>
             <Link href="#products" className="hover:text-[#d4af37] transition">{text.navProducts}</Link>
             <Link href="/about" className="hover:text-[#d4af37] transition">{text.navAbout}</Link>
             <Link href="/contact" className="hover:text-[#d4af37] transition">{text.navContact}</Link>
           </nav>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-6 text-white">
             <button className="text-2xl">🛒</button>
-            <button onClick={toggleLang} className="text-sm font-bold border border-[#d4af37] text-[#d4af37] px-4 py-1 rounded-full hover:bg-[#d4af37] hover:text-white transition">
+            <button onClick={toggleLang} className="text-sm font-bold border border-white text-white px-4 py-1 rounded-full hover:bg-white hover:text-black transition">
               {lang === 'ar' ? 'English' : 'عربي'}
             </button>
           </div>
         </div>
       </header>
 
-      {/* 2. قسم الـ Hero (الصورة كخلفية والكلام فوقيها) */}
-      <section className="relative w-full min-h-[85vh] flex items-center">
+      {/* 2. قسم الـ Hero (الصورة كخلفية والكلام فوقيها مباشرة) */}
+      <section className="relative w-full h-screen flex items-center">
         
         {/* الصورة كخلفية */}
         <div 
@@ -135,19 +135,19 @@ export default function Home() {
           style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}
         ></div>
         
-        {/* طبقة ظل خفيفة جداً عشان الكلام يبان */}
+        {/* طبقة ظل خفيفة عشان الكلام يبان */}
         <div className="absolute inset-0 bg-black/30"></div>
 
-        {/* الكلام على الشمال */}
+        {/* الكلام على الشمال (مباشرة بدون بوكس) */}
         <div className="relative z-10 w-full max-w-7xl mx-auto px-6">
-          <div className="max-w-xl text-right">
-            <h2 className="font-playfair text-5xl md:text-7xl font-bold mb-6 text-[#d4af37] leading-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+          <div className="max-w-2xl text-right">
+            <h2 className="font-playfair text-6xl md:text-8xl font-bold mb-6 text-[#d4af37] leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
               {text.heroTitle}
             </h2>
-            <p className="text-lg md:text-xl mb-10 text-white font-medium drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+            <p className="text-xl md:text-2xl mb-10 text-white font-medium drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
               {text.heroSubtitle}
             </p>
-            <Link href="#products" className="inline-block bg-[#d4af37] text-white px-10 py-4 rounded-md font-bold text-lg hover:bg-[#c19b2e] transition-all duration-300 shadow-lg">
+            <Link href="#products" className="inline-block bg-[#d4af37] text-white px-10 py-4 rounded-md font-bold text-xl hover:bg-[#c19b2e] transition-all duration-300 shadow-xl">
               {text.heroCta}
             </Link>
           </div>
