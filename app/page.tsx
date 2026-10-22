@@ -100,7 +100,7 @@ export default function Home() {
     <div className={`min-h-screen bg-[#fdfbf7] text-[#3e2723] font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       
       {/* 1. قسم الـ Hero (الصورة خلفية كاملة) */}
-      <section className="relative w-full h-screen flex flex-col justify-between">
+      <section className="relative w-full h-screen flex flex-col justify-between overflow-hidden">
         
         {/* الصورة كخلفية كاملة */}
         <div 
@@ -108,26 +108,26 @@ export default function Home() {
           style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}
         ></div>
 
-        {/* طبقة ظل خفيفة جداً عشان الكلام يبان */}
+        {/* طبقة تظليل خفيفة جداً عشان الكلام يبان */}
         <div className="absolute inset-0 bg-black/20"></div>
+        
+        {/* طبقة تدرج (Gradient) على الشمال عشان الكلام يبان أكتر */}
+        <div className={`absolute inset-y-0 ${lang === 'ar' ? 'left-0 bg-gradient-to-r' : 'right-0 bg-gradient-to-l'} from-black/70 to-transparent w-1/2`}></div>
 
         {/* الشريط اللي فوق (شفاف من غير لوجو) */}
         <header className="relative z-20 w-full py-6 px-6">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
             
-            {/* مساحة فاضية على اليمين (عشان التخطيط) */}
-            <div className="w-12"></div>
-
             {/* اللينكات في النص */}
-            <nav className="hidden md:flex gap-8 text-sm font-bold text-white drop-shadow-lg">
+            <nav className="hidden md:flex gap-8 text-sm font-bold text-white drop-shadow-lg mx-auto">
               <Link href="/" className="hover:text-[#d4af37] transition">{text.navHome}</Link>
               <Link href="#products" className="hover:text-[#d4af37] transition">{text.navProducts}</Link>
               <Link href="/about" className="hover:text-[#d4af37] transition">{text.navAbout}</Link>
               <Link href="/contact" className="hover:text-[#d4af37] transition">{text.navContact}</Link>
             </nav>
 
-            {/* الأيقونات واللغة (على الشمال) */}
-            <div className="flex items-center gap-6 text-white drop-shadow-lg">
+            {/* الأيقونات واللغة (على الشمال في العربي) */}
+            <div className="flex items-center gap-6 text-white drop-shadow-lg absolute left-6">
               <button className="text-2xl">🛒</button>
               <button onClick={toggleLang} className="text-sm font-bold border border-white text-white px-4 py-1 rounded-full hover:bg-white hover:text-black transition">
                 {lang === 'ar' ? 'English' : 'عربي'}
@@ -136,13 +136,14 @@ export default function Home() {
           </div>
         </header>
 
-        {/* الكلام على الشمال فوق الصورة */}
-        <div className="relative z-20 w-full max-w-7xl mx-auto px-6 flex-grow flex items-center pb-20">
-          <div className="max-w-2xl text-right">
-            <h2 className="font-playfair text-6xl md:text-8xl font-bold mb-6 text-[#d4af37] leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
+        {/* الكلام على الشمال فوق الصورة مباشرة (Absolute) */}
+        <div className="relative z-20 w-full max-w-7xl mx-auto px-6 flex-grow flex items-center">
+          {/* الحاوية دي بتاخد نص الشاشة على الشمال */}
+          <div className={`w-full md:w-1/2 flex flex-col justify-center ${lang === 'ar' ? 'items-end text-right' : 'items-start text-left'}`}>
+            <h2 className="font-playfair text-5xl md:text-7xl font-bold mb-6 text-[#d4af37] leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
               {text.heroTitle}
             </h2>
-            <p className="text-xl md:text-2xl mb-10 text-white font-medium drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
+            <p className="text-lg md:text-xl mb-10 text-white font-medium drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)] max-w-lg">
               {text.heroSubtitle}
             </p>
             <Link href="#products" className="inline-block bg-[#d4af37] text-white px-10 py-4 rounded-sm font-bold text-xl hover:bg-[#c19b2e] transition-all duration-300 shadow-xl">
