@@ -60,6 +60,7 @@ export default function Home() {
     router.refresh();
   };
 
+  // الفلترة الذكية (عشان لو فيه أخطاء إملائية بسيطة)
   const handleCategoryClick = (category: string) => {
     setActiveCategory(category);
     if (category === "All") {
@@ -110,19 +111,13 @@ export default function Home() {
   return (
     <div className={`min-h-screen bg-[#fdfbf7] text-[#3e2723] font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       
-      {/* قسم الـ Hero (المعدل عشان الموبايل) */}
-      <section className="relative w-full h-screen overflow-hidden flex flex-col justify-center">
-        
-        {/* الصورة كخلفية */}
+      {/* قسم الـ Hero (نفس التصميم القديم مع تعديل الموبايل) */}
+      <section className="relative w-full h-screen overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}></div>
-        
-        {/* تظليل */}
         <div className="absolute inset-0 bg-black/50 md:bg-gradient-to-r md:from-black/80 md:to-transparent"></div>
 
-        {/* الهيدر */}
         <header className="absolute top-0 w-full z-50 py-4 px-4 md:py-6 md:px-6">
           <div className="max-w-7xl mx-auto flex items-center justify-between relative">
-            {/* اللينكات مخفية في الموبايل */}
             <nav className="hidden md:flex gap-8 text-sm font-bold text-white drop-shadow-md mx-auto">
               <Link href="/" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navHome}</Link>
               <Link href="#products" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navProducts}</Link>
@@ -131,7 +126,6 @@ export default function Home() {
               <Link href="/contact" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navContact}</Link>
             </nav>
             
-            {/* الأزرار */}
             <div className="flex items-center gap-2 md:gap-4 text-white drop-shadow-md w-full md:w-auto justify-between md:justify-start md:absolute md:left-0">
               <div className="flex gap-2">
                 {user ? (
@@ -149,17 +143,12 @@ export default function Home() {
           </div>
         </header>
 
-        {/* الكلام (متوسط في الموبايل، وشمال في اللاب) */}
-        <div className="relative z-20 w-full max-w-7xl mx-auto px-6 text-center md:text-right mt-20 md:mt-0 flex flex-col items-center md:items-start">
-          <h2 className="font-playfair text-4xl md:text-7xl font-bold mb-4 md:mb-6 text-[#d4af37] leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
-            {text.heroTitle}
-          </h2>
-          <p className="text-base md:text-xl mb-8 md:mb-10 text-white font-medium drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] max-w-md md:max-w-xl">
-            {text.heroSubtitle}
-          </p>
-          <Link href="#products" className="inline-block bg-[#d4af37] text-white px-8 py-3 md:px-10 md:py-4 rounded-md font-bold text-lg md:text-xl hover:bg-[#c19b2e] hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl">
-            {text.heroCta}
-          </Link>
+        <div className="relative z-20 w-full max-w-7xl mx-auto px-6 flex flex-col justify-center h-full text-center md:text-right pt-20 md:pt-0">
+          <h2 className="font-playfair text-4xl md:text-7xl font-bold mb-4 md:mb-6 text-[#d4af37] leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">{text.heroTitle}</h2>
+          <p className="text-base md:text-xl mb-8 md:mb-10 text-white font-medium drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] max-w-md md:max-w-xl mx-auto md:mx-0">{text.heroSubtitle}</p>
+          <div className="flex justify-center md:justify-start">
+            <Link href="#products" className="inline-block bg-[#d4af37] text-white px-8 py-3 md:px-10 md:py-4 rounded-md font-bold text-lg md:text-xl hover:bg-[#c19b2e] hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl">{text.heroCta}</Link>
+          </div>
         </div>
       </section>
 
