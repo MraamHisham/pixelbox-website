@@ -8,6 +8,10 @@ const supabaseUrl = "https://nngvbcabtppkhfnnpnnt.supabase.co";
 const supabaseKey = "sb_publishable_1Ds5k-Sjn4gGpaXWnciS6w_F4wQf9Yc";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+const whatsappNumber = "966580647288"; 
+const emailAddress = "pixelads823@gmail.com"; 
+const instagramLink = "https://www.instagram.com/pixel_box_ads"; 
+
 export default function Home() {
   const [products, setProducts] = useState<any[]>([]);
   const [lang, setLang] = useState<"ar" | "en">("ar");
@@ -46,17 +50,28 @@ export default function Home() {
       heroTitle: "الإبداع في كل بكسل",
       heroSubtitle: "نصنع لك تصاميم إعلانية وهويات بصرية تخطف الأنظار، بلمسة يدوية فاخرة.",
       heroCta: "اطلب تصميمك",
-      fastShipping: "شحن سريع",
-      fastShippingDesc: "لجميع مناطق المملكة",
-      securePayment: "دفع آمن",
-      securePaymentDesc: "بجميع الوسائل",
-      quality: "جودة عالية",
-      qualityDesc: "في كل منتج",
-      support: "خدمة عملاء",
-      supportDesc: "على مدار الساعة",
+      
+      aboutTitle: "عن بيكسل بوكس",
+      aboutText: "نحن علامة تجارية متخصصة في تصميم وتنفيذ علب الهدايا الفاخرة، الشوكولاتة، والعطور. نؤمن بأن التفاصيل الصغيرة تصنع فرقاً كبيراً، ولذلك نضع لمساتنا الفنية في كل منتج لنقدم لك تجربة استثنائية تعكس ذوقك الرفيع.",
+      
+      featuresTitle: "تواصل معنا بسهولة",
+      fWhatsapp: "واتساب",
+      fWhatsappDesc: "تواصل معنا مباشرة",
+      fEmail: "البريد الإلكتروني",
+      fEmailDesc: "راسلنا في أي وقت",
+      fInstagram: "إنستجرام",
+      fInstagramDesc: "شاهد أحدث أعمالنا",
+      fCustom: "تصميمات مخصصة",
+      fCustomDesc: "نصمم حسب طلبك",
+      
       latestProducts: "أحدث المنتجات",
       noProducts: "لا توجد منتجات حالياً.",
       currency: "ر.س",
+      
+      contactTitle: "هل لديك فكرة؟ تواصل معنا",
+      contactDesc: "فريقنا جاهز لمساعدتك في تنفيذ تصميمك الخاص.",
+      contactBtn: "تحدث معنا الآن",
+
       footerDesc: "نصنع الإبداع في كل بكسل.",
       quickLinks: "روابط سريعة",
       privacy: "سياسة الخصوصية",
@@ -72,17 +87,28 @@ export default function Home() {
       heroTitle: "Creativity in Every Pixel",
       heroSubtitle: "We craft eye-catching ad designs and visual identities with a luxurious handmade touch.",
       heroCta: "Order Your Design",
-      fastShipping: "Fast Shipping",
-      fastShippingDesc: "To all regions of the Kingdom",
-      securePayment: "Secure Payment",
-      securePaymentDesc: "All payment methods",
-      quality: "High Quality",
-      qualityDesc: "In every product",
-      support: "Customer Support",
-      supportDesc: "24/7 Service",
+      
+      aboutTitle: "About Pixel Box",
+      aboutText: "We are a brand specialized in designing and crafting luxury gift boxes, chocolate boxes, and perfumes. We believe small details make a big difference, so we add our artistic touch to every product to give you an exceptional experience that reflects your fine taste.",
+      
+      featuresTitle: "Contact Us Easily",
+      fWhatsapp: "WhatsApp",
+      fWhatsappDesc: "Chat with us directly",
+      fEmail: "Email",
+      fEmailDesc: "Email us anytime",
+      fInstagram: "Instagram",
+      fInstagramDesc: "See our latest work",
+      fCustom: "Custom Designs",
+      fCustomDesc: "Tailored to your needs",
+      
       latestProducts: "Latest Products",
       noProducts: "No products available.",
       currency: "SAR",
+      
+      contactTitle: "Have an idea? Contact us",
+      contactDesc: "Our team is ready to help you bring your custom design to life.",
+      contactBtn: "Chat with us now",
+
       footerDesc: "We craft creativity in every pixel.",
       quickLinks: "Quick Links",
       privacy: "Privacy Policy",
@@ -99,31 +125,27 @@ export default function Home() {
   return (
     <div className={`min-h-screen bg-[#fdfbf7] text-[#3e2723] font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       
-      {/* 1. قسم الـ Hero (صورة كاملة من غير حواف) */}
-      <section className="relative w-full h-screen overflow-hidden">
+      {/* 1. قسم الـ Hero */}
+      <section id="home" className="relative w-full h-screen overflow-hidden">
         
-        {/* الصورة كخلفية كاملة، ومركزة من فوق عشان اللوجو يبان */}
         <div 
           className="absolute inset-0 bg-cover bg-[center_top]" 
           style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}
         ></div>
 
-        {/* تدرج داكن على الشمال عشان الكلام يبان */}
         <div className="absolute inset-y-0 left-0 w-full md:w-1/2 bg-gradient-to-r from-black/80 to-transparent"></div>
 
-        {/* الشريط اللي فوق (شفاف ومثبت فوق) */}
+        {/* الشريط اللي فوق */}
         <header className="absolute top-0 w-full z-50 py-6 px-6">
           <div className="max-w-7xl mx-auto flex items-center justify-between relative">
             
-            {/* اللينكات في النص */}
             <nav className="hidden md:flex gap-8 text-sm font-bold text-white drop-shadow-md mx-auto">
-              <Link href="/" className="hover:text-[#d4af37] transition">{text.navHome}</Link>
+              <Link href="#home" className="hover:text-[#d4af37] transition">{text.navHome}</Link>
               <Link href="#products" className="hover:text-[#d4af37] transition">{text.navProducts}</Link>
-              <Link href="/about" className="hover:text-[#d4af37] transition">{text.navAbout}</Link>
-              <Link href="/contact" className="hover:text-[#d4af37] transition">{text.navContact}</Link>
+              <Link href="#about" className="hover:text-[#d4af37] transition">{text.navAbout}</Link>
+              <Link href="#contact" className="hover:text-[#d4af37] transition">{text.navContact}</Link>
             </nav>
 
-            {/* الأيقونات واللغة */}
             <div className="flex items-center gap-6 text-white drop-shadow-md absolute left-0">
               <button className="text-2xl">🛒</button>
               <button onClick={toggleLang} className="text-sm font-bold border border-white text-white px-4 py-1 rounded-full hover:bg-white hover:text-black transition">
@@ -133,7 +155,7 @@ export default function Home() {
           </div>
         </header>
 
-        {/* الكلام (مثبت في الشمال) */}
+        {/* الكلام على الشمال */}
         <div className="absolute top-1/2 -translate-y-1/2 left-8 md:left-16 z-20 max-w-xl text-right">
           <h2 className="font-playfair text-5xl md:text-7xl font-bold mb-6 text-[#d4af37] leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
             {text.heroTitle}
@@ -147,17 +169,41 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3. المزايا */}
-      <section className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center border-t border-[#e0d8cf] bg-[#fdfbf7]">
-        <div><span className="text-3xl">🚚</span><h3 className="font-bold mt-2">{text.fastShipping}</h3><p className="text-sm text-gray-500">{text.fastShippingDesc}</p></div>
-        <div><span className="text-3xl">🛡️</span><h3 className="font-bold mt-2">{text.securePayment}</h3><p className="text-sm text-gray-500">{text.securePaymentDesc}</p></div>
-        <div><span className="text-3xl">⭐</span><h3 className="font-bold mt-2">{text.quality}</h3><p className="text-sm text-gray-500">{text.qualityDesc}</p></div>
-        <div><span className="text-3xl">🎧</span><h3 className="font-bold mt-2">{text.support}</h3><p className="text-sm text-gray-500">{text.supportDesc}</p></div>
+      {/* 2. قسم من نحن */}
+      <section id="about" className="max-w-5xl mx-auto px-6 py-24 text-center animate-fade-in-up">
+        <h2 className="font-playfair text-4xl font-bold mb-8 text-[#3e2723]">{text.aboutTitle}</h2>
+        <p className="text-lg md:text-xl text-gray-600 leading-relaxed font-light max-w-3xl mx-auto">
+          {text.aboutText}
+        </p>
+      </section>
+
+      {/* 3. قسم التواصل (بدل الشحن والدفع) */}
+      <section id="features" className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center border-t border-[#e0d8cf] bg-white rounded-3xl shadow-sm animate-fade-in-up">
+        <a href={`https://wa.me/${whatsappNumber}`} target="_blank" className="group hover:-translate-y-2 transition-transform duration-300">
+          <span className="text-4xl block mb-2 group-hover:scale-110 transition-transform">💬</span>
+          <h3 className="font-bold text-lg">{text.fWhatsapp}</h3>
+          <p className="text-sm text-gray-500">{text.fWhatsappDesc}</p>
+        </a>
+        <a href={`mailto:${emailAddress}`} className="group hover:-translate-y-2 transition-transform duration-300">
+          <span className="text-4xl block mb-2 group-hover:scale-110 transition-transform">✉️</span>
+          <h3 className="font-bold text-lg">{text.fEmail}</h3>
+          <p className="text-sm text-gray-500">{text.fEmailDesc}</p>
+        </a>
+        <a href={instagramLink} target="_blank" className="group hover:-translate-y-2 transition-transform duration-300">
+          <span className="text-4xl block mb-2 group-hover:scale-110 transition-transform">📸</span>
+          <h3 className="font-bold text-lg">{text.fInstagram}</h3>
+          <p className="text-sm text-gray-500">{text.fInstagramDesc}</p>
+        </a>
+        <div className="group hover:-translate-y-2 transition-transform duration-300">
+          <span className="text-4xl block mb-2 group-hover:scale-110 transition-transform">🎨</span>
+          <h3 className="font-bold text-lg">{text.fCustom}</h3>
+          <p className="text-sm text-gray-500">{text.fCustomDesc}</p>
+        </div>
       </section>
 
       {/* 4. المنتجات */}
-      <section id="products" className="max-w-7xl mx-auto px-6 py-16 bg-[#fdfbf7]">
-        <h2 className="font-playfair text-3xl font-bold text-center mb-12">{text.latestProducts}</h2>
+      <section id="products" className="max-w-7xl mx-auto px-6 py-24 bg-[#fdfbf7]">
+        <h2 className="font-playfair text-4xl font-bold text-center mb-12">{text.latestProducts}</h2>
         {products.length === 0 ? (
           <p className="text-center text-gray-500">{text.noProducts}</p>
         ) : (
@@ -188,26 +234,41 @@ export default function Home() {
         )}
       </section>
 
-      {/* 5. الفوتر */}
-      <footer className="bg-[#3e2723] text-[#fdfbf7] py-12 mt-16">
+      {/* 5. قسم تواصل معنا */}
+      <section id="contact" className="bg-[#3e2723] text-white py-24 text-center">
+        <div className="max-w-3xl mx-auto px-6">
+          <h2 className="font-playfair text-4xl font-bold mb-6 text-[#d4af37]">{text.contactTitle}</h2>
+          <p className="text-lg mb-10 text-gray-300">{text.contactDesc}</p>
+          <a href={`https://wa.me/${whatsappNumber}`} target="_blank" className="inline-block bg-[#d4af37] text-white px-12 py-4 rounded-full font-bold text-xl hover:bg-[#c19b2e] hover:scale-105 transition-all duration-300 shadow-xl">
+            {text.contactBtn}
+          </a>
+        </div>
+      </section>
+
+      {/* 6. الفوتر */}
+      <footer className="bg-[#2a1b19] text-[#fdfbf7] py-12 border-t border-[#5d4037]">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-right">
           <div>
             <h4 className="font-playfair text-2xl font-bold text-[#d4af37] mb-4">PIXEL BOX</h4>
-            <p className="text-sm">{text.footerDesc}</p>
+            <p className="text-sm text-gray-400">{text.footerDesc}</p>
           </div>
           <div>
             <h4 className="font-bold mb-4">{text.quickLinks}</h4>
-            <ul className="space-y-2 text-sm text-[#e0d8cf]">
-              <li><Link href="/privacy">{text.privacy}</Link></li>
-              <li><Link href="/terms">{text.terms}</Link></li>
+            <ul className="space-y-2 text-sm text-gray-400">
+              <li><Link href="/privacy" className="hover:text-[#d4af37] transition">{text.privacy}</Link></li>
+              <li><Link href="/terms" className="hover:text-[#d4af37] transition">{text.terms}</Link></li>
             </ul>
           </div>
           <div>
             <h4 className="font-bold mb-4">{text.contactUs}</h4>
-            <p className="text-sm">info@pixelboxads.shop</p>
+            <p className="text-sm text-gray-400 mb-2">{emailAddress}</p>
+            <div className="flex justify-center md:justify-start gap-4 mt-4">
+              <a href={`https://wa.me/${whatsappNumber}`} target="_blank" className="text-2xl hover:text-[#d4af37] transition">💬</a>
+              <a href={instagramLink} target="_blank" className="text-2xl hover:text-[#d4af37] transition">📸</a>
+            </div>
           </div>
         </div>
-        <div className="text-center text-xs mt-8 border-t border-[#5d4037] pt-6">
+        <div className="text-center text-xs mt-12 pt-6 border-t border-[#5d4037] text-gray-500">
           {text.copyright}
         </div>
       </footer>

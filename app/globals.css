@@ -1,12 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  /* ألوان ترابية فخمة زي الـ Reference */
-  --background: #fdfbf7; /* لون بيج فاتح جداً */
-  --foreground: #3e2723; /* لون بني غامق للكلام */
-  
-  --color-primary: #d4af37; /* ذهبي هادي */
-  --color-secondary: #8d6e63; /* بني فاتح */
+  --background: #fdfbf7;
+  --foreground: #3e2723;
 }
 
 @theme inline {
@@ -23,9 +19,52 @@ body {
   overflow-x: hidden;
 }
 
-/* ... (باقي الأنيميشن والكلاسات اللي إحنا عملناها قبل كده، سيبها زي ما هي) ... */
-/* لو مش موجودة، ضيفي دي: */
-.scrollbar-hide::-webkit-scrollbar { display: none; }
-.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-.animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+/* إخفاء شريط التمرير للتصنيفات */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* كلاسات الـ 3D */
+.perspective-1000 {
+  perspective: 1000px;
+}
+.rotate-y-360 {
+  transform: rotateY(360deg);
+}
+
+/* أنيميشن ظهور العناصر (Fade In) */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* أنيميشن النبض (Pulse) */
+@keyframes pulse-gold {
+  0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+}
+.animate-pulse-gold {
+  animation: pulse-gold 2s infinite;
+}
