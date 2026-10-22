@@ -60,10 +60,16 @@ export default function Home() {
     router.refresh();
   };
 
+  // فلترة ذكية (بتدور على الكلمة في أي مكان)
   const handleCategoryClick = (category: string) => {
     setActiveCategory(category);
-    if (category === "All") setFilteredProducts(products);
-    else setFilteredProducts(products.filter(p => p.category === category));
+    if (category === "All") {
+      setFilteredProducts(products);
+    } else {
+      setFilteredProducts(products.filter(p => 
+        p.category && p.category.toLowerCase().includes(category.toLowerCase())
+      ));
+    }
   };
 
   const t = {
@@ -71,10 +77,7 @@ export default function Home() {
       navHome: "الرئيسية", navProducts: "المنتجات", navAbout: "من نحن", navContact: "تواصل معنا",
       heroTitle: "الإبداع في كل بكسل", heroSubtitle: "نصنع لك تصاميم إعلانية وهويات بصرية تخطف الأنظار، بلمسة يدوية فاخرة.", heroCta: "اطلب تصميمك",
       categoriesTitle: "تصنيفاتنا",
-      catAll: "الكل", 
-      cat1: "علب هدايا مخصصة", 
-      cat2: "ريزن | طباعة | أكريليك | حفر ليزر", 
-      cat3: "علب صلبة وليزر",
+      catAll: "الكل", catGift: "علب هدايا", catResin: "ريزن", catDTF: "طباعة", catAcrylic: "أكريليك", catLaser: "ليزر", catHard: "علب صلبة",
       latestProducts: "أحدث المنتجات", noProducts: "لا توجد منتجات في هذا التصنيف حالياً.", currency: "ر.س",
       login: "تسجيل الدخول", logout: "تسجيل الخروج",
       footerDesc: "نصنع الإبداع في كل بكسل.", quickLinks: "روابط سريعة", privacy: "سياسة الخصوصية", terms: "الشروط والأحكام", contactUs: "تواصل معنا", copyright: "© 2026 Pixel Box Ads. All rights reserved."
@@ -83,10 +86,7 @@ export default function Home() {
       navHome: "Home", navProducts: "Products", navAbout: "About Us", navContact: "Contact Us",
       heroTitle: "Creativity in Every Pixel", heroSubtitle: "We craft eye-catching ad designs and visual identities with a luxurious handmade touch.", heroCta: "Order Your Design",
       categoriesTitle: "Our Categories",
-      catAll: "All", 
-      cat1: "Custom Gift Boxes", 
-      cat2: "Resin | DTF | Acrylic | Laser Engravin", 
-      cat3: "Hardcover & Laser Boxes",
+      catAll: "All", catGift: "Gift Boxes", catResin: "Resin", catDTF: "DTF", catAcrylic: "Acrylic", catLaser: "Laser", catHard: "Hardcover",
       latestProducts: "Latest Products", noProducts: "No products in this category.", currency: "SAR",
       login: "Login", logout: "Logout",
       footerDesc: "We craft creativity in every pixel.", quickLinks: "Quick Links", privacy: "Privacy Policy", terms: "Terms & Conditions", contactUs: "Contact Us", copyright: "© 2026 Pixel Box Ads. All rights reserved."
@@ -100,7 +100,6 @@ export default function Home() {
   return (
     <div className={`min-h-screen bg-[#fdfbf7] text-[#3e2723] font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       
-      {/* 1. قسم الـ Hero */}
       <section className="relative w-full h-screen overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-[center_top]" style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}></div>
         <div className="absolute inset-y-0 left-0 w-full md:w-1/2 bg-gradient-to-r from-black/80 to-transparent"></div>
@@ -108,26 +107,25 @@ export default function Home() {
         <header className="absolute top-0 w-full z-50 py-6 px-6">
           <div className="max-w-7xl mx-auto flex items-center justify-between relative">
             <nav className="hidden md:flex gap-8 text-sm font-bold text-white drop-shadow-md mx-auto">
-              <Link href="/" className="hover:text-[#d4af37] transition active:scale-95">{text.navHome}</Link>
-              <Link href="#products" className="hover:text-[#d4af37] transition active:scale-95">{text.navProducts}</Link>
-              <Link href="#categories" className="hover:text-[#d4af37] transition active:scale-95">{text.categoriesTitle}</Link>
-              <Link href="/about" className="hover:text-[#d4af37] transition active:scale-95">{text.navAbout}</Link>
-              <Link href="/contact" className="hover:text-[#d4af37] transition active:scale-95">{text.navContact}</Link>
+              <Link href="/" className="hover:text-[#d4af37] active:scale-90 transition-all">{text.navHome}</Link>
+              <Link href="#products" className="hover:text-[#d4af37] active:scale-90 transition-all">{text.navProducts}</Link>
+              <Link href="#categories" className="hover:text-[#d4af37] active:scale-90 transition-all">{text.categoriesTitle}</Link>
+              <Link href="/about" className="hover:text-[#d4af37] active:scale-90 transition-all">{text.navAbout}</Link>
+              <Link href="/contact" className="hover:text-[#d4af37] active:scale-90 transition-all">{text.navContact}</Link>
             </nav>
             
-            <div className="flex items-center gap-6 text-white drop-shadow-md absolute left-0">
+            <div className="flex items-center gap-4 text-white drop-shadow-md absolute left-0">
               {user ? (
-                <div className="flex items-center gap-4">
-                  <span className="text-sm font-bold hidden md:block">أهلاً، {user.user_metadata?.full_name || 'عميل'}</span>
-                  <button onClick={handleLogout} className="text-sm border border-white px-3 py-1 rounded-full hover:bg-white hover:text-black transition active:scale-95">{text.logout}</button>
+                <div className="flex items-center gap-3">
+                  <button onClick={handleLogout} className="text-sm border border-white px-4 py-2 rounded-full hover:bg-white hover:text-black active:scale-90 transition-all touch-btn">{text.logout}</button>
                 </div>
               ) : (
-                <Link href="/login" className="text-sm border border-white px-3 py-1 rounded-full hover:bg-white hover:text-black transition active:scale-95 flex items-center gap-2">
+                <Link href="/login" className="text-sm border border-white px-4 py-2 rounded-full hover:bg-white hover:text-black active:scale-90 transition-all touch-btn">
                   {text.login}
                 </Link>
               )}
-              <button onClick={toggleLang} className="text-sm font-bold border border-white text-white px-4 py-1 rounded-full hover:bg-white hover:text-black transition active:scale-95">
-                {lang === 'ar' ? 'English' : 'عربي'}
+              <button onClick={toggleLang} className="text-sm font-bold border border-white text-white px-4 py-2 rounded-full hover:bg-white hover:text-black active:scale-90 transition-all touch-btn">
+                {lang === 'ar' ? 'EN' : 'عربي'}
               </button>
             </div>
           </div>
@@ -136,24 +134,42 @@ export default function Home() {
         <div className="absolute top-1/2 -translate-y-1/2 left-8 md:left-16 z-20 max-w-xl text-right">
           <h2 className="font-playfair text-5xl md:text-7xl font-bold mb-6 text-[#d4af37] leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">{text.heroTitle}</h2>
           <p className="text-lg md:text-xl mb-10 text-white font-medium drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">{text.heroSubtitle}</p>
-          <Link href="#products" className="inline-block bg-[#d4af37] text-white px-10 py-4 rounded-sm font-bold text-xl hover:bg-[#c19b2e] transition-all duration-300 shadow-xl active:scale-95">{text.heroCta}</Link>
+          <Link href="#products" className="inline-block bg-[#d4af37] text-white px-10 py-4 rounded-md font-bold text-xl hover:bg-[#c19b2e] active:scale-95 transition-all shadow-xl touch-btn">{text.heroCta}</Link>
         </div>
       </section>
 
-      {/* 2. قسم التصنيفات */}
-      <section id="categories" className="max-w-7xl mx-auto px-6 py-24 bg-[#fdfbf7]">
-        <h2 className="font-playfair text-4xl font-bold text-center mb-12 animate-fade-in-up">{text.categoriesTitle}</h2>
-        <div className="flex flex-wrap justify-center gap-4">
-          <button onClick={() => handleCategoryClick("All")} className={`px-8 py-3 rounded-full border border-[#e0d8cf] text-sm font-bold transition-all duration-300 active:scale-95 ${activeCategory === "All" ? 'bg-[#d4af37] text-white shadow-md' : 'bg-white text-[#3e2723] hover:bg-[#f5f1eb]'}`}>{text.catAll}</button>
-          <button onClick={() => handleCategoryClick("Gift Boxes")} className={`px-8 py-3 rounded-full border border-[#e0d8cf] text-sm font-bold transition-all duration-300 active:scale-95 ${activeCategory === "Gift Boxes" ? 'bg-[#d4af37] text-white shadow-md' : 'bg-white text-[#3e2723] hover:bg-[#f5f1eb]'}`}>{text.cat1}</button>
-          <button onClick={() => handleCategoryClick("Resin")} className={`px-8 py-3 rounded-full border border-[#e0d8cf] text-sm font-bold transition-all duration-300 active:scale-95 ${activeCategory === "Resin" ? 'bg-[#d4af37] text-white shadow-md' : 'bg-white text-[#3e2723] hover:bg-[#f5f1eb]'}`}>{text.cat2}</button>
-          <button onClick={() => handleCategoryClick("Hardcover")} className={`px-8 py-3 rounded-full border border-[#e0d8cf] text-sm font-bold transition-all duration-300 active:scale-95 ${activeCategory === "Hardcover" ? 'bg-[#d4af37] text-white shadow-md' : 'bg-white text-[#3e2723] hover:bg-[#f5f1eb]'}`}>{text.cat3}</button>
+      {/* التصنيفات (أزرار بيضاوية منفصلة) */}
+      <section id="categories" className="max-w-7xl mx-auto px-6 py-24 bg-[#fdfbf7] text-center">
+        <h2 className="font-playfair text-4xl font-bold mb-12">{text.categoriesTitle}</h2>
+        
+        <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+          {[
+            { id: "All", label: text.catAll },
+            { id: "Gift Boxes", label: text.catGift },
+            { id: "Resin", label: text.catResin },
+            { id: "DTF", label: text.catDTF },
+            { id: "Acrylic", label: text.catAcrylic },
+            { id: "Laser", label: text.catLaser },
+            { id: "Hardcover", label: text.catHard },
+          ].map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => handleCategoryClick(cat.id)}
+              className={`px-8 py-3 rounded-full text-sm font-bold border transition-all duration-300 active:scale-90 touch-btn ${
+                activeCategory === cat.id 
+                  ? 'bg-[#d4af37] text-white border-[#d4af37] shadow-lg scale-105' 
+                  : 'bg-white text-[#3e2723] border-[#e0d8cf] hover:border-[#d4af37] hover:text-[#d4af37]'
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
         </div>
       </section>
 
-      {/* 3. المنتجات */}
+      {/* المنتجات */}
       <section id="products" className="max-w-7xl mx-auto px-6 py-24 bg-white border-t border-[#e0d8cf]">
-        <h2 className="font-playfair text-4xl font-bold text-center mb-12 animate-fade-in-up">{text.latestProducts}</h2>
+        <h2 className="font-playfair text-4xl font-bold text-center mb-12">{text.latestProducts}</h2>
         {filteredProducts.length === 0 ? (
           <p className="text-center text-gray-500">{text.noProducts}</p>
         ) : (
@@ -161,7 +177,7 @@ export default function Home() {
             {filteredProducts.map((product) => {
               const displayName = lang === 'en' && product.name_en ? product.name_en : product.name;
               return (
-                <div key={product.id} className="group bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-2xl transition-all duration-500 touch-card animate-fade-in-up border border-[#e0d8cf]">
+                <div key={product.id} className="group bg-white rounded-xl shadow-sm overflow-hidden border border-[#e0d8cf] hover:shadow-2xl transition-all duration-300 touch-card">
                   <Link href={`/products/${product.id}?lang=${lang}`}>
                     <div className="relative aspect-square bg-[#f5f1eb] overflow-hidden">
                       {product.image_url ? (
@@ -173,7 +189,7 @@ export default function Home() {
                   </Link>
                   <div className="p-5 text-center">
                     <Link href={`/products/${product.id}?lang=${lang}`}>
-                      <h3 className="font-playfair text-lg font-bold mb-1 group-hover:text-[#d4af37] transition">{displayName}</h3>
+                      <h3 className="font-playfair text-lg font-bold mb-1 group-hover:text-[#d4af37] transition-colors">{displayName}</h3>
                     </Link>
                     <p className="text-[#d4af37] font-bold">{product.price} {text.currency}</p>
                   </div>
@@ -184,7 +200,6 @@ export default function Home() {
         )}
       </section>
 
-      {/* 4. الفوتر */}
       <footer className="bg-[#2a1b19] text-[#fdfbf7] py-12 border-t border-[#5d4037]">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-right">
           <div>
@@ -194,16 +209,16 @@ export default function Home() {
           <div>
             <h4 className="font-bold mb-4">{text.quickLinks}</h4>
             <ul className="space-y-2 text-sm text-gray-400">
-              <li><Link href="/privacy" className="hover:text-[#d4af37] transition active:scale-95">{text.privacy}</Link></li>
-              <li><Link href="/terms" className="hover:text-[#d4af37] transition active:scale-95">{text.terms}</Link></li>
+              <li><Link href="/privacy" className="hover:text-[#d4af37] transition active:scale-95 inline-block">{text.privacy}</Link></li>
+              <li><Link href="/terms" className="hover:text-[#d4af37] transition active:scale-95 inline-block">{text.terms}</Link></li>
             </ul>
           </div>
           <div>
             <h4 className="font-bold mb-4">{text.contactUs}</h4>
             <p className="text-sm text-gray-400 mb-2">pixelads823@gmail.com</p>
             <div className="flex justify-center md:justify-start gap-4 mt-4">
-              <a href="https://wa.me/966580647288" target="_blank" className="text-2xl hover:text-[#d4af37] transition active:scale-95">💬</a>
-              <a href="https://www.instagram.com/pixel_box_ads" target="_blank" className="text-2xl hover:text-[#d4af37] transition active:scale-95">📸</a>
+              <a href="https://wa.me/966580647288" target="_blank" className="text-2xl hover:text-[#d4af37] transition active:scale-90 touch-btn">💬</a>
+              <a href="https://www.instagram.com/pixel_box_ads" target="_blank" className="text-2xl hover:text-[#d4af37] transition active:scale-90 touch-btn">📸</a>
             </div>
           </div>
         </div>

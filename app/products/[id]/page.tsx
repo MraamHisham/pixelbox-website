@@ -37,7 +37,7 @@ function ProductDetails() {
 
       if (productData) {
         setProduct(productData);
-        setColors(colorsData || []); // شلنا الفلتر عشان أي لون في الداتابيز يظهر
+        setColors(colorsData || []); // شلنا الشرط عشان أي لون يظهر
         setSelectedImage(productData.image_url || '');
       }
       setLoading(false);
@@ -61,12 +61,12 @@ function ProductDetails() {
   return (
     <div className={`min-h-screen bg-[#fdfbf7] text-[#3e2723] font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       <header className="w-full border-b border-[#e0d8cf] p-6 flex items-center justify-between max-w-7xl mx-auto">
-        <Link href={`/?lang=${lang}`} className="text-[#d4af37] hover:text-[#3e2723] transition-colors text-sm font-bold flex items-center gap-2 active:scale-95">
+        <Link href={`/?lang=${lang}`} className="text-[#d4af37] hover:text-[#3e2723] transition-colors text-sm font-bold flex items-center gap-2 active:scale-90 touch-btn">
           <span>→</span> {text.back}
         </Link>
       </header>
 
-      <main className="max-w-7xl mx-auto px-6 py-16 animate-fade-in-up">
+      <main className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
           
           <div className="relative aspect-square bg-[#f5f1eb] rounded-3xl border border-[#e0d8cf] overflow-hidden flex items-center justify-center group perspective-1000 shadow-sm hover:shadow-xl transition-shadow duration-700">
@@ -100,7 +100,7 @@ function ProductDetails() {
                     
                     return (
                       <button key={idx} onClick={() => { if (!isSoldOut) setSelectedImage(colorObj.color_image_url ? colorObj.color_image_url : product.image_url); }} disabled={isSoldOut}
-                        className={`relative flex flex-col items-center justify-center w-12 h-16 transition-all duration-500 group/color ${isSoldOut ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer hover:-translate-y-2 active:scale-95'}`} title={isSoldOut ? text.soldOut : colorObj.color_name}>
+                        className={`relative flex flex-col items-center justify-center w-12 h-16 transition-all duration-300 active:scale-90 touch-btn group/color ${isSoldOut ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer hover:-translate-y-2'}`} title={isSoldOut ? text.soldOut : colorObj.color_name}>
                         <div className={`w-4 h-14 rounded-full transition-all duration-500 ${isSelected ? 'ring-2 ring-[#d4af37] ring-offset-4 ring-offset-[#fdfbf7] scale-110 shadow-[0_0_15px_rgba(212,175,55,0.5)] animate-pulse' : 'opacity-60 group-hover/color:opacity-100'} ${isSoldOut ? 'grayscale' : ''}`} style={{ backgroundColor: colorObj.color_code }} />
                         {isSoldOut && (<span className="absolute inset-0 flex items-center justify-center text-white font-bold text-lg drop-shadow-md">X</span>)}
                       </button>
@@ -111,7 +111,7 @@ function ProductDetails() {
             )}
 
             <div>
-              <a href={waLink} target="_blank" rel="noopener noreferrer" className="relative overflow-hidden w-full md:w-auto inline-flex py-5 px-14 bg-[#d4af37] text-white font-bold text-lg rounded-md items-center justify-center gap-3 transition-all duration-500 hover:bg-[#c19b2e] active:scale-95 hover:shadow-xl group/btn">
+              <a href={waLink} target="_blank" rel="noopener noreferrer" className="relative overflow-hidden w-full md:w-auto inline-flex py-5 px-14 bg-[#d4af37] text-white font-bold text-lg rounded-md items-center justify-center gap-3 transition-all duration-300 hover:bg-[#c19b2e] active:scale-95 touch-btn hover:shadow-xl">
                 <span className="relative z-10">{text.inquire}</span>
               </a>
             </div>
