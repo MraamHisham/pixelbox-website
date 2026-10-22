@@ -19,15 +19,16 @@ body {
   overflow-x: hidden;
 }
 
-/* ده الكود اللي هيخلي أي حاجة تلمسيها تصغر أو تكبر */
-/* ده مخصوص للموبايل عشان يشتغل باللمس */
+/* أنيميشن إجباري للموبايل عشان أي حاجة تتلمس تصغر (Touch Animation) */
 @media (max-width: 768px) {
-  .hover\:scale-105:active { transform: scale(0.95) !important; }
-  .hover\:scale-110:active { transform: scale(0.90) !important; }
-  .hover\:scale-125:active { transform: scale(0.95) !important; }
-  
-  /* حركة ناعمة */
-  a, button, .group {
-    transition: all 0.2s ease-in-out !important;
+  a:active, button:active {
+    transform: scale(0.92) !important;
+    transition: transform 0.1s ease-in-out !important;
   }
+}
+
+/* أنيميشن للكروت بتاعت المنتجات */
+.group:active {
+  transform: scale(0.96) !important;
+  transition: transform 0.1s ease-in-out !important;
 }

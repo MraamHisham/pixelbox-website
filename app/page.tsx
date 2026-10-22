@@ -60,14 +60,13 @@ export default function Home() {
     router.refresh();
   };
 
-  // الفلترة الذكية الجديدة
-  const handleCategoryClick = (category: string) => {
-    setActiveCategory(category);
+  // الفلترة الذكية
+  const handleCategoryClick = (categoryId: string) => {
+    setActiveCategory(categoryId);
     
-    if (category === "All") {
+    if (categoryId === "All") {
       setFilteredProducts(products);
-    } else if (category === "Resin | DTF | Acrylic | Laser Engravin") {
-      // لو دوس على التصنيف الكبير ده، بيدور على أي كلمة فيهم
+    } else if (categoryId === "ResinDTF") { // ده التصنيف المجمع
       setFilteredProducts(products.filter(p => 
         p.category && (
           p.category.toLowerCase().includes("resin") ||
@@ -77,9 +76,8 @@ export default function Home() {
         )
       ));
     } else {
-      // لو دوس على تصنيف عادي
       setFilteredProducts(products.filter(p => 
-        p.category && p.category.toLowerCase().includes(category.toLowerCase())
+        p.category && p.category.toLowerCase().includes(categoryId.toLowerCase())
       ));
     }
   };
@@ -89,7 +87,10 @@ export default function Home() {
       navHome: "الرئيسية", navProducts: "المنتجات", navAbout: "من نحن", navContact: "تواصل معنا",
       heroTitle: "الإبداع في كل بكسل", heroSubtitle: "نصنع لك تصاميم إعلانية وهويات بصرية تخطف الأنظار، بلمسة يدوية فاخرة.", heroCta: "اطلب تصميمك",
       categoriesTitle: "تصنيفاتنا",
-      catAll: "الكل",
+      catAll: "الكل", 
+      catGift: "علب هدايا مخصصة", 
+      catResin: "ريزن | طباعة | أكريليك | ليزر", 
+      catHardcover: "علب صلبة وليزر",
       latestProducts: "أحدث المنتجات", noProducts: "لا توجد منتجات في هذا التصنيف حالياً.", currency: "ر.س",
       login: "تسجيل الدخول", logout: "تسجيل الخروج",
       footerDesc: "نصنع الإبداع في كل بكسل.", quickLinks: "روابط سريعة", privacy: "سياسة الخصوصية", terms: "الشروط والأحكام", contactUs: "تواصل معنا", copyright: "© 2026 Pixel Box Ads. All rights reserved."
@@ -98,7 +99,10 @@ export default function Home() {
       navHome: "Home", navProducts: "Products", navAbout: "About Us", navContact: "Contact Us",
       heroTitle: "Creativity in Every Pixel", heroSubtitle: "We craft eye-catching ad designs and visual identities with a luxurious handmade touch.", heroCta: "Order Your Design",
       categoriesTitle: "Our Categories",
-      catAll: "All",
+      catAll: "All", 
+      catGift: "Custom Gift Boxes", 
+      catResin: "Resin | DTF | Acrylic | Laser Engravin", 
+      catHardcover: "Hardcover & Laser Boxes",
       latestProducts: "Latest Products", noProducts: "No products in this category.", currency: "SAR",
       login: "Login", logout: "Logout",
       footerDesc: "We craft creativity in every pixel.", quickLinks: "Quick Links", privacy: "Privacy Policy", terms: "Terms & Conditions", contactUs: "Contact Us", copyright: "© 2026 Pixel Box Ads. All rights reserved."
@@ -109,6 +113,14 @@ export default function Home() {
 
   if (loading) return <div className="min-h-screen flex items-center justify-center text-xl bg-[#fdfbf7] text-[#3e2723] font-cairo">Loading...</div>;
 
+  // قائمة التصنيفات
+  const categoriesList = [
+    { id: "All", label: text.catAll },
+    { id: "Custom Gift Boxes", label: text.catGift },
+    { id: "ResinDTF", label: text.catResin },
+    { id: "Hardcover", label: text.catHardcover },
+  ];
+
   return (
     <div className={`min-h-screen bg-[#fdfbf7] text-[#3e2723] font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       
@@ -118,12 +130,13 @@ export default function Home() {
 
         <header className="absolute top-0 w-full z-50 py-6 px-6">
           <div className="max-w-7xl mx-auto flex items-center justify-between relative">
+            {/* اللينكات مع أنيميشن اللف والتكبير */}
             <nav className="hidden md:flex gap-8 text-sm font-bold text-white drop-shadow-md mx-auto">
-              <Link href="/" className="hover:text-[#d4af37] hover:scale-110 active:scale-90 transition-all duration-300">{text.navHome}</Link>
-              <Link href="#products" className="hover:text-[#d4af37] hover:scale-110 active:scale-90 transition-all duration-300">{text.navProducts}</Link>
-              <Link href="#categories" className="hover:text-[#d4af37] hover:scale-110 active:scale-90 transition-all duration-300">{text.categoriesTitle}</Link>
-              <Link href="/about" className="hover:text-[#d4af37] hover:scale-110 active:scale-90 transition-all duration-300">{text.navAbout}</Link>
-              <Link href="/contact" className="hover:text-[#d4af37] hover:scale-110 active:scale-90 transition-all duration-300">{text.navContact}</Link>
+              <Link href="/" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navHome}</Link>
+              <Link href="#products" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navProducts}</Link>
+              <Link href="#categories" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.categoriesTitle}</Link>
+              <Link href="/about" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navAbout}</Link>
+              <Link href="/contact" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navContact}</Link>
             </nav>
             
             <div className="flex items-center gap-4 text-white drop-shadow-md absolute left-0">
@@ -148,62 +161,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* التصنيفات الجديدة (بالظبط زي ما إنتي طلبتي) */}
+      {/* التصنيفات (كل واحد في بيضاوي لوحده ومترجم) */}
       <section id="categories" className="max-w-7xl mx-auto px-6 py-24 bg-[#fdfbf7] text-center">
         <h2 className="font-playfair text-4xl font-bold mb-12">{text.categoriesTitle}</h2>
         
         <div className="flex flex-wrap justify-center gap-6">
-          {/* زرار الكل */}
-          <button
-            onClick={() => handleCategoryClick("All")}
-            className={`px-10 py-4 rounded-full text-sm font-bold border transition-all duration-300 hover:scale-105 active:scale-90 ${
-              activeCategory === "All" 
-                ? 'bg-[#d4af37] text-white border-[#d4af37] shadow-lg' 
-                : 'bg-white text-[#3e2723] border-[#e0d8cf] hover:border-[#d4af37] hover:text-[#d4af37]'
-            }`}
-          >
-            {text.catAll}
-          </button>
-
-          {/* التصنيف الأول */}
-          <button
-            onClick={() => handleCategoryClick("Custom Gift Boxes")}
-            className={`px-10 py-4 rounded-full text-sm font-bold border transition-all duration-300 hover:scale-105 active:scale-90 ${
-              activeCategory === "Custom Gift Boxes" 
-                ? 'bg-[#d4af37] text-white border-[#d4af37] shadow-lg' 
-                : 'bg-white text-[#3e2723] border-[#e0d8cf] hover:border-[#d4af37] hover:text-[#d4af37]'
-            }`}
-          >
-            Custom Gift Boxes
-          </button>
-
-          {/* التصنيف الثاني (المجمع) */}
-          <button
-            onClick={() => handleCategoryClick("Resin | DTF | Acrylic | Laser Engravin")}
-            className={`px-10 py-4 rounded-full text-sm font-bold border transition-all duration-300 hover:scale-105 active:scale-90 ${
-              activeCategory === "Resin | DTF | Acrylic | Laser Engravin" 
-                ? 'bg-[#d4af37] text-white border-[#d4af37] shadow-lg' 
-                : 'bg-white text-[#3e2723] border-[#e0d8cf] hover:border-[#d4af37] hover:text-[#d4af37]'
-            }`}
-          >
-            Resin | DTF | Acrylic | Laser Engravin
-          </button>
-
-          {/* التصنيف الثالث */}
-          <button
-            onClick={() => handleCategoryClick("Hardcover & Laser Boxes")}
-            className={`px-10 py-4 rounded-full text-sm font-bold border transition-all duration-300 hover:scale-105 active:scale-90 ${
-              activeCategory === "Hardcover & Laser Boxes" 
-                ? 'bg-[#d4af37] text-white border-[#d4af37] shadow-lg' 
-                : 'bg-white text-[#3e2723] border-[#e0d8cf] hover:border-[#d4af37] hover:text-[#d4af37]'
-            }`}
-          >
-            Hardcover & Laser Boxes
-          </button>
+          {categoriesList.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => handleCategoryClick(cat.id)}
+              className={`px-10 py-4 rounded-full text-sm font-bold border transition-all duration-300 hover:scale-105 hover:-translate-y-1 active:scale-90 ${
+                activeCategory === cat.id 
+                  ? 'bg-[#d4af37] text-white border-[#d4af37] shadow-lg' 
+                  : 'bg-white text-[#3e2723] border-[#e0d8cf] hover:border-[#d4af37] hover:text-[#d4af37]'
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
         </div>
       </section>
 
-      {/* المنتجات */}
+      {/* المنتجات مع أنيميشن */}
       <section id="products" className="max-w-7xl mx-auto px-6 py-24 bg-white border-t border-[#e0d8cf]">
         <h2 className="font-playfair text-4xl font-bold text-center mb-12">{text.latestProducts}</h2>
         {filteredProducts.length === 0 ? (
@@ -213,8 +192,7 @@ export default function Home() {
             {filteredProducts.map((product) => {
               const displayName = lang === 'en' && product.name_en ? product.name_en : product.name;
               return (
-                // الكارت هنا فيه hover:scale-105 و active:scale-95 عشان يتحرك
-                <div key={product.id} className="group bg-white rounded-xl shadow-sm overflow-hidden border border-[#e0d8cf] hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300">
+                <div key={product.id} className="group bg-white rounded-xl shadow-sm overflow-hidden border border-[#e0d8cf] hover:shadow-2xl hover:scale-[1.03] hover:-translate-y-2 active:scale-95 transition-all duration-300">
                   <Link href={`/products/${product.id}?lang=${lang}`}>
                     <div className="relative aspect-square bg-[#f5f1eb] overflow-hidden">
                       {product.image_url ? (
