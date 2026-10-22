@@ -37,9 +37,7 @@ function ProductDetails() {
 
       if (productData) {
         setProduct(productData);
-        const allowedColors = ['Black', 'White', 'Navy Blue', 'Brown', 'Pink', 'Red', 'Olive'];
-        const filteredColors = (colorsData || []).filter(c => allowedColors.includes(c.color_name));
-        setColors(filteredColors);
+        setColors(colorsData || []); // شلنا الفلتر عشان أي لون في الداتابيز يظهر
         setSelectedImage(productData.image_url || '');
       }
       setLoading(false);
@@ -68,7 +66,7 @@ function ProductDetails() {
         </Link>
       </header>
 
-      <main className="max-w-7xl mx-auto px-6 py-16">
+      <main className="max-w-7xl mx-auto px-6 py-16 animate-fade-in-up">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
           
           <div className="relative aspect-square bg-[#f5f1eb] rounded-3xl border border-[#e0d8cf] overflow-hidden flex items-center justify-center group perspective-1000 shadow-sm hover:shadow-xl transition-shadow duration-700">

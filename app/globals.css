@@ -19,56 +19,19 @@ body {
   overflow-x: hidden;
 }
 
-/* إخفاء شريط التمرير للتصنيفات */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* كلاسات الـ 3D */
-.perspective-1000 {
-  perspective: 1000px;
-}
-.rotate-y-360 {
-  transform: rotateY(360deg);
-}
-
-/* أنيميشن ظهور العناصر (Fade In Up) */
+/* أنيميشن ظهور العناصر */
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 .animate-fade-in-up {
   animation: fadeInUp 0.8s ease-out forwards;
 }
 
-/* أنيميشن النبض (Pulse) */
-@keyframes pulse-gold {
-  0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
-  70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
-}
-.animate-pulse-gold {
-  animation: pulse-gold 2s infinite;
-}
-
-/* أنيميشن للكروت على الموبايل (Touch) */
-.touch-card:active {
-  transform: scale(0.97) !important;
-  transition: transform 0.1s ease;
-}
+/* أنيميشن اللمس للموبايل */
 @media (hover: none) {
   .touch-card:active {
-    transform: scale(0.97) !important;
+    transform: scale(0.95) !important;
     transition: transform 0.1s ease;
   }
 }
