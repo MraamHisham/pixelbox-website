@@ -99,51 +99,55 @@ export default function Home() {
   return (
     <div className={`min-h-screen bg-[#fdfbf7] text-[#3e2723] font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       
-      {/* 1. قسم الـ Hero (الصورة خلفية كاملة) */}
-      <section className="relative w-full h-screen overflow-hidden">
+      {/* 1. قسم الـ Hero */}
+      <section className="relative w-full min-h-screen bg-[#fdfbf7] flex items-center justify-center p-4 md:p-8 lg:p-12 pt-24 overflow-hidden">
         
-        {/* الصورة كخلفية كاملة */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center" 
-          style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}
-        ></div>
+        {/* حاوية الصورة المصغرة (عشان الحواف تبان) */}
+        <div className="relative w-full h-[85vh] rounded-3xl overflow-hidden shadow-2xl">
+          
+          {/* الصورة كخلفية جوه الحاوية */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center" 
+            style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}
+          ></div>
 
-        {/* تدرج داكن على الشمال عشان الكلام يبان */}
-        <div className="absolute inset-y-0 left-0 w-full md:w-3/5 bg-gradient-to-r from-black/80 to-transparent"></div>
+          {/* تدرج داكن على الشمال عشان الكلام يبان */}
+          <div className="absolute inset-y-0 left-0 w-full md:w-2/3 bg-gradient-to-r from-black/80 to-transparent"></div>
 
-        {/* الشريط اللي فوق (شفاف) */}
-        <header className="absolute top-0 w-full z-30 py-6 px-6">
-          <div className="max-w-7xl mx-auto flex items-center justify-between relative">
-            
-            {/* اللينكات في النص */}
-            <nav className="hidden md:flex gap-8 text-sm font-bold text-white drop-shadow-lg mx-auto">
-              <Link href="/" className="hover:text-[#d4af37] transition">{text.navHome}</Link>
-              <Link href="#products" className="hover:text-[#d4af37] transition">{text.navProducts}</Link>
-              <Link href="/about" className="hover:text-[#d4af37] transition">{text.navAbout}</Link>
-              <Link href="/contact" className="hover:text-[#d4af37] transition">{text.navContact}</Link>
-            </nav>
+          {/* الشريط اللي فوق (شفاف) */}
+          <header className="absolute top-0 w-full z-30 py-6 px-6">
+            <div className="max-w-7xl mx-auto flex items-center justify-between relative">
+              
+              {/* اللينكات في النص */}
+              <nav className="hidden md:flex gap-8 text-sm font-bold text-white drop-shadow-lg mx-auto">
+                <Link href="/" className="hover:text-[#d4af37] transition">{text.navHome}</Link>
+                <Link href="#products" className="hover:text-[#d4af37] transition">{text.navProducts}</Link>
+                <Link href="/about" className="hover:text-[#d4af37] transition">{text.navAbout}</Link>
+                <Link href="/contact" className="hover:text-[#d4af37] transition">{text.navContact}</Link>
+              </nav>
 
-            {/* الأيقونات واللغة */}
-            <div className="flex items-center gap-6 text-white drop-shadow-lg absolute left-0">
-              <button className="text-2xl">🛒</button>
-              <button onClick={toggleLang} className="text-sm font-bold border border-white text-white px-4 py-1 rounded-full hover:bg-white hover:text-black transition">
-                {lang === 'ar' ? 'English' : 'عربي'}
-              </button>
+              {/* الأيقونات واللغة */}
+              <div className="flex items-center gap-6 text-white drop-shadow-lg absolute left-0">
+                <button className="text-2xl">🛒</button>
+                <button onClick={toggleLang} className="text-sm font-bold border border-white text-white px-4 py-1 rounded-full hover:bg-white hover:text-black transition">
+                  {lang === 'ar' ? 'English' : 'عربي'}
+                </button>
+              </div>
             </div>
-          </div>
-        </header>
+          </header>
 
-        {/* الكلام مثبت في الشمال الفيزيائي ومُنزّل لتحت شوية */}
-        <div className="absolute top-[45%] left-8 md:left-24 z-20 max-w-xl text-right">
-          <h2 className="font-playfair text-5xl md:text-7xl font-bold mb-6 text-[#d4af37] leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
-            {text.heroTitle}
-          </h2>
-          <p className="text-lg md:text-xl mb-10 text-white font-medium drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
-            {text.heroSubtitle}
-          </p>
-          <Link href="#products" className="inline-block bg-[#d4af37] text-white px-10 py-4 rounded-sm font-bold text-xl hover:bg-[#c19b2e] transition-all duration-300 shadow-xl">
-            {text.heroCta}
-          </Link>
+          {/* الكلام (مثبت في الشمال) */}
+          <div className="absolute top-1/2 -translate-y-1/2 left-8 md:left-16 z-20 max-w-xl text-right">
+            <h2 className="font-playfair text-5xl md:text-7xl font-bold mb-6 text-[#d4af37] leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
+              {text.heroTitle}
+            </h2>
+            <p className="text-lg md:text-xl mb-10 text-white font-medium drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
+              {text.heroSubtitle}
+            </p>
+            <Link href="#products" className="inline-block bg-[#d4af37] text-white px-10 py-4 rounded-sm font-bold text-xl hover:bg-[#c19b2e] transition-all duration-300 shadow-xl">
+              {text.heroCta}
+            </Link>
+          </div>
         </div>
       </section>
 
