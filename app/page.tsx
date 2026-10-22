@@ -100,7 +100,7 @@ export default function Home() {
     <div className={`min-h-screen bg-[#fdfbf7] text-[#3e2723] font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       
       {/* 1. قسم الـ Hero (الصورة خلفية كاملة) */}
-      <section className="relative w-full min-h-screen flex items-center overflow-hidden">
+      <section className="relative w-full h-screen overflow-hidden">
         
         {/* الصورة كخلفية كاملة */}
         <div 
@@ -108,11 +108,8 @@ export default function Home() {
           style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}
         ></div>
 
-        {/* تظليل خفيف جداً عشان الكلام يبان */}
-        <div className="absolute inset-0 bg-black/30"></div>
-        
-        {/* تدرج داكن على الشمال عشان الكلام يبان أكتر */}
-        <div className="absolute inset-y-0 left-0 w-full md:w-1/2 bg-gradient-to-r from-black/70 to-transparent"></div>
+        {/* تدرج داكن على الشمال عشان الكلام يبان */}
+        <div className="absolute inset-y-0 left-0 w-full md:w-3/5 bg-gradient-to-r from-black/80 to-transparent"></div>
 
         {/* الشريط اللي فوق (شفاف) */}
         <header className="absolute top-0 w-full z-30 py-6 px-6">
@@ -136,20 +133,17 @@ export default function Home() {
           </div>
         </header>
 
-        {/* الكلام (على الشمال ومفيش حاجة بتغطيه) */}
-        <div className="relative z-20 w-full max-w-7xl mx-auto px-6 flex items-center h-full pt-20">
-          {/* الحاوية دي بتاخد نص الشاشة على الشمال */}
-          <div className="w-full md:w-1/2 flex flex-col justify-center mt-32 md:mt-40">
-            <h2 className="font-playfair text-5xl md:text-7xl font-bold mb-6 text-[#d4af37] leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
-              {text.heroTitle}
-            </h2>
-            <p className="text-lg md:text-xl mb-10 text-white font-medium drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] max-w-lg">
-              {text.heroSubtitle}
-            </p>
-            <Link href="#products" className="inline-block bg-[#d4af37] text-white px-10 py-4 rounded-sm font-bold text-xl hover:bg-[#c19b2e] transition-all duration-300 shadow-xl w-fit">
-              {text.heroCta}
-            </Link>
-          </div>
+        {/* الكلام مثبت في الشمال الفيزيائي ومُنزّل لتحت شوية */}
+        <div className="absolute top-[45%] left-8 md:left-24 z-20 max-w-xl text-right">
+          <h2 className="font-playfair text-5xl md:text-7xl font-bold mb-6 text-[#d4af37] leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
+            {text.heroTitle}
+          </h2>
+          <p className="text-lg md:text-xl mb-10 text-white font-medium drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
+            {text.heroSubtitle}
+          </p>
+          <Link href="#products" className="inline-block bg-[#d4af37] text-white px-10 py-4 rounded-sm font-bold text-xl hover:bg-[#c19b2e] transition-all duration-300 shadow-xl">
+            {text.heroCta}
+          </Link>
         </div>
       </section>
 
