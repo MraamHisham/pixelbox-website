@@ -19,17 +19,15 @@ body {
   overflow-x: hidden;
 }
 
-/* أنيميشن الزرار والكروت على الموبايل (اللمس) */
-.touch-card {
-  transition: all 0.2s ease-in-out;
-}
-.touch-card:active {
-  transform: scale(0.95) !important;
-}
-
-.touch-btn {
-  transition: all 0.2s ease-in-out;
-}
-.touch-btn:active {
-  transform: scale(0.90) !important;
+/* ده الكود اللي هيخلي أي حاجة تلمسيها تصغر أو تكبر */
+/* ده مخصوص للموبايل عشان يشتغل باللمس */
+@media (max-width: 768px) {
+  .hover\:scale-105:active { transform: scale(0.95) !important; }
+  .hover\:scale-110:active { transform: scale(0.90) !important; }
+  .hover\:scale-125:active { transform: scale(0.95) !important; }
+  
+  /* حركة ناعمة */
+  a, button, .group {
+    transition: all 0.2s ease-in-out !important;
+  }
 }
