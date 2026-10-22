@@ -60,14 +60,11 @@ export default function Home() {
     router.refresh();
   };
 
-  // الفلترة الذكية جداً
   const handleCategoryClick = (category: string) => {
     setActiveCategory(category);
-    
     if (category === "All") {
       setFilteredProducts(products);
     } else {
-      // بيدور على الكلمة سواء كانت كابيتال أو سمول
       setFilteredProducts(products.filter(p => 
         p.category && p.category.toLowerCase().includes(category.toLowerCase())
       ));
@@ -79,14 +76,7 @@ export default function Home() {
       navHome: "الرئيسية", navProducts: "المنتجات", navAbout: "من نحن", navContact: "تواصل معنا",
       heroTitle: "الإبداع في كل بكسل", heroSubtitle: "نصنع لك تصاميم إعلانية وهويات بصرية تخطف الأنظار، بلمسة يدوية فاخرة.", heroCta: "اطلب تصميمك",
       categoriesTitle: "تصنيفاتنا",
-      catAll: "الكل", 
-      catGift: "علب هدايا", 
-      catResin: "ريزن", 
-      catDTF: "طباعة DTF", 
-      catAcrylic: "أكريليك", 
-      catLaser: "ليزر", 
-      catHardcover: "علب صلبة",
-      catTote: "شنط توت",
+      catAll: "الكل", catGift: "علب هدايا", catResin: "ريزن", catDTF: "طباعة DTF", catAcrylic: "أكريليك", catLaser: "ليزر", catHardcover: "علب صلبة", catTote: "شنط توت",
       latestProducts: "أحدث المنتجات", noProducts: "لا توجد منتجات في هذا التصنيف حالياً.", currency: "ر.س",
       login: "تسجيل الدخول", logout: "تسجيل الخروج",
       footerDesc: "نصنع الإبداع في كل بكسل.", quickLinks: "روابط سريعة", privacy: "سياسة الخصوصية", terms: "الشروط والأحكام", contactUs: "تواصل معنا", copyright: "© 2026 Pixel Box Ads. All rights reserved."
@@ -95,14 +85,7 @@ export default function Home() {
       navHome: "Home", navProducts: "Products", navAbout: "About Us", navContact: "Contact Us",
       heroTitle: "Creativity in Every Pixel", heroSubtitle: "We craft eye-catching ad designs and visual identities with a luxurious handmade touch.", heroCta: "Order Your Design",
       categoriesTitle: "Our Categories",
-      catAll: "All", 
-      catGift: "Gift Boxes", 
-      catResin: "Resin", 
-      catDTF: "DTF", 
-      catAcrylic: "Acrylic", 
-      catLaser: "Laser", 
-      catHardcover: "Hardcover",
-      catTote: "Tote Bags",
+      catAll: "All", catGift: "Gift Boxes", catResin: "Resin", catDTF: "DTF", catAcrylic: "Acrylic", catLaser: "Laser", catHardcover: "Hardcover", catTote: "Tote Bags",
       latestProducts: "Latest Products", noProducts: "No products in this category.", currency: "SAR",
       login: "Login", logout: "Logout",
       footerDesc: "We craft creativity in every pixel.", quickLinks: "Quick Links", privacy: "Privacy Policy", terms: "Terms & Conditions", contactUs: "Contact Us", copyright: "© 2026 Pixel Box Ads. All rights reserved."
@@ -163,28 +146,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* التصنيفات (كل تصنيف في بيضاوي لوحده) */}
       <section id="categories" className="max-w-7xl mx-auto px-6 py-24 bg-[#fdfbf7] text-center">
         <h2 className="font-playfair text-4xl font-bold mb-12">{text.categoriesTitle}</h2>
-        
         <div className="flex flex-wrap justify-center gap-4 md:gap-6">
           {categoriesList.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => handleCategoryClick(cat.id)}
-              className={`px-8 py-3 rounded-full text-sm font-bold border transition-all duration-300 hover:scale-105 hover:-translate-y-1 active:scale-90 ${
-                activeCategory === cat.id 
-                  ? 'bg-[#d4af37] text-white border-[#d4af37] shadow-lg' 
-                  : 'bg-white text-[#3e2723] border-[#e0d8cf] hover:border-[#d4af37] hover:text-[#d4af37]'
-              }`}
-            >
+            <button key={cat.id} onClick={() => handleCategoryClick(cat.id)} className={`px-8 py-3 rounded-full text-sm font-bold border transition-all duration-300 hover:scale-105 hover:-translate-y-1 active:scale-90 ${activeCategory === cat.id ? 'bg-[#d4af37] text-white border-[#d4af37] shadow-lg' : 'bg-white text-[#3e2723] border-[#e0d8cf] hover:border-[#d4af37] hover:text-[#d4af37]'}`}>
               {cat.label}
             </button>
           ))}
         </div>
       </section>
 
-      {/* المنتجات */}
       <section id="products" className="max-w-7xl mx-auto px-6 py-24 bg-white border-t border-[#e0d8cf]">
         <h2 className="font-playfair text-4xl font-bold text-center mb-12">{text.latestProducts}</h2>
         {filteredProducts.length === 0 ? (
