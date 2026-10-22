@@ -99,63 +99,61 @@ export default function Home() {
   return (
     <div className={`min-h-screen bg-[#fdfbf7] text-[#3e2723] font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       
-      {/* 1. الهيدر (من غير كلمة PIXEL BOX) */}
-      <header className="w-full bg-white/80 backdrop-blur-md border-b border-[#e0d8cf] sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          
-          {/* اللوجو (الدايرة بس) */}
-          <Link href="/">
-            <div className="w-12 h-12 rounded-full border-2 border-[#d4af37] flex items-center justify-center font-bold text-xl text-[#d4af37]">
-              P
-            </div>
-          </Link>
-
-          <nav className="hidden md:flex gap-8 text-sm font-bold text-[#3e2723]">
-            <Link href="/" className="hover:text-[#d4af37] transition">{text.navHome}</Link>
-            <Link href="#products" className="hover:text-[#d4af37] transition">{text.navProducts}</Link>
-            <Link href="/about" className="hover:text-[#d4af37] transition">{text.navAbout}</Link>
-            <Link href="/contact" className="hover:text-[#d4af37] transition">{text.navContact}</Link>
-          </nav>
-
-          <div className="flex items-center gap-6">
-            <button className="text-2xl">🛒</button>
-            <button onClick={toggleLang} className="text-sm font-bold border border-[#d4af37] text-[#d4af37] px-4 py-1 rounded-full hover:bg-[#d4af37] hover:text-white transition">
-              {lang === 'ar' ? 'English' : 'عربي'}
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* 2. قسم الـ Hero (الكلام على الشمال والصورة على اليمين) */}
-      <section className="max-w-7xl mx-auto px-6 py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      {/* 1. قسم الـ Hero (الصورة خلفية كاملة) */}
+      <section className="relative w-full h-screen flex flex-col justify-between">
         
-        {/* الكلام على الشمال */}
-        <div className="order-2 md:order-1 flex flex-col justify-center text-right">
-          <h2 className="font-playfair text-5xl md:text-7xl font-bold mb-6 text-[#3e2723] leading-tight">
-            {text.heroTitle}
-          </h2>
-          <p className="text-lg md:text-xl mb-10 text-gray-600 font-light max-w-lg">
-            {text.heroSubtitle}
-          </p>
-          <div>
-            <Link href="#products" className="inline-block bg-[#d4af37] text-white px-10 py-4 rounded-md font-bold text-lg hover:bg-[#c19b2e] transition-all duration-300 shadow-lg">
+        {/* الصورة كخلفية كاملة */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center" 
+          style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}
+        ></div>
+
+        {/* طبقة ظل خفيفة جداً عشان الكلام يبان */}
+        <div className="absolute inset-0 bg-black/20"></div>
+
+        {/* الشريط اللي فوق (شفاف من غير لوجو) */}
+        <header className="relative z-20 w-full py-6 px-6">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            
+            {/* مساحة فاضية على اليمين (عشان التخطيط) */}
+            <div className="w-12"></div>
+
+            {/* اللينكات في النص */}
+            <nav className="hidden md:flex gap-8 text-sm font-bold text-white drop-shadow-lg">
+              <Link href="/" className="hover:text-[#d4af37] transition">{text.navHome}</Link>
+              <Link href="#products" className="hover:text-[#d4af37] transition">{text.navProducts}</Link>
+              <Link href="/about" className="hover:text-[#d4af37] transition">{text.navAbout}</Link>
+              <Link href="/contact" className="hover:text-[#d4af37] transition">{text.navContact}</Link>
+            </nav>
+
+            {/* الأيقونات واللغة (على الشمال) */}
+            <div className="flex items-center gap-6 text-white drop-shadow-lg">
+              <button className="text-2xl">🛒</button>
+              <button onClick={toggleLang} className="text-sm font-bold border border-white text-white px-4 py-1 rounded-full hover:bg-white hover:text-black transition">
+                {lang === 'ar' ? 'English' : 'عربي'}
+              </button>
+            </div>
+          </div>
+        </header>
+
+        {/* الكلام على الشمال فوق الصورة */}
+        <div className="relative z-20 w-full max-w-7xl mx-auto px-6 flex-grow flex items-center pb-20">
+          <div className="max-w-2xl text-right">
+            <h2 className="font-playfair text-6xl md:text-8xl font-bold mb-6 text-[#d4af37] leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
+              {text.heroTitle}
+            </h2>
+            <p className="text-xl md:text-2xl mb-10 text-white font-medium drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]">
+              {text.heroSubtitle}
+            </p>
+            <Link href="#products" className="inline-block bg-[#d4af37] text-white px-10 py-4 rounded-sm font-bold text-xl hover:bg-[#c19b2e] transition-all duration-300 shadow-xl">
               {text.heroCta}
             </Link>
           </div>
         </div>
-
-        {/* الصورة على اليمين (مصغرة عشان اللوجو يبان) */}
-        <div className="order-1 md:order-2 relative h-[400px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
-          <img 
-            src="https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg" 
-            alt="Pixel Box" 
-            className="w-full h-full object-cover object-top" 
-          />
-        </div>
       </section>
 
       {/* 3. المزايا */}
-      <section className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center border-t border-[#e0d8cf]">
+      <section className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center border-t border-[#e0d8cf] bg-[#fdfbf7]">
         <div><span className="text-3xl">🚚</span><h3 className="font-bold mt-2">{text.fastShipping}</h3><p className="text-sm text-gray-500">{text.fastShippingDesc}</p></div>
         <div><span className="text-3xl">🛡️</span><h3 className="font-bold mt-2">{text.securePayment}</h3><p className="text-sm text-gray-500">{text.securePaymentDesc}</p></div>
         <div><span className="text-3xl">⭐</span><h3 className="font-bold mt-2">{text.quality}</h3><p className="text-sm text-gray-500">{text.qualityDesc}</p></div>
@@ -163,7 +161,7 @@ export default function Home() {
       </section>
 
       {/* 4. المنتجات */}
-      <section id="products" className="max-w-7xl mx-auto px-6 py-16">
+      <section id="products" className="max-w-7xl mx-auto px-6 py-16 bg-[#fdfbf7]">
         <h2 className="font-playfair text-3xl font-bold text-center mb-12">{text.latestProducts}</h2>
         {products.length === 0 ? (
           <p className="text-center text-gray-500">{text.noProducts}</p>
