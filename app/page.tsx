@@ -39,28 +39,16 @@ export default function Home() {
 
   const t = {
     ar: {
-      navHome: "الرئيسية",
-      navProducts: "المنتجات",
-      navAbout: "من نحن",
-      navContact: "تواصل معنا",
-      heroTitle: "الإبداع في كل بكسل",
-      heroSubtitle: "نصنع لك تصاميم إعلانية وهويات بصرية تخطف الأنظار، بلمسة يدوية فاخرة.",
-      heroCta: "اطلب تصميمك",
-      latestProducts: "أحدث المنتجات",
-      noProducts: "لا توجد منتجات حالياً.",
-      currency: "ر.س",
+      navHome: "الرئيسية", navProducts: "المنتجات", navAbout: "من نحن", navContact: "تواصل معنا",
+      heroTitle: "الإبداع في كل بكسل", heroSubtitle: "نصنع لك تصاميم إعلانية وهويات بصرية تخطف الأنظار، بلمسة يدوية فاخرة.", heroCta: "اطلب تصميمك",
+      latestProducts: "أحدث المنتجات", noProducts: "لا توجد منتجات حالياً.", currency: "ر.س",
+      footerDesc: "نصنع الإبداع في كل بكسل.", quickLinks: "روابط سريعة", privacy: "سياسة الخصوصية", terms: "الشروط والأحكام", contactUs: "تواصل معنا", copyright: "© 2026 Pixel Box Ads. All rights reserved."
     },
     en: {
-      navHome: "Home",
-      navProducts: "Products",
-      navAbout: "About Us",
-      navContact: "Contact Us",
-      heroTitle: "Creativity in Every Pixel",
-      heroSubtitle: "We craft eye-catching ad designs and visual identities with a luxurious handmade touch.",
-      heroCta: "Order Your Design",
-      latestProducts: "Latest Products",
-      noProducts: "No products available.",
-      currency: "SAR",
+      navHome: "Home", navProducts: "Products", navAbout: "About Us", navContact: "Contact Us",
+      heroTitle: "Creativity in Every Pixel", heroSubtitle: "We craft eye-catching ad designs and visual identities with a luxurious handmade touch.", heroCta: "Order Your Design",
+      latestProducts: "Latest Products", noProducts: "No products available.", currency: "SAR",
+      footerDesc: "We craft creativity in every pixel.", quickLinks: "Quick Links", privacy: "Privacy Policy", terms: "Terms & Conditions", contactUs: "Contact Us", copyright: "© 2026 Pixel Box Ads. All rights reserved."
     }
   };
 
@@ -80,7 +68,6 @@ export default function Home() {
             <nav className="hidden md:flex gap-8 text-sm font-bold text-white drop-shadow-md mx-auto">
               <Link href="/" className="hover:text-[#d4af37] transition">{text.navHome}</Link>
               <Link href="#products" className="hover:text-[#d4af37] transition">{text.navProducts}</Link>
-              {/* ربط الصفحات الجديدة */}
               <Link href="/about" className="hover:text-[#d4af37] transition">{text.navAbout}</Link>
               <Link href="/contact" className="hover:text-[#d4af37] transition">{text.navContact}</Link>
             </nav>
@@ -130,6 +117,32 @@ export default function Home() {
           </div>
         )}
       </section>
+
+      {/* الفوتر */}
+      <footer className="bg-[#2a1b19] text-[#fdfbf7] py-12 border-t border-[#5d4037]">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-right">
+          <div>
+            <h4 className="font-playfair text-2xl font-bold text-[#d4af37] mb-4">PIXEL BOX</h4>
+            <p className="text-sm text-gray-400">{text.footerDesc}</p>
+          </div>
+          <div>
+            <h4 className="font-bold mb-4">{text.quickLinks}</h4>
+            <ul className="space-y-2 text-sm text-gray-400">
+              <li><Link href="/privacy" className="hover:text-[#d4af37] transition">{text.privacy}</Link></li>
+              <li><Link href="/terms" className="hover:text-[#d4af37] transition">{text.terms}</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-bold mb-4">{text.contactUs}</h4>
+            <p className="text-sm text-gray-400 mb-2">pixelads823@gmail.com</p>
+            <div className="flex justify-center md:justify-start gap-4 mt-4">
+              <a href="https://wa.me/966580647288" target="_blank" className="text-2xl hover:text-[#d4af37] transition">💬</a>
+              <a href="https://www.instagram.com/pixel_box_ads" target="_blank" className="text-2xl hover:text-[#d4af37] transition">📸</a>
+            </div>
+          </div>
+        </div>
+        <div className="text-center text-xs mt-12 pt-6 border-t border-[#5d4037] text-gray-500">{text.copyright}</div>
+      </footer>
     </div>
   );
 }
