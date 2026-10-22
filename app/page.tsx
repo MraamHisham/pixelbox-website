@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const supabaseUrl = "https://nngvbcabtppkhfnnpnnt.supabase.co";
 const supabaseKey = "sb_publishable_1Ds5k-Sjn4gGpaXWnciS6w_F4wQf9Yc";
@@ -12,6 +13,8 @@ export default function Home() {
   const [products, setProducts] = useState<any[]>([]);
   const [lang, setLang] = useState<"ar" | "en">("ar");
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<any>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const savedLang = localStorage.getItem('siteLang') as "ar" | "en";
@@ -24,9 +27,21 @@ export default function Home() {
     async function fetchData() {
       const { data } = await supabase.from("products").select("*").eq("is_visible", true);
       if (data) setProducts(data);
+      
+      const { data: { session } } = await supabase.auth.getSession();
+      setUser(session?.user || null);
+      
       setLoading(false);
     }
     fetchData();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user || null);
+    });
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
   }, []);
 
   const toggleLang = () => {
@@ -37,17 +52,28 @@ export default function Home() {
     document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
   };
 
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.refresh();
+  };
+
   const t = {
     ar: {
       navHome: "الرئيسية", navProducts: "المنتجات", navAbout: "من نحن", navContact: "تواصل معنا",
       heroTitle: "الإبداع في كل بكسل", heroSubtitle: "نصنع لك تصاميم إعلانية وهويات بصرية تخطف الأنظار، بلمسة يدوية فاخرة.", heroCta: "اطلب تصميمك",
+      categoriesTitle: "تصنيفاتنا",
+      cat1: "علب هدايا مخصصة", cat2: "ريزن | طباعة | حفر ليزر", cat3: "علب صلبة وليزر",
       latestProducts: "أحدث المنتجات", noProducts: "لا توجد منتجات حالياً.", currency: "ر.س",
+      login: "تسجيل الدخول", logout: "تسجيل الخروج",
       footerDesc: "نصنع الإبداع في كل بكسل.", quickLinks: "روابط سريعة", privacy: "سياسة الخصوصية", terms: "الشروط والأحكام", contactUs: "تواصل معنا", copyright: "© 2026 Pixel Box Ads. All rights reserved."
     },
     en: {
       navHome: "Home", navProducts: "Products", navAbout: "About Us", navContact: "Contact Us",
       heroTitle: "Creativity in Every Pixel", heroSubtitle: "We craft eye-catching ad designs and visual identities with a luxurious handmade touch.", heroCta: "Order Your Design",
+      categoriesTitle: "Our Categories",
+      cat1: "Custom Gift Boxes", cat2: "Resin | DTF | Laser", cat3: "Hardcover & Laser Boxes",
       latestProducts: "Latest Products", noProducts: "No products available.", currency: "SAR",
+      login: "Login", logout: "Logout",
       footerDesc: "We craft creativity in every pixel.", quickLinks: "Quick Links", privacy: "Privacy Policy", terms: "Terms & Conditions", contactUs: "Contact Us", copyright: "© 2026 Pixel Box Ads. All rights reserved."
     }
   };
@@ -68,10 +94,27 @@ export default function Home() {
             <nav className="hidden md:flex gap-8 text-sm font-bold text-white drop-shadow-md mx-auto">
               <Link href="/" className="hover:text-[#d4af37] transition">{text.navHome}</Link>
               <Link href="#products" className="hover:text-[#d4af37] transition">{text.navProducts}</Link>
+              <Link href="#categories" className="hover:text-[#d4af37] transition">{text.categoriesTitle}</Link>
               <Link href="/about" className="hover:text-[#d4af37] transition">{text.navAbout}</Link>
               <Link href="/contact" className="hover:text-[#d4af37] transition">{text.navContact}</Link>
             </nav>
+            
             <div className="flex items-center gap-6 text-white drop-shadow-md absolute left-0">
+              {/* أيقونة المستخدم */}
+              {user ? (
+                <div className="flex items-center gap-4">
+                  <span className="text-sm font-bold hidden md:block">أهلاً، {user.user_metadata?.full_name || 'عميل'}</span>
+                  <button onClick={handleLogout} className="text-sm border border-white px-3 py-1 rounded-full hover:bg-white hover:text-black transition active:scale-95">{text.logout}</button>
+                </div>
+              ) : (
+                <Link href="/login" className="text-sm border border-white px-3 py-1 rounded-full hover:bg-white hover:text-black transition active:scale-95 flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                  </svg>
+                  {text.login}
+                </Link>
+              )}
+              
               <button onClick={toggleLang} className="text-sm font-bold border border-white text-white px-4 py-1 rounded-full hover:bg-white hover:text-black transition active:scale-95">
                 {lang === 'ar' ? 'English' : 'عربي'}
               </button>
@@ -86,7 +129,26 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="products" className="max-w-7xl mx-auto px-6 py-24 bg-[#fdfbf7]">
+      {/* قسم التصنيفات الجديد */}
+      <section id="categories" className="max-w-7xl mx-auto px-6 py-24 bg-[#fdfbf7]">
+        <h2 className="font-playfair text-4xl font-bold text-center mb-12 animate-fade-in-up">{text.categoriesTitle}</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="group bg-white rounded-2xl shadow-sm border border-[#e0d8cf] p-10 text-center hover:-translate-y-2 hover:shadow-xl transition-all duration-300 active:scale-95 cursor-pointer">
+            <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">🎁</div>
+            <h3 className="font-playfair text-2xl font-bold text-[#3e2723]">{text.cat1}</h3>
+          </div>
+          <div className="group bg-white rounded-2xl shadow-sm border border-[#e0d8cf] p-10 text-center hover:-translate-y-2 hover:shadow-xl transition-all duration-300 active:scale-95 cursor-pointer">
+            <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">✨</div>
+            <h3 className="font-playfair text-2xl font-bold text-[#3e2723]">{text.cat2}</h3>
+          </div>
+          <div className="group bg-white rounded-2xl shadow-sm border border-[#e0d8cf] p-10 text-center hover:-translate-y-2 hover:shadow-xl transition-all duration-300 active:scale-95 cursor-pointer">
+            <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">📦</div>
+            <h3 className="font-playfair text-2xl font-bold text-[#3e2723]">{text.cat3}</h3>
+          </div>
+        </div>
+      </section>
+
+      <section id="products" className="max-w-7xl mx-auto px-6 py-24 bg-white border-t border-[#e0d8cf]">
         <h2 className="font-playfair text-4xl font-bold text-center mb-12 animate-fade-in-up">{text.latestProducts}</h2>
         {products.length === 0 ? (
           <p className="text-center text-gray-500">{text.noProducts}</p>
@@ -95,7 +157,7 @@ export default function Home() {
             {products.map((product) => {
               const displayName = lang === 'en' && product.name_en ? product.name_en : product.name;
               return (
-                <div key={product.id} className="group bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-2xl transition-all duration-500 touch-card animate-fade-in-up">
+                <div key={product.id} className="group bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-2xl transition-all duration-500 touch-card animate-fade-in-up border border-[#e0d8cf]">
                   <Link href={`/products/${product.id}?lang=${lang}`}>
                     <div className="relative aspect-square bg-[#f5f1eb] overflow-hidden">
                       {product.image_url ? (
@@ -118,7 +180,6 @@ export default function Home() {
         )}
       </section>
 
-      {/* الفوتر */}
       <footer className="bg-[#2a1b19] text-[#fdfbf7] py-12 border-t border-[#5d4037]">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-right">
           <div>
