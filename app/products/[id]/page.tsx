@@ -37,7 +37,7 @@ function ProductDetails() {
 
       if (productData) {
         setProduct(productData);
-        setColors(colorsData || []); // شلنا الشرط عشان أي لون يظهر
+        setColors(colorsData || []);
         setSelectedImage(productData.image_url || '');
       }
       setLoading(false);
@@ -99,8 +99,18 @@ function ProductDetails() {
                     const isSelected = selectedImage === (colorObj.color_image_url || product.image_url);
                     
                     return (
-                      <button key={idx} onClick={() => { if (!isSoldOut) setSelectedImage(colorObj.color_image_url ? colorObj.color_image_url : product.image_url); }} disabled={isSoldOut}
-                        className={`relative flex flex-col items-center justify-center w-12 h-16 transition-all duration-300 active:scale-90 touch-btn group/color ${isSoldOut ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer hover:-translate-y-2'}`} title={isSoldOut ? text.soldOut : colorObj.color_name}>
+                      <button 
+                        key={idx} 
+                        onClick={() => { 
+                          if (!isSoldOut) {
+                            const newImage = colorObj.color_image_url ? colorObj.color_image_url : product.image_url;
+                            setSelectedImage(newImage);
+                          } 
+                        }} 
+                        disabled={isSoldOut}
+                        className={`relative flex flex-col items-center justify-center w-12 h-16 transition-all duration-300 active:scale-90 touch-btn group/color ${isSoldOut ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer hover:-translate-y-2'}`} 
+                        title={isSoldOut ? text.soldOut : colorObj.color_name}
+                      >
                         <div className={`w-4 h-14 rounded-full transition-all duration-500 ${isSelected ? 'ring-2 ring-[#d4af37] ring-offset-4 ring-offset-[#fdfbf7] scale-110 shadow-[0_0_15px_rgba(212,175,55,0.5)] animate-pulse' : 'opacity-60 group-hover/color:opacity-100'} ${isSoldOut ? 'grayscale' : ''}`} style={{ backgroundColor: colorObj.color_code }} />
                         {isSoldOut && (<span className="absolute inset-0 flex items-center justify-center text-white font-bold text-lg drop-shadow-md">X</span>)}
                       </button>

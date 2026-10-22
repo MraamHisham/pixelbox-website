@@ -60,24 +60,16 @@ export default function Home() {
     router.refresh();
   };
 
-  // الفلترة الذكية
-  const handleCategoryClick = (categoryId: string) => {
-    setActiveCategory(categoryId);
+  // الفلترة الذكية جداً
+  const handleCategoryClick = (category: string) => {
+    setActiveCategory(category);
     
-    if (categoryId === "All") {
+    if (category === "All") {
       setFilteredProducts(products);
-    } else if (categoryId === "ResinDTF") { // ده التصنيف المجمع
-      setFilteredProducts(products.filter(p => 
-        p.category && (
-          p.category.toLowerCase().includes("resin") ||
-          p.category.toLowerCase().includes("dtf") ||
-          p.category.toLowerCase().includes("acrylic") ||
-          p.category.toLowerCase().includes("laser")
-        )
-      ));
     } else {
+      // بيدور على الكلمة سواء كانت كابيتال أو سمول
       setFilteredProducts(products.filter(p => 
-        p.category && p.category.toLowerCase().includes(categoryId.toLowerCase())
+        p.category && p.category.toLowerCase().includes(category.toLowerCase())
       ));
     }
   };
@@ -88,9 +80,13 @@ export default function Home() {
       heroTitle: "الإبداع في كل بكسل", heroSubtitle: "نصنع لك تصاميم إعلانية وهويات بصرية تخطف الأنظار، بلمسة يدوية فاخرة.", heroCta: "اطلب تصميمك",
       categoriesTitle: "تصنيفاتنا",
       catAll: "الكل", 
-      catGift: "علب هدايا مخصصة", 
-      catResin: "ريزن | طباعة | أكريليك | ليزر", 
-      catHardcover: "علب صلبة وليزر",
+      catGift: "علب هدايا", 
+      catResin: "ريزن", 
+      catDTF: "طباعة DTF", 
+      catAcrylic: "أكريليك", 
+      catLaser: "ليزر", 
+      catHardcover: "علب صلبة",
+      catTote: "شنط توت",
       latestProducts: "أحدث المنتجات", noProducts: "لا توجد منتجات في هذا التصنيف حالياً.", currency: "ر.س",
       login: "تسجيل الدخول", logout: "تسجيل الخروج",
       footerDesc: "نصنع الإبداع في كل بكسل.", quickLinks: "روابط سريعة", privacy: "سياسة الخصوصية", terms: "الشروط والأحكام", contactUs: "تواصل معنا", copyright: "© 2026 Pixel Box Ads. All rights reserved."
@@ -100,9 +96,13 @@ export default function Home() {
       heroTitle: "Creativity in Every Pixel", heroSubtitle: "We craft eye-catching ad designs and visual identities with a luxurious handmade touch.", heroCta: "Order Your Design",
       categoriesTitle: "Our Categories",
       catAll: "All", 
-      catGift: "Custom Gift Boxes", 
-      catResin: "Resin | DTF | Acrylic | Laser Engravin", 
-      catHardcover: "Hardcover & Laser Boxes",
+      catGift: "Gift Boxes", 
+      catResin: "Resin", 
+      catDTF: "DTF", 
+      catAcrylic: "Acrylic", 
+      catLaser: "Laser", 
+      catHardcover: "Hardcover",
+      catTote: "Tote Bags",
       latestProducts: "Latest Products", noProducts: "No products in this category.", currency: "SAR",
       login: "Login", logout: "Logout",
       footerDesc: "We craft creativity in every pixel.", quickLinks: "Quick Links", privacy: "Privacy Policy", terms: "Terms & Conditions", contactUs: "Contact Us", copyright: "© 2026 Pixel Box Ads. All rights reserved."
@@ -113,12 +113,15 @@ export default function Home() {
 
   if (loading) return <div className="min-h-screen flex items-center justify-center text-xl bg-[#fdfbf7] text-[#3e2723] font-cairo">Loading...</div>;
 
-  // قائمة التصنيفات
   const categoriesList = [
     { id: "All", label: text.catAll },
-    { id: "Custom Gift Boxes", label: text.catGift },
-    { id: "ResinDTF", label: text.catResin },
+    { id: "Gift Boxes", label: text.catGift },
+    { id: "Resin", label: text.catResin },
+    { id: "DTF", label: text.catDTF },
+    { id: "Acrylic", label: text.catAcrylic },
+    { id: "Laser", label: text.catLaser },
     { id: "Hardcover", label: text.catHardcover },
+    { id: "Tote Bags", label: text.catTote },
   ];
 
   return (
@@ -130,7 +133,6 @@ export default function Home() {
 
         <header className="absolute top-0 w-full z-50 py-6 px-6">
           <div className="max-w-7xl mx-auto flex items-center justify-between relative">
-            {/* اللينكات مع أنيميشن اللف والتكبير */}
             <nav className="hidden md:flex gap-8 text-sm font-bold text-white drop-shadow-md mx-auto">
               <Link href="/" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navHome}</Link>
               <Link href="#products" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navProducts}</Link>
@@ -161,16 +163,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* التصنيفات (كل واحد في بيضاوي لوحده ومترجم) */}
+      {/* التصنيفات (كل تصنيف في بيضاوي لوحده) */}
       <section id="categories" className="max-w-7xl mx-auto px-6 py-24 bg-[#fdfbf7] text-center">
         <h2 className="font-playfair text-4xl font-bold mb-12">{text.categoriesTitle}</h2>
         
-        <div className="flex flex-wrap justify-center gap-6">
+        <div className="flex flex-wrap justify-center gap-4 md:gap-6">
           {categoriesList.map((cat) => (
             <button
               key={cat.id}
               onClick={() => handleCategoryClick(cat.id)}
-              className={`px-10 py-4 rounded-full text-sm font-bold border transition-all duration-300 hover:scale-105 hover:-translate-y-1 active:scale-90 ${
+              className={`px-8 py-3 rounded-full text-sm font-bold border transition-all duration-300 hover:scale-105 hover:-translate-y-1 active:scale-90 ${
                 activeCategory === cat.id 
                   ? 'bg-[#d4af37] text-white border-[#d4af37] shadow-lg' 
                   : 'bg-white text-[#3e2723] border-[#e0d8cf] hover:border-[#d4af37] hover:text-[#d4af37]'
@@ -182,7 +184,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* المنتجات مع أنيميشن */}
+      {/* المنتجات */}
       <section id="products" className="max-w-7xl mx-auto px-6 py-24 bg-white border-t border-[#e0d8cf]">
         <h2 className="font-playfair text-4xl font-bold text-center mb-12">{text.latestProducts}</h2>
         {filteredProducts.length === 0 ? (

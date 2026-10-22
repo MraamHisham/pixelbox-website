@@ -19,16 +19,28 @@ body {
   overflow-x: hidden;
 }
 
-/* أنيميشن إجباري للموبايل عشان أي حاجة تتلمس تصغر (Touch Animation) */
+/* ========================================= */
+/* ده الكود اللي بيخلي الأنيميشن يشتغل باللمس على الموبايل */
+/* ========================================= */
 @media (max-width: 768px) {
+  /* لما تدوسي على أي لينك أو زرار، هيصغر شوية */
   a:active, button:active {
     transform: scale(0.92) !important;
     transition: transform 0.1s ease-in-out !important;
   }
+  
+  /* لما تدوسي على كارت المنتج، هيصغر شوية */
+  .group:active {
+    transform: scale(0.96) !important;
+    transition: transform 0.1s ease-in-out !important;
+  }
 }
 
-/* أنيميشن للكروت بتاعت المنتجات */
-.group:active {
-  transform: scale(0.96) !important;
-  transition: transform 0.1s ease-in-out !important;
+/* أنيميشن ظهور العناصر (Fade In Up) */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
 }
