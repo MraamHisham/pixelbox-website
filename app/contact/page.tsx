@@ -6,6 +6,8 @@ import Link from "next/link";
 const whatsappNumber = "966580647288"; 
 const emailAddress = "pixelads823@gmail.com"; 
 const instagramLink = "https://www.instagram.com/pixel_box_ads"; 
+// اللينك الجديد المباشر لجوجل ميل
+const gmailComposeLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${emailAddress}`;
 
 export default function Contact() {
   const [lang, setLang] = useState<"ar" | "en">("ar");
@@ -57,6 +59,7 @@ export default function Contact() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             
+            {/* واتساب */}
             <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer" 
                className="bg-white p-8 rounded-3xl shadow-sm border border-[#e0d8cf] hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group active:scale-95">
               <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">💬</div>
@@ -64,13 +67,15 @@ export default function Contact() {
               <p className="text-gray-500 text-sm">{text.whatsappDesc}</p>
             </a>
 
-            <a href={`mailto:${emailAddress}`} 
+            {/* الإيميل (معدل ليفتح Gmail مباشرة) */}
+            <a href={gmailComposeLink} target="_blank" rel="noopener noreferrer" 
                className="bg-white p-8 rounded-3xl shadow-sm border border-[#e0d8cf] hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group active:scale-95">
               <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">✉️</div>
               <h3 className="text-xl font-bold mb-2">{text.email}</h3>
               <p className="text-gray-500 text-sm">{text.emailDesc}</p>
             </a>
 
+            {/* إنستجرام */}
             <a href={instagramLink} target="_blank" rel="noopener noreferrer" 
                className="bg-white p-8 rounded-3xl shadow-sm border border-[#e0d8cf] hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group active:scale-95">
               <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">📸</div>
