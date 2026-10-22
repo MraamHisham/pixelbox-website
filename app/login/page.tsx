@@ -14,6 +14,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
+  const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const router = useRouter();
@@ -31,10 +32,15 @@ export default function Login() {
       const { error } = await supabase.auth.signUp({
         email,
         password,
-        options: { data: { full_name: fullName } }
+        options: { data: { full_name: fullName, phone: phone } }
       });
       if (error) setMessage(error.message);
-      else setMessage("تم إنشاء الحساب بنجاح! يمكنك تسجيل الدخول الآن.");
+      else {
+        // تسجيل الدخول التلقائي بعد إنشاء الحساب
+        const { error: loginError } = await supabase.auth.signInWithPassword({ email, password });
+        if (!loginError) router.push("/");
+        else setMessage("تم إنشاء الحساب، يرجى تسجيل الدخول.");
+      }
     }
     setLoading(false);
   };
@@ -48,14 +54,20 @@ export default function Login() {
           <p className="text-gray-500">{isLogin ? "تسجيل الدخول" : "إنشاء حساب جديد"}</p>
         </div>
 
-        {message && <div className="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm text-center">{message}</div>}
+        {message && <div className="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm text-center animate-fade-in">{message}</div>}
 
         <form onSubmit={handleAuth} className="space-y-5">
           {!isLogin && (
-            <div>
-              <label className="block text-sm font-bold mb-1">الاسم بالكامل</label>
-              <input type="text" required value={fullName} onChange={(e) => setFullName(e.target.value)} className="w-full p-3 rounded-lg border border-[#e0d8cf] focus:outline-none focus:border-[#d4af37] transition-colors" />
-            </div>
+            <>
+              <div>
+                <label className="block text-sm font-bold mb-1">الاسم بالكامل</label>
+                <input type="text" required value={fullName} onChange={(e) => setFullName(e.target.value)} className="w-full p-3 rounded-lg border border-[#e0d8cf] focus:outline-none focus:border-[#d4af37] transition-colors" />
+              </div>
+              <div>
+                <label className="block text-sm font-bold mb-1">رقم التليفون</label>
+                <input type="tel" required value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full p-3 rounded-lg border border-[#e0d8cf] focus:outline-none focus:border-[#d4af37] transition-colors" />
+              </div>
+            </>
           )}
           <div>
             <label className="block text-sm font-bold mb-1">البريد الإلكتروني</label>
@@ -73,7 +85,7 @@ export default function Login() {
 
         <div className="mt-6 text-center text-sm">
           <span className="text-gray-500">{isLogin ? "ليس لديك حساب؟" : "لديك حساب بالفعل؟"} </span>
-          <button onClick={() => setIsLogin(!isLogin)} className="text-[#d4af37] font-bold hover:underline">
+          <button onClick={() => setIsLogin(!isLogin)} className="text-[#d4af37] font-bold hover:underline active:scale-95">
             {isLogin ? "أنشئ حساب" : "تسجيل الدخول"}
           </button>
         </div>

@@ -11,9 +11,11 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export default function Home() {
   const [products, setProducts] = useState<any[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [lang, setLang] = useState<"ar" | "en">("ar");
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
+  const [activeCategory, setActiveCategory] = useState("All");
   const router = useRouter();
 
   useEffect(() => {
@@ -26,7 +28,10 @@ export default function Home() {
 
     async function fetchData() {
       const { data } = await supabase.from("products").select("*").eq("is_visible", true);
-      if (data) setProducts(data);
+      if (data) {
+        setProducts(data);
+        setFilteredProducts(data);
+      }
       
       const { data: { session } } = await supabase.auth.getSession();
       setUser(session?.user || null);
@@ -57,13 +62,22 @@ export default function Home() {
     router.refresh();
   };
 
+  const handleCategoryClick = (category: string) => {
+    setActiveCategory(category);
+    if (category === "All") {
+      setFilteredProducts(products);
+    } else {
+      setFilteredProducts(products.filter(p => p.category === category));
+    }
+  };
+
   const t = {
     ar: {
       navHome: "الرئيسية", navProducts: "المنتجات", navAbout: "من نحن", navContact: "تواصل معنا",
       heroTitle: "الإبداع في كل بكسل", heroSubtitle: "نصنع لك تصاميم إعلانية وهويات بصرية تخطف الأنظار، بلمسة يدوية فاخرة.", heroCta: "اطلب تصميمك",
       categoriesTitle: "تصنيفاتنا",
-      cat1: "علب هدايا مخصصة", cat2: "ريزن | طباعة | حفر ليزر", cat3: "علب صلبة وليزر",
-      latestProducts: "أحدث المنتجات", noProducts: "لا توجد منتجات حالياً.", currency: "ر.س",
+      catAll: "الكل", cat1: "علب هدايا", cat2: "ريزن", cat3: "طباعة DTF", cat4: "أكريليك", cat5: "حفر ليزر", cat6: "علب صلبة",
+      latestProducts: "أحدث المنتجات", noProducts: "لا توجد منتجات في هذا التصنيف حالياً.", currency: "ر.س",
       login: "تسجيل الدخول", logout: "تسجيل الخروج",
       footerDesc: "نصنع الإبداع في كل بكسل.", quickLinks: "روابط سريعة", privacy: "سياسة الخصوصية", terms: "الشروط والأحكام", contactUs: "تواصل معنا", copyright: "© 2026 Pixel Box Ads. All rights reserved."
     },
@@ -71,8 +85,8 @@ export default function Home() {
       navHome: "Home", navProducts: "Products", navAbout: "About Us", navContact: "Contact Us",
       heroTitle: "Creativity in Every Pixel", heroSubtitle: "We craft eye-catching ad designs and visual identities with a luxurious handmade touch.", heroCta: "Order Your Design",
       categoriesTitle: "Our Categories",
-      cat1: "Custom Gift Boxes", cat2: "Resin | DTF | Laser", cat3: "Hardcover & Laser Boxes",
-      latestProducts: "Latest Products", noProducts: "No products available.", currency: "SAR",
+      catAll: "All", cat1: "Gift Boxes", cat2: "Resin", cat3: "DTF", cat4: "Acrylic", cat5: "Laser Engraving", cat6: "Hardcover",
+      latestProducts: "Latest Products", noProducts: "No products in this category.", currency: "SAR",
       login: "Login", logout: "Logout",
       footerDesc: "We craft creativity in every pixel.", quickLinks: "Quick Links", privacy: "Privacy Policy", terms: "Terms & Conditions", contactUs: "Contact Us", copyright: "© 2026 Pixel Box Ads. All rights reserved."
     }
@@ -100,7 +114,6 @@ export default function Home() {
             </nav>
             
             <div className="flex items-center gap-6 text-white drop-shadow-md absolute left-0">
-              {/* أيقونة المستخدم */}
               {user ? (
                 <div className="flex items-center gap-4">
                   <span className="text-sm font-bold hidden md:block">أهلاً، {user.user_metadata?.full_name || 'عميل'}</span>
@@ -132,29 +145,24 @@ export default function Home() {
       {/* قسم التصنيفات الجديد */}
       <section id="categories" className="max-w-7xl mx-auto px-6 py-24 bg-[#fdfbf7]">
         <h2 className="font-playfair text-4xl font-bold text-center mb-12 animate-fade-in-up">{text.categoriesTitle}</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="group bg-white rounded-2xl shadow-sm border border-[#e0d8cf] p-10 text-center hover:-translate-y-2 hover:shadow-xl transition-all duration-300 active:scale-95 cursor-pointer">
-            <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">🎁</div>
-            <h3 className="font-playfair text-2xl font-bold text-[#3e2723]">{text.cat1}</h3>
-          </div>
-          <div className="group bg-white rounded-2xl shadow-sm border border-[#e0d8cf] p-10 text-center hover:-translate-y-2 hover:shadow-xl transition-all duration-300 active:scale-95 cursor-pointer">
-            <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">✨</div>
-            <h3 className="font-playfair text-2xl font-bold text-[#3e2723]">{text.cat2}</h3>
-          </div>
-          <div className="group bg-white rounded-2xl shadow-sm border border-[#e0d8cf] p-10 text-center hover:-translate-y-2 hover:shadow-xl transition-all duration-300 active:scale-95 cursor-pointer">
-            <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">📦</div>
-            <h3 className="font-playfair text-2xl font-bold text-[#3e2723]">{text.cat3}</h3>
-          </div>
+        <div className="flex flex-wrap justify-center gap-4">
+          <button onClick={() => handleCategoryClick("All")} className={`px-6 py-2 rounded-full border border-[#e0d8cf] text-sm font-bold transition-all duration-300 active:scale-95 ${activeCategory === "All" ? 'bg-[#d4af37] text-white' : 'bg-white text-[#3e2723] hover:bg-[#f5f1eb]'}`}>{text.catAll}</button>
+          <button onClick={() => handleCategoryClick("Gift Boxes")} className={`px-6 py-2 rounded-full border border-[#e0d8cf] text-sm font-bold transition-all duration-300 active:scale-95 ${activeCategory === "Gift Boxes" ? 'bg-[#d4af37] text-white' : 'bg-white text-[#3e2723] hover:bg-[#f5f1eb]'}`}>{text.cat1}</button>
+          <button onClick={() => handleCategoryClick("Resin")} className={`px-6 py-2 rounded-full border border-[#e0d8cf] text-sm font-bold transition-all duration-300 active:scale-95 ${activeCategory === "Resin" ? 'bg-[#d4af37] text-white' : 'bg-white text-[#3e2723] hover:bg-[#f5f1eb]'}`}>{text.cat2}</button>
+          <button onClick={() => handleCategoryClick("DTF")} className={`px-6 py-2 rounded-full border border-[#e0d8cf] text-sm font-bold transition-all duration-300 active:scale-95 ${activeCategory === "DTF" ? 'bg-[#d4af37] text-white' : 'bg-white text-[#3e2723] hover:bg-[#f5f1eb]'}`}>{text.cat3}</button>
+          <button onClick={() => handleCategoryClick("Acrylic")} className={`px-6 py-2 rounded-full border border-[#e0d8cf] text-sm font-bold transition-all duration-300 active:scale-95 ${activeCategory === "Acrylic" ? 'bg-[#d4af37] text-white' : 'bg-white text-[#3e2723] hover:bg-[#f5f1eb]'}`}>{text.cat4}</button>
+          <button onClick={() => handleCategoryClick("Laser Engraving")} className={`px-6 py-2 rounded-full border border-[#e0d8cf] text-sm font-bold transition-all duration-300 active:scale-95 ${activeCategory === "Laser Engraving" ? 'bg-[#d4af37] text-white' : 'bg-white text-[#3e2723] hover:bg-[#f5f1eb]'}`}>{text.cat5}</button>
+          <button onClick={() => handleCategoryClick("Hardcover")} className={`px-6 py-2 rounded-full border border-[#e0d8cf] text-sm font-bold transition-all duration-300 active:scale-95 ${activeCategory === "Hardcover" ? 'bg-[#d4af37] text-white' : 'bg-white text-[#3e2723] hover:bg-[#f5f1eb]'}`}>{text.cat6}</button>
         </div>
       </section>
 
       <section id="products" className="max-w-7xl mx-auto px-6 py-24 bg-white border-t border-[#e0d8cf]">
         <h2 className="font-playfair text-4xl font-bold text-center mb-12 animate-fade-in-up">{text.latestProducts}</h2>
-        {products.length === 0 ? (
+        {filteredProducts.length === 0 ? (
           <p className="text-center text-gray-500">{text.noProducts}</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {products.map((product) => {
+            {filteredProducts.map((product) => {
               const displayName = lang === 'en' && product.name_en ? product.name_en : product.name;
               return (
                 <div key={product.id} className="group bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-2xl transition-all duration-500 touch-card animate-fade-in-up border border-[#e0d8cf]">

@@ -21,10 +21,11 @@ export default function Admin() {
   }, []);
 
   const downloadCSV = () => {
-    const headers = ["Name", "Email", "Created At"];
+    const headers = ["Name", "Email", "Phone", "Created At"];
     const csvRows = users.map(u => [
       u.full_name || "N/A",
       u.email,
+      u.phone || "N/A",
       new Date(u.created_at).toLocaleDateString()
     ]);
     const csvContent = [headers, ...csvRows].map(e => e.join(",")).join("\n");
@@ -57,17 +58,19 @@ export default function Admin() {
               <tr className="bg-[#f5f1eb] text-[#3e2723]">
                 <th className="p-4 border-b">الاسم</th>
                 <th className="p-4 border-b">البريد الإلكتروني</th>
+                <th className="p-4 border-b">رقم التليفون</th>
                 <th className="p-4 border-b">تاريخ التسجيل</th>
               </tr>
             </thead>
             <tbody>
               {users.length === 0 ? (
-                <tr><td colSpan={3} className="p-8 text-center text-gray-500">لا يوجد مستخدمين مسجلين حالياً.</td></tr>
+                <tr><td colSpan={4} className="p-8 text-center text-gray-500">لا يوجد مستخدمين مسجلين حالياً.</td></tr>
               ) : (
                 users.map((u) => (
                   <tr key={u.id} className="hover:bg-[#fdfbf7] transition">
                     <td className="p-4 border-b font-bold">{u.full_name || "غير محدد"}</td>
                     <td className="p-4 border-b text-gray-600">{u.email}</td>
+                    <td className="p-4 border-b text-gray-600">{u.phone || "غير محدد"}</td>
                     <td className="p-4 border-b text-gray-500">{new Date(u.created_at).toLocaleDateString('ar-EG')}</td>
                   </tr>
                 ))

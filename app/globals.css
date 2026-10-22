@@ -66,3 +66,9 @@ body {
   transform: scale(0.97) !important;
   transition: transform 0.1s ease;
 }
+@media (hover: none) {
+  .touch-card:active {
+    transform: scale(0.97) !important;
+    transition: transform 0.1s ease;
+  }
+}
