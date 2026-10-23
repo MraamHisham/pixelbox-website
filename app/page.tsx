@@ -113,23 +113,15 @@ export default function Home() {
       {/* قسم الـ Hero */}
       <section className="relative w-full h-screen overflow-hidden bg-black">
         
-        {/* الصورة: في الموبايل بتركز على اليمين عشان اللوجو يبان، وفي اللاب بتاخد الشاشة كلها */}
-        <div 
-          className="absolute inset-0 bg-cover bg-[right_center] md:bg-center" 
-          style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}
-        ></div>
+        <div className="absolute inset-0 bg-cover bg-[right_center] md:bg-center" style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}></div>
         
-        {/* تظليل خفيف عشان الكلام يبان فوق الصورة */}
         <div className="absolute inset-0 bg-black/40"></div>
-        
-        {/* تدرج داكن على الشمال عشان الكلام يبان أكتر */}
         <div className="absolute inset-y-0 left-0 w-full md:w-1/2 bg-gradient-to-r from-black/80 to-transparent"></div>
 
-        {/* الشريط اللي فوق (شفاف بالكامل مع أنيميشن) */}
+        {/* الشريط اللي فوق */}
         <header className="absolute top-0 w-full z-50 py-4 px-4 md:py-6 md:px-6">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0 relative">
             
-            {/* اللينكات ظاهرة في الموبايل واللاب مع أنيميشن اللمس */}
             <nav className="flex flex-wrap justify-center gap-4 md:gap-8 text-sm font-bold text-white drop-shadow-md mx-auto w-full">
               <Link href="/" className="hover:text-[#d4af37] hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navHome}</Link>
               <Link href="#products" className="hover:text-[#d4af37] hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navProducts}</Link>
@@ -138,8 +130,8 @@ export default function Home() {
               <Link href="/contact" className="hover:text-[#d4af37] hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navContact}</Link>
             </nav>
 
-            {/* الأزرار */}
-            <div className="flex items-center gap-4 text-white drop-shadow-md md:absolute md:left-0 mt-2 md:mt-0">
+            {/* التعديل هنا: ضفت w-full justify-end عشان الزراير تروح أقصى الشمال في الموبايل */}
+            <div className="flex items-center gap-2 md:gap-4 text-white drop-shadow-md w-full justify-end md:w-auto md:absolute md:left-0 mt-2 md:mt-0">
               {user ? (
                 <button onClick={handleLogout} className="text-xs md:text-sm border border-white px-3 py-1.5 md:px-4 md:py-2 rounded-full hover:bg-white hover:text-black active:scale-90 transition-all duration-300">{text.logout}</button>
               ) : (
@@ -154,7 +146,7 @@ export default function Home() {
           </div>
         </header>
 
-        {/* الكلام (مثبت على الشمال ومتوسط عمودياً) */}
+        {/* الكلام */}
         <div className="absolute top-1/2 -translate-y-1/2 left-6 md:left-16 z-20 max-w-[85%] md:max-w-xl text-right">
           <h2 className="font-playfair text-4xl md:text-7xl font-bold mb-4 md:mb-6 text-[#d4af37] leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
             {text.heroTitle}
