@@ -110,34 +110,36 @@ export default function Home() {
   return (
     <div className={`min-h-screen bg-[#fdfbf7] text-[#3e2723] font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       
-      {/* قسم الـ Hero (الصورة كاملة + الشريط فوق) */}
-      <section className="relative w-full h-[85vh] md:h-screen overflow-hidden flex items-center">
+      {/* قسم الـ Hero (نفس الشكل اللي عجبك) */}
+      <section className="relative w-full h-screen overflow-hidden">
+        {/* الصورة كاملة */}
+        <div className="absolute inset-0 bg-cover bg-[center_top]" style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}></div>
         
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}></div>
+        {/* تظليل خفيف عشان الكلام يبان */}
         <div className="absolute inset-0 bg-black/40"></div>
+        <div className="absolute inset-y-0 left-0 w-full md:w-1/2 bg-gradient-to-r from-black/80 to-transparent"></div>
 
-        {/* الشريط اللي فوق (أنيميشن وترتيب مناسب للموبايل) */}
+        {/* الشريط اللي فوق */}
         <header className="absolute top-0 w-full z-50 py-4 px-4 md:py-6 md:px-6">
-          <div className="max-w-7xl mx-auto flex items-center justify-between">
-            
-            {/* اللينكات مخفية في الموبايل وتظهر في اللاب */}
+          <div className="max-w-7xl mx-auto flex items-center justify-between relative">
             <nav className="hidden md:flex gap-8 text-sm font-bold text-white drop-shadow-md mx-auto">
-              <Link href="/" className="hover:text-[#d4af37] hover:scale-110 active:scale-90 transition-all duration-300">{text.navHome}</Link>
-              <Link href="#products" className="hover:text-[#d4af37] hover:scale-110 active:scale-90 transition-all duration-300">{text.navProducts}</Link>
-              <Link href="#categories" className="hover:text-[#d4af37] hover:scale-110 active:scale-90 transition-all duration-300">{text.categoriesTitle}</Link>
-              <Link href="/about" className="hover:text-[#d4af37] hover:scale-110 active:scale-90 transition-all duration-300">{text.navAbout}</Link>
-              <Link href="/contact" className="hover:text-[#d4af37] hover:scale-110 active:scale-90 transition-all duration-300">{text.navContact}</Link>
+              <Link href="/" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navHome}</Link>
+              <Link href="#products" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navProducts}</Link>
+              <Link href="#categories" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.categoriesTitle}</Link>
+              <Link href="/about" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navAbout}</Link>
+              <Link href="/contact" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navContact}</Link>
             </nav>
-
-            {/* الأزرار يمين وشمال */}
-            <div className="flex items-center justify-between w-full md:w-auto gap-4 text-white drop-shadow-md md:absolute md:left-0">
-              {user ? (
-                <button onClick={handleLogout} className="text-xs md:text-sm border border-white px-3 py-1.5 md:px-4 md:py-2 rounded-full hover:bg-white hover:text-black hover:scale-105 active:scale-90 transition-all duration-300">{text.logout}</button>
-              ) : (
-                <Link href="/login" className="text-xs md:text-sm border border-white px-3 py-1.5 md:px-4 md:py-2 rounded-full hover:bg-white hover:text-black hover:scale-105 active:scale-90 transition-all duration-300">
-                  {text.login}
-                </Link>
-              )}
+            
+            <div className="flex items-center gap-2 md:gap-4 text-white drop-shadow-md w-full md:w-auto justify-between md:justify-start md:absolute md:left-0">
+              <div className="flex gap-2">
+                {user ? (
+                  <button onClick={handleLogout} className="text-xs md:text-sm border border-white px-3 py-1.5 md:px-4 md:py-2 rounded-full hover:bg-white hover:text-black hover:scale-105 active:scale-90 transition-all duration-300">{text.logout}</button>
+                ) : (
+                  <Link href="/login" className="text-xs md:text-sm border border-white px-3 py-1.5 md:px-4 md:py-2 rounded-full hover:bg-white hover:text-black hover:scale-105 active:scale-90 transition-all duration-300">
+                    {text.login}
+                  </Link>
+                )}
+              </div>
               <button onClick={toggleLang} className="text-xs md:text-sm font-bold border border-white text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full hover:bg-white hover:text-black hover:scale-105 active:scale-90 transition-all duration-300">
                 {lang === 'ar' ? 'EN' : 'عربي'}
               </button>
@@ -145,20 +147,18 @@ export default function Home() {
           </div>
         </header>
 
-        {/* الكلام على الشمال */}
-        <div className="relative z-20 w-full max-w-7xl mx-auto px-6 text-right">
-          <div className="max-w-xl">
-            <h2 className="font-playfair text-4xl md:text-7xl font-bold mb-4 md:mb-6 text-[#d4af37] leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">{text.heroTitle}</h2>
-            <p className="text-base md:text-xl mb-8 md:mb-10 text-white font-medium drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">{text.heroSubtitle}</p>
-            <Link href="#products" className="inline-block bg-[#d4af37] text-white px-8 py-3 md:px-10 md:py-4 rounded-md font-bold text-lg md:text-xl hover:bg-[#c19b2e] hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl">{text.heroCta}</Link>
-          </div>
+        {/* الكلام على الشمال (مثبت فيزيائياً على الشمال) */}
+        <div className="absolute top-1/2 -translate-y-1/2 left-4 md:left-16 z-20 max-w-[85%] md:max-w-xl text-right">
+          <h2 className="font-playfair text-4xl md:text-7xl font-bold mb-4 md:mb-6 text-[#d4af37] leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">{text.heroTitle}</h2>
+          <p className="text-sm md:text-xl mb-8 md:mb-10 text-white font-medium drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">{text.heroSubtitle}</p>
+          <Link href="#products" className="inline-block bg-[#d4af37] text-white px-8 py-3 md:px-10 md:py-4 rounded-md font-bold text-lg md:text-xl hover:bg-[#c19b2e] hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl">{text.heroCta}</Link>
         </div>
       </section>
 
       {/* التصنيفات */}
       <section id="categories" className="max-w-7xl mx-auto px-6 py-16 md:py-24 bg-[#fdfbf7] text-center">
         <h2 className="font-playfair text-3xl md:text-4xl font-bold mb-8 md:mb-12">{text.categoriesTitle}</h2>
-        <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+        <div className="flex flex-wrap justify-center gap-3 md:gap-6">
           {categoriesList.map((cat) => (
             <button key={cat.id} onClick={() => handleCategoryClick(cat.id)} className={`px-5 py-2 md:px-8 md:py-3 rounded-full text-xs md:text-sm font-bold border transition-all duration-300 hover:scale-105 active:scale-90 ${activeCategory === cat.id ? 'bg-[#d4af37] text-white border-[#d4af37] shadow-lg' : 'bg-white text-[#3e2723] border-[#e0d8cf] hover:border-[#d4af37] hover:text-[#d4af37]'}`}>
               {cat.label}
@@ -173,7 +173,6 @@ export default function Home() {
         {filteredProducts.length === 0 ? (
           <p className="text-center text-gray-500">{text.noProducts}</p>
         ) : (
-          // هنا التعديل: grid-cols-2 في الموبايل عشان يبقوا اتنين جنب بعض
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
             {filteredProducts.map((product) => {
               const displayName = lang === 'en' && product.name_en ? product.name_en : product.name;
@@ -184,7 +183,7 @@ export default function Home() {
                       {product.image_url ? (
                         <img src={product.image_url} alt={displayName} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                       ) : (
-                        <div className="flex items-center justify-center h-full text-[#8d6e63] text-xs md:text-base">صورة المنتج</div>
+                        <div className="flex items-center justify-center h-full text-[#8d6e63] text-sm md:text-base">صورة المنتج</div>
                       )}
                     </div>
                   </Link>
@@ -192,7 +191,7 @@ export default function Home() {
                     <Link href={`/products/${product.id}?lang=${lang}`}>
                       <h3 className="font-playfair text-sm md:text-lg font-bold mb-1 group-hover:text-[#d4af37] transition-colors">{displayName}</h3>
                     </Link>
-                    <p className="text-[#d4af37] font-bold text-sm md:text-base">{product.price} {text.currency}</p>
+                    <p className="text-[#d4af37] font-bold text-xs md:text-base">{product.price} {text.currency}</p>
                   </div>
                 </div>
               );
