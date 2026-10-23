@@ -110,11 +110,11 @@ export default function Home() {
   return (
     <div className={`min-h-screen bg-[#fdfbf7] text-[#3e2723] font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       
-      {/* قسم الـ Hero (نفس الشكل اللي عجبك بالظبط) */}
-      <section className="relative w-full h-screen overflow-hidden">
+      {/* قسم الـ Hero (التعديل الوحيد هنا) */}
+      <section className="relative w-full h-screen overflow-hidden bg-black">
         
-        {/* الصورة كخلفية كاملة */}
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}></div>
+        {/* الصورة كاملة في الموبايل وبتغطي الشاشة في اللاب */}
+        <div className="absolute inset-0 bg-contain md:bg-cover bg-no-repeat bg-center" style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}></div>
         
         {/* طبقة ظل خفيفة جداً عشان الكلام يبان */}
         <div className="absolute inset-0 bg-black/30"></div>
