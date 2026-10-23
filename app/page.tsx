@@ -111,19 +111,19 @@ export default function Home() {
     <div className={`min-h-screen bg-[#fdfbf7] text-[#3e2723] font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       
       {/* قسم الـ Hero */}
-      <section className="relative w-full h-screen overflow-hidden bg-black">
+      <section className="relative w-full h-[100dvh] overflow-hidden bg-black">
         
         {/* الصورة كاملة في الموبايل (مركزة على اليمين) وبتغطي الشاشة في اللاب */}
-        <div className="absolute inset-0 bg-cover bg-right md:bg-center" style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}></div>
+        <div className="absolute inset-0 bg-cover bg-[center_top] md:bg-center" style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}></div>
         
         {/* طبقة ظل خفيفة جداً عشان الكلام يبان */}
-        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="absolute inset-0 bg-black/30"></div>
         
         {/* تدرج داكن على الشمال عشان الكلام يبان أكتر */}
         <div className="absolute inset-y-0 left-0 w-full md:w-1/2 bg-gradient-to-r from-black/80 to-transparent"></div>
 
-        {/* الشريط اللي فوق (شفاف وثابت) */}
-        <header className="absolute top-0 w-full z-50 py-4 px-4 md:py-6 md:px-6 bg-black/30 backdrop-blur-sm md:bg-transparent md:backdrop-blur-none">
+        {/* الشريط اللي فوق (شفاف بالكامل) */}
+        <header className="absolute top-0 w-full z-50 py-4 px-4 md:py-6 md:px-6">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0 relative">
             
             {/* اللينكات ظاهرة في الموبايل واللاب */}
@@ -151,8 +151,8 @@ export default function Home() {
           </div>
         </header>
 
-        {/* الكلام */}
-        <div className="absolute top-1/2 -translate-y-1/2 left-6 md:left-16 z-20 max-w-[85%] md:max-w-xl text-right mt-10 md:mt-0">
+        {/* الكلام (نزلته لتحت شوية عشان ميتداخلش مع اللي في الصورة) */}
+        <div className="absolute bottom-[15%] md:top-1/2 md:-translate-y-1/2 md:bottom-auto left-6 md:left-16 z-20 max-w-[85%] md:max-w-xl text-right">
           <h2 className="font-playfair text-4xl md:text-7xl font-bold mb-4 md:mb-6 text-[#d4af37] leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
             {text.heroTitle}
           </h2>
