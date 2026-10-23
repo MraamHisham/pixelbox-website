@@ -110,48 +110,56 @@ export default function Home() {
   return (
     <div className={`min-h-screen bg-[#fdfbf7] text-[#3e2723] font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       
-      {/* قسم الـ Hero (نفس الشكل اللي عجبك) */}
-      <section className="relative w-full h-screen overflow-hidden">
-        {/* الصورة كاملة */}
-        <div className="absolute inset-0 bg-cover bg-[center_top]" style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}></div>
+      {/* قسم الـ Hero (المعدل عشان يظبط في الموبايل) */}
+      <section className="relative w-full h-screen flex flex-col justify-center overflow-hidden">
         
-        {/* تظليل خفيف عشان الكلام يبان */}
-        <div className="absolute inset-0 bg-black/40"></div>
-        <div className="absolute inset-y-0 left-0 w-full md:w-1/2 bg-gradient-to-r from-black/80 to-transparent"></div>
+        {/* الصورة كاملة في الموبايل واللاب */}
+        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}></div>
+        
+        {/* تظليل عشان الكلام يبان */}
+        <div className="absolute inset-0 bg-black/50 md:bg-gradient-to-r md:from-black/80 md:to-transparent"></div>
 
-        {/* الشريط اللي فوق */}
+        {/* الشريط اللي فوق (ظاهر في الموبايل) */}
         <header className="absolute top-0 w-full z-50 py-4 px-4 md:py-6 md:px-6">
-          <div className="max-w-7xl mx-auto flex items-center justify-between relative">
-            <nav className="hidden md:flex gap-8 text-sm font-bold text-white drop-shadow-md mx-auto">
-              <Link href="/" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navHome}</Link>
-              <Link href="#products" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navProducts}</Link>
-              <Link href="#categories" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.categoriesTitle}</Link>
-              <Link href="/about" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navAbout}</Link>
-              <Link href="/contact" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navContact}</Link>
-            </nav>
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
             
-            <div className="flex items-center gap-2 md:gap-4 text-white drop-shadow-md w-full md:w-auto justify-between md:justify-start md:absolute md:left-0">
-              <div className="flex gap-2">
-                {user ? (
-                  <button onClick={handleLogout} className="text-xs md:text-sm border border-white px-3 py-1.5 md:px-4 md:py-2 rounded-full hover:bg-white hover:text-black hover:scale-105 active:scale-90 transition-all duration-300">{text.logout}</button>
-                ) : (
-                  <Link href="/login" className="text-xs md:text-sm border border-white px-3 py-1.5 md:px-4 md:py-2 rounded-full hover:bg-white hover:text-black hover:scale-105 active:scale-90 transition-all duration-300">
-                    {text.login}
-                  </Link>
-                )}
-              </div>
-              <button onClick={toggleLang} className="text-xs md:text-sm font-bold border border-white text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full hover:bg-white hover:text-black hover:scale-105 active:scale-90 transition-all duration-300">
+            {/* اللينكات (بتظهر في الموبايل فوق الكلام) */}
+            <nav className="flex flex-wrap justify-center gap-4 md:gap-8 text-xs md:text-sm font-bold text-white drop-shadow-md">
+              <Link href="/" className="hover:text-[#d4af37] active:scale-90 transition-all">{text.navHome}</Link>
+              <Link href="#products" className="hover:text-[#d4af37] active:scale-90 transition-all">{text.navProducts}</Link>
+              <Link href="/about" className="hover:text-[#d4af37] active:scale-90 transition-all">{text.navAbout}</Link>
+              <Link href="/contact" className="hover:text-[#d4af37] active:scale-90 transition-all">{text.navContact}</Link>
+            </nav>
+
+            {/* أزرار اللغة والحساب */}
+            <div className="flex items-center gap-3 text-white drop-shadow-md">
+              {user ? (
+                <button onClick={handleLogout} className="text-xs md:text-sm border border-white px-3 py-1.5 rounded-full hover:bg-white hover:text-black active:scale-90 transition-all">{text.logout}</button>
+              ) : (
+                <Link href="/login" className="text-xs md:text-sm border border-white px-3 py-1.5 rounded-full hover:bg-white hover:text-black active:scale-90 transition-all">
+                  {text.login}
+                </Link>
+              )}
+              <button onClick={toggleLang} className="text-xs md:text-sm font-bold border border-white text-white px-3 py-1.5 rounded-full hover:bg-white hover:text-black active:scale-90 transition-all">
                 {lang === 'ar' ? 'EN' : 'عربي'}
               </button>
             </div>
           </div>
         </header>
 
-        {/* الكلام على الشمال (مثبت فيزيائياً على الشمال) */}
-        <div className="absolute top-1/2 -translate-y-1/2 left-4 md:left-16 z-20 max-w-[85%] md:max-w-xl text-right">
-          <h2 className="font-playfair text-4xl md:text-7xl font-bold mb-4 md:mb-6 text-[#d4af37] leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">{text.heroTitle}</h2>
-          <p className="text-sm md:text-xl mb-8 md:mb-10 text-white font-medium drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">{text.heroSubtitle}</p>
-          <Link href="#products" className="inline-block bg-[#d4af37] text-white px-8 py-3 md:px-10 md:py-4 rounded-md font-bold text-lg md:text-xl hover:bg-[#c19b2e] hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl">{text.heroCta}</Link>
+        {/* الكلام (يتوسط في الموبايل، وعلى الشمال في اللاب) */}
+        <div className="relative z-20 w-full max-w-7xl mx-auto px-6 flex flex-col justify-center h-full text-center md:text-right items-center md:items-start mt-20 md:mt-0">
+          <div className="max-w-xl">
+            <h2 className="font-playfair text-4xl md:text-7xl font-bold mb-4 md:mb-6 text-[#d4af37] leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
+              {text.heroTitle}
+            </h2>
+            <p className="text-base md:text-xl mb-8 md:mb-10 text-white font-medium drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
+              {text.heroSubtitle}
+            </p>
+            <Link href="#products" className="inline-block bg-[#d4af37] text-white px-8 py-3 md:px-10 md:py-4 rounded-md font-bold text-lg md:text-xl hover:bg-[#c19b2e] hover:scale-105 active:scale-95 transition-all duration-300 shadow-xl">
+              {text.heroCta}
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -160,7 +168,7 @@ export default function Home() {
         <h2 className="font-playfair text-3xl md:text-4xl font-bold mb-8 md:mb-12">{text.categoriesTitle}</h2>
         <div className="flex flex-wrap justify-center gap-3 md:gap-6">
           {categoriesList.map((cat) => (
-            <button key={cat.id} onClick={() => handleCategoryClick(cat.id)} className={`px-5 py-2 md:px-8 md:py-3 rounded-full text-xs md:text-sm font-bold border transition-all duration-300 hover:scale-105 active:scale-90 ${activeCategory === cat.id ? 'bg-[#d4af37] text-white border-[#d4af37] shadow-lg' : 'bg-white text-[#3e2723] border-[#e0d8cf] hover:border-[#d4af37] hover:text-[#d4af37]'}`}>
+            <button key={cat.id} onClick={() => handleCategoryClick(cat.id)} className={`px-6 py-2 md:px-8 md:py-3 rounded-full text-xs md:text-sm font-bold border transition-all duration-300 hover:scale-105 active:scale-90 ${activeCategory === cat.id ? 'bg-[#d4af37] text-white border-[#d4af37] shadow-lg' : 'bg-white text-[#3e2723] border-[#e0d8cf] hover:border-[#d4af37] hover:text-[#d4af37]'}`}>
               {cat.label}
             </button>
           ))}
