@@ -130,8 +130,8 @@ export default function Home() {
               <Link href="/contact" className="hover:text-[#d4af37] hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navContact}</Link>
             </nav>
 
-            {/* التعديل هنا: ضفت w-full justify-end عشان الزراير تروح أقصى الشمال في الموبايل */}
-            <div className="flex items-center gap-2 md:gap-4 text-white drop-shadow-md w-full justify-end md:w-auto md:absolute md:left-0 mt-2 md:mt-0">
+            {/* التعديل هنا: ltr:justify-start rtl:justify-end عشان يروحوا الشمال في اللغتين */}
+            <div className="flex items-center gap-2 md:gap-4 text-white drop-shadow-md w-full ltr:justify-start rtl:justify-end md:w-auto md:absolute md:left-0 mt-2 md:mt-0">
               {user ? (
                 <button onClick={handleLogout} className="text-xs md:text-sm border border-white px-3 py-1.5 md:px-4 md:py-2 rounded-full hover:bg-white hover:text-black active:scale-90 transition-all duration-300">{text.logout}</button>
               ) : (
