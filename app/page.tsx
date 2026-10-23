@@ -110,49 +110,49 @@ export default function Home() {
   return (
     <div className={`min-h-screen bg-[#fdfbf7] text-[#3e2723] font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
       
-      {/* قسم الـ Hero (التعديل الوحيد هنا) */}
+      {/* قسم الـ Hero */}
       <section className="relative w-full h-screen overflow-hidden bg-black">
         
-        {/* الصورة كاملة في الموبايل وبتغطي الشاشة في اللاب */}
-        <div className="absolute inset-0 bg-contain md:bg-cover bg-no-repeat bg-center" style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}></div>
+        {/* الصورة كاملة في الموبايل (مركزة على اليمين) وبتغطي الشاشة في اللاب */}
+        <div className="absolute inset-0 bg-cover bg-right md:bg-center" style={{ backgroundImage: "url('https://nngvbcabtppkhfnnpnnt.supabase.co/storage/v1/object/public/product-images/web.jpg')" }}></div>
         
         {/* طبقة ظل خفيفة جداً عشان الكلام يبان */}
-        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="absolute inset-0 bg-black/40"></div>
         
         {/* تدرج داكن على الشمال عشان الكلام يبان أكتر */}
         <div className="absolute inset-y-0 left-0 w-full md:w-1/2 bg-gradient-to-r from-black/80 to-transparent"></div>
 
-        {/* الشريط اللي فوق (شفاف) */}
-        <header className="absolute top-0 w-full z-50 py-6 px-6">
+        {/* الشريط اللي فوق (شفاف وثابت) */}
+        <header className="absolute top-0 w-full z-50 py-4 px-4 md:py-6 md:px-6 bg-black/30 backdrop-blur-sm md:bg-transparent md:backdrop-blur-none">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0 relative">
             
             {/* اللينكات ظاهرة في الموبايل واللاب */}
-            <nav className="flex flex-wrap justify-center gap-4 md:gap-8 text-sm font-bold text-white drop-shadow-md mx-auto">
-              <Link href="/" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navHome}</Link>
-              <Link href="#products" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navProducts}</Link>
-              <Link href="#categories" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.categoriesTitle}</Link>
-              <Link href="/about" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navAbout}</Link>
-              <Link href="/contact" className="hover:text-[#d4af37] hover:rotate-3 hover:scale-110 active:scale-90 active:rotate-6 transition-all duration-300">{text.navContact}</Link>
+            <nav className="flex flex-wrap justify-center gap-4 md:gap-8 text-sm font-bold text-white drop-shadow-md mx-auto w-full">
+              <Link href="/" className="hover:text-[#d4af37] active:scale-90 transition-all">{text.navHome}</Link>
+              <Link href="#products" className="hover:text-[#d4af37] active:scale-90 transition-all">{text.navProducts}</Link>
+              <Link href="#categories" className="hover:text-[#d4af37] active:scale-90 transition-all">{text.categoriesTitle}</Link>
+              <Link href="/about" className="hover:text-[#d4af37] active:scale-90 transition-all">{text.navAbout}</Link>
+              <Link href="/contact" className="hover:text-[#d4af37] active:scale-90 transition-all">{text.navContact}</Link>
             </nav>
 
             {/* الأزرار */}
-            <div className="flex items-center gap-4 text-white drop-shadow-md md:absolute md:left-0 mt-4 md:mt-0">
+            <div className="flex items-center gap-4 text-white drop-shadow-md md:absolute md:left-0 mt-2 md:mt-0">
               {user ? (
-                <button onClick={handleLogout} className="text-sm border border-white px-4 py-2 rounded-full hover:bg-white hover:text-black hover:scale-105 active:scale-90 transition-all duration-300">{text.logout}</button>
+                <button onClick={handleLogout} className="text-xs md:text-sm border border-white px-3 py-1.5 md:px-4 md:py-2 rounded-full hover:bg-white hover:text-black active:scale-90 transition-all">{text.logout}</button>
               ) : (
-                <Link href="/login" className="text-sm border border-white px-4 py-2 rounded-full hover:bg-white hover:text-black hover:scale-105 active:scale-90 transition-all duration-300">
+                <Link href="/login" className="text-xs md:text-sm border border-white px-3 py-1.5 md:px-4 md:py-2 rounded-full hover:bg-white hover:text-black active:scale-90 transition-all">
                   {text.login}
                 </Link>
               )}
-              <button onClick={toggleLang} className="text-sm font-bold border border-white text-white px-4 py-2 rounded-full hover:bg-white hover:text-black hover:scale-105 active:scale-90 transition-all duration-300">
+              <button onClick={toggleLang} className="text-xs md:text-sm font-bold border border-white text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full hover:bg-white hover:text-black active:scale-90 transition-all">
                 {lang === 'ar' ? 'EN' : 'عربي'}
               </button>
             </div>
           </div>
         </header>
 
-        {/* الكلام (مثبت في الشمال تماماً زي الصورة اللي عجبتك) */}
-        <div className="absolute top-1/2 -translate-y-1/2 left-6 md:left-16 z-20 max-w-[85%] md:max-w-xl text-right">
+        {/* الكلام */}
+        <div className="absolute top-1/2 -translate-y-1/2 left-6 md:left-16 z-20 max-w-[85%] md:max-w-xl text-right mt-10 md:mt-0">
           <h2 className="font-playfair text-4xl md:text-7xl font-bold mb-4 md:mb-6 text-[#d4af37] leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
             {text.heroTitle}
           </h2>
