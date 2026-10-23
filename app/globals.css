@@ -19,12 +19,23 @@ body {
   overflow-x: hidden;
 }
 
+/* أنيميشن فتح الصفحات */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* أنيميشن اللمس الإجباري للموبايل */
 @media (max-width: 768px) {
-  a:active, button:active {
+  a:active, button:active, .touch-btn:active {
     transform: scale(0.92) !important;
     transition: transform 0.1s ease-in-out !important;
   }
-  .group:active {
+  
+  .touch-card:active, .group:active {
     transform: scale(0.96) !important;
     transition: transform 0.1s ease-in-out !important;
   }
