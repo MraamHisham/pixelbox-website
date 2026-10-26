@@ -196,7 +196,8 @@ export default function Home() {
                     <Link href={`/products/${product.id}?lang=${lang}`}>
                       <h3 className="font-playfair text-sm md:text-lg font-bold mb-1 group-hover:text-[#d4af37] transition-colors">{displayName}</h3>
                     </Link>
-                    <p className="text-[#d4af37] font-bold text-xs md:text-base">{product.price} {text.currency}</p>
+                    {/* التعديل هنا: تم إزالة كلمة العملة من هنا */}
+                    <p className="text-[#d4af37] font-bold text-xs md:text-base">{product.price}</p>
                   </div>
                 </div>
               );
