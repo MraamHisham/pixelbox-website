@@ -33,7 +33,7 @@ function ProductDetails() {
       if (!params.id) return;
       
       const { data: productData } = await supabase.from("products").select("*").eq("id", params.id).single();
-      // التعديل الأول: إضافة شرط is_visible هنا عشان يجيب الألوان الظاهرة بس
+      // جلب الألوان التي تكون is_visible مساوية لـ true فقط
       const { data: colorsData } = await supabase.from("product_colors").select("*").eq("product_id", params.id).eq("is_visible", true);
 
       if (productData) {
@@ -71,10 +71,8 @@ function ProductDetails() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
           
           <div className="relative aspect-square bg-[#f5f1eb] rounded-3xl border border-[#e0d8cf] overflow-hidden flex items-center justify-center group perspective-1000 shadow-sm hover:shadow-xl transition-shadow duration-700">
-            {/* التعديل الثاني: تغيير p-8 إلى p-0 عشان الصورة تلزق في الفريم */}
             <div className="w-full h-full transition-transform duration-1000 ease-in-out group-hover:rotate-y-360 group-active:rotate-y-360 flex items-center justify-center overflow-hidden rounded-3xl p-0">
               {selectedImage ? (
-                /* التعديل الثاني: تغيير object-contain إلى object-cover عشان الصورة تملأ الإطار */
                 <img key={selectedImage} src={selectedImage} alt={displayName} className="w-full h-full object-cover transition-all duration-700 animate-fade-in drop-shadow-md" />
               ) : (
                 <span className="text-[#d4af37]/20 font-playfair text-4xl italic tracking-widest">PIXEL BOX</span>
@@ -91,6 +89,21 @@ function ProductDetails() {
           <div className="flex flex-col justify-center">
             <h1 className="font-playfair text-4xl md:text-6xl font-bold mb-6 text-[#3e2723] leading-tight">{displayName}</h1>
             <div className="w-20 h-1 bg-[#d4af37] mb-8 rounded-full"></div>
+            
+            {/* عرض الـ Title */}
+            {product['Title'] && (
+              <h2 className="text-2xl font-bold mb-4 text-[#3e2723]">{product['Title']}</h2>
+            )}
+
+            {/* عرض الـ Key Features */}
+            {product['Key Features'] && (
+              <div className="mb-8">
+                <h3 className="text-sm text-[#d4af37] mb-2 uppercase tracking-widest font-bold">Key Features</h3>
+                <p className="text-gray-600 text-base leading-relaxed whitespace-pre-line">{product['Key Features']}</p>
+              </div>
+            )}
+
+            {/* عرض الوصف */}
             <p className="text-gray-600 text-lg leading-relaxed mb-12 font-light">{product.description || text.notAvailable}</p>
 
             {colors.length > 0 && (
