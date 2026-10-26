@@ -57,7 +57,19 @@ function ProductDetails() {
     en: { back: "Back to Store", notAvailable: "No description available for this product.", availableColors: "Available Colors:", inquire: "Order Your Design", soldOut: "Sold Out", currency: "SAR", hint: "Hover or touch to see 360°" }
   };
   const text = t[lang];
+  
+  // --- منطق الترجمة الجديد ---
   const displayName = lang === 'en' && product.name_en ? product.name_en : product.name;
+  
+  // بيشيك لو اللغة عربي ولو في وصف عربي هيجيبه، غير كده هيسيب الوصف الإنجليزي
+  const displayDescription = lang === 'ar' && product.description_ar ? product.description_ar : product.description;
+  
+  // بيشيك لو اللغة عربي ولو في عنوان عربي هيجيبه، غير كده هيسيب العنوان الإنجليزي
+  const displayTitle = lang === 'ar' && product['Title_ar'] ? product['Title_ar'] : product['Title'];
+  
+  // بيشيك لو اللغة عربي ولو في خصائص عربية هيجيبها، غير كده هيسيب الخصائص الإنجليزية
+  const displayKeyFeatures = lang === 'ar' && product['Key Features_ar'] ? product['Key Features_ar'] : product['Key Features'];
+  // ----------------------------
 
   return (
     <div className={`min-h-screen bg-[#fdfbf7] text-[#3e2723] font-cairo ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} translate="no">
@@ -90,21 +102,21 @@ function ProductDetails() {
             <h1 className="font-playfair text-4xl md:text-6xl font-bold mb-6 text-[#3e2723] leading-tight">{displayName}</h1>
             <div className="w-20 h-1 bg-[#d4af37] mb-8 rounded-full"></div>
             
-            {/* عرض الـ Title */}
-            {product['Title'] && (
-              <h2 className="text-2xl font-bold mb-4 text-[#3e2723]">{product['Title']}</h2>
+            {/* عرض الـ Title المترجم */}
+            {displayTitle && (
+              <h2 className="text-2xl font-bold mb-4 text-[#3e2723]">{displayTitle}</h2>
             )}
 
-            {/* عرض الـ Key Features */}
-            {product['Key Features'] && (
+            {/* عرض الـ Key Features المترجمة */}
+            {displayKeyFeatures && (
               <div className="mb-8">
                 <h3 className="text-sm text-[#d4af37] mb-2 uppercase tracking-widest font-bold">Key Features</h3>
-                <p className="text-gray-600 text-base leading-relaxed whitespace-pre-line">{product['Key Features']}</p>
+                <p className="text-gray-600 text-base leading-relaxed whitespace-pre-line">{displayKeyFeatures}</p>
               </div>
             )}
 
-            {/* عرض الوصف */}
-            <p className="text-gray-600 text-lg leading-relaxed mb-12 font-light">{product.description || text.notAvailable}</p>
+            {/* عرض الوصف المترجم */}
+            <p className="text-gray-600 text-lg leading-relaxed mb-12 font-light">{displayDescription || text.notAvailable}</p>
 
             {colors.length > 0 && (
               <div className="mb-14">
