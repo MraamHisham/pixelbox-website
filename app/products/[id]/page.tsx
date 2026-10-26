@@ -33,7 +33,8 @@ function ProductDetails() {
       if (!params.id) return;
       
       const { data: productData } = await supabase.from("products").select("*").eq("id", params.id).single();
-      const { data: colorsData } = await supabase.from("product_colors").select("*").eq("product_id", params.id);
+      // التعديل الأول: إضافة شرط is_visible هنا عشان يجيب الألوان الظاهرة بس
+      const { data: colorsData } = await supabase.from("product_colors").select("*").eq("product_id", params.id).eq("is_visible", true);
 
       if (productData) {
         setProduct(productData);
@@ -70,9 +71,11 @@ function ProductDetails() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
           
           <div className="relative aspect-square bg-[#f5f1eb] rounded-3xl border border-[#e0d8cf] overflow-hidden flex items-center justify-center group perspective-1000 shadow-sm hover:shadow-xl transition-shadow duration-700">
-            <div className="w-full h-full transition-transform duration-1000 ease-in-out group-hover:rotate-y-360 group-active:rotate-y-360 flex items-center justify-center overflow-hidden rounded-3xl p-8">
+            {/* التعديل الثاني: تغيير p-8 إلى p-0 عشان الصورة تلزق في الفريم */}
+            <div className="w-full h-full transition-transform duration-1000 ease-in-out group-hover:rotate-y-360 group-active:rotate-y-360 flex items-center justify-center overflow-hidden rounded-3xl p-0">
               {selectedImage ? (
-                <img key={selectedImage} src={selectedImage} alt={displayName} className="w-full h-full object-contain transition-all duration-700 animate-fade-in drop-shadow-md" />
+                /* التعديل الثاني: تغيير object-contain إلى object-cover عشان الصورة تملأ الإطار */
+                <img key={selectedImage} src={selectedImage} alt={displayName} className="w-full h-full object-cover transition-all duration-700 animate-fade-in drop-shadow-md" />
               ) : (
                 <span className="text-[#d4af37]/20 font-playfair text-4xl italic tracking-widest">PIXEL BOX</span>
               )}
