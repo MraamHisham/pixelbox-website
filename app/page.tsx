@@ -101,9 +101,9 @@ export default function Home() {
     { id: "Gift Boxes", label: text.catGift },
     { id: "Resin", label: text.catResin },
     { id: "DTF", label: text.catDTF },
-    { id: "Acrylic", label: text.catAcrylic },
-    { id: "Laser", label: text.catLaser },
-    { id: "Hardcover", label: text.catHardcover },
+    // { id: "Acrylic", label: text.catAcrylic }, // تم إخفاء أكريليك
+    // { id: "Laser", label: text.catLaser },     // تم إخفاء ليزر
+    // { id: "Hardcover", label: text.catHardcover }, // تم إخفاء علب صلبة
     { id: "Tote Bags", label: text.catTote },
   ];
 
