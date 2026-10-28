@@ -3,7 +3,7 @@
 A fully responsive, bilingual e-commerce platform for handcrafted luxury gift boxes. Built from scratch as a solo project to provide a seamless user experience for ordering custom designs.
 
 ## 🔗 Live Demo
-[Visit Pixel Box Ads]((https://pixelboxads.shop/))
+[Visit Pixel Box Ads](https://pixelboxads.shop/)
 
 ##  Key Features
 - **Bilingual Support:** Seamless switching between Arabic (RTL) and English (LTR) with dynamic layout adjustments.
